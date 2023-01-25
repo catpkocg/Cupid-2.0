@@ -4,23 +4,30 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.Tilemaps;
+using Wayway.Engine.Singleton;
 
-public class Map : MonoBehaviour
+public class Map : MonoSingleton<Map>
 {
-    public Transform backGround;
+    [SerializeField] private Transform backGround;
+    [SerializeField] private List<Tilemap> tilemapList;
+    [SerializeField] private Camera cam;
+
     public Tilemap tilemap;
-    public List<Vector3> availablePlaces = new List<Vector3>();
-    public Camera cam;
+    public GameConfig gameConfig;
+    
+    public List<Vector3> canSpwanPlace = new List<Vector3>();
+    public Dictionary<Vector3Int, Block> BlockPlace = new Dictionary<Vector3Int, Block>();
     private void Awake()
     {
-        var tile = Instantiate(tilemap, transform.position, Quaternion.identity);
+        var tile = Instantiate(tilemapList[gameConfig.StageLevel], transform.position, Quaternion.identity);
         tile.transform.SetParent(backGround);
         tilemap = tile;
+        FindCanPutTile();
     }
 
     void Start()
     {
-        FindCanPutTile();
+        
     }
 
     private void FindCanPutTile()
@@ -29,47 +36,16 @@ public class Map : MonoBehaviour
         {
             for (int p = tilemap.cellBounds.yMin; p < tilemap.cellBounds.yMax; p++)
             {
-                Vector3Int localPlace = new Vector3Int(n, p, (int)tilemap.transform.position.y);
+                Vector3Int localPlace = new Vector3Int(n, p, 0);
                 Vector3 place = tilemap.CellToWorld(localPlace);
+                var putPlace = new Vector3(place.x, place.y, 0);
                 if (tilemap.HasTile(localPlace))
                 {
-                    availablePlaces.Add(place);
-                    Debug.Log(n + "da"+p);
+                    canSpwanPlace.Add(putPlace);
                 }
             }
         }
-        cam.transform.GetComponent<Camera>().orthographicSize = tilemap.cellBounds.xMax - tilemap.cellBounds.xMin;
-
-    }
-
-    private void SpawnBlockOnTile()
-    {
-        for (int i = 0; i < availablePlaces.Count; i++)
-        {
-            
-        }
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
         
-    }
-
-    private void HitPoint()
-    {
-        if (Input.GetMouseButtonDown(0))
-        {
-            var plane = new Plane();
-            plane.Set3Points(Vector3.zero, Vector3.up, Vector3.right);
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            if (plane.Raycast(ray, out var enter))
-            {
-                Vector3 hitPoint = ray.GetPoint(enter);
-                var grid = tilemap.GetComponentInParent<Grid>();
-                var cellCoord = grid.WorldToCell(hitPoint);
-                Debug.Log(cellCoord);
-            }
-        }
+        cam.transform.GetComponent<Camera>().orthographicSize = tilemap.cellBounds.xMax - tilemap.cellBounds.xMin;
     }
 }
