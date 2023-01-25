@@ -1,0 +1,3 @@
+[submodule "Cupid-2.0"]
+	path = Cupid-2.0
+	url = https://github.com/waywaystudio/Core.git
