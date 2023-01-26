@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
@@ -28,8 +29,12 @@ public class GameManager : MonoBehaviour
             Vector3 hitPoint = ray.GetPoint(enter);
             var grid = Map.Instance.tilemap.GetComponentInParent<Grid>();
             var cellCoord = grid.WorldToCell(hitPoint);
-            Debug.Log(hitPoint);
-            Debug.Log(cellCoord);
+            //Map.Instance.DeleteBlock(Util.UnityCellToCube(cellCoord));
+            var blockPos = Util.UnityCellToCube(cellCoord);
+            var a = Map.Instance.BlockPlace[blockPos];
+            var b = Map.Instance.FindNearSameValue(a);
+            Debug.Log(b.Count);
+
         }
     }
     

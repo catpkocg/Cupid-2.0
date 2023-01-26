@@ -6,7 +6,7 @@ public class Block : MonoBehaviour
 {
     
     [SerializeField] public int value;
-    public Vector2Int Coord { get; set; }
+    public Vector3Int Coord { get; set; }
 
     public int score = 1;
     

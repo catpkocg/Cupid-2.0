@@ -2,10 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CubeCoord : MonoBehaviour
+public static class Util
 {
-    
-    private List<Vector3Int> GetNeighbors(Vector3Int unityCell, int range)
+    public static List<Vector3Int> GetNeighbors(Vector3Int unityCell, int range)
     {
         var centerCubePos = UnityCellToCube(unityCell);
 
@@ -31,7 +30,7 @@ public class CubeCoord : MonoBehaviour
 
         return result;
     }
-    private Vector3Int UnityCellToCube(Vector3Int cell)
+    public static Vector3Int UnityCellToCube(Vector3Int cell)
     {
         var yCell = cell.x; 
         var xCell = cell.y;
@@ -41,7 +40,7 @@ public class CubeCoord : MonoBehaviour
         return new Vector3Int(x, y, z);
     }
     
-    private Vector3Int CubeToUnityCell(Vector3Int cube)
+    public static Vector3Int CubeToUnityCell(Vector3Int cube)
     {
         var x = cube.x;
         var z = cube.z;

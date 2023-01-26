@@ -16,26 +16,17 @@ public class Spawn : MonoBehaviour
         for (int i = 0; i < Map.Instance.canSpwanPlace.Count; i++)
         {
             var cellCoord = grid.WorldToCell(Map.Instance.canSpwanPlace[i]);
-            var cubeCoord = UnityCellToCube(cellCoord);
+            var cubeCoord = Util.UnityCellToCube(cellCoord);
             var random = Random.Range(0, Map.Instance.gameConfig.BlockNumber);
             var block = Instantiate(allKindsOfBlock[random], Map.Instance.canSpwanPlace[i], Quaternion.identity);
             block.transform.SetParent(blockBase);
             block.GetComponentInChildren<TextMeshPro>().text = cubeCoord.ToString();
-
+            block.Coord = cubeCoord;
+            Map.Instance.BlockPlace.Add(cubeCoord,block);
         }
     }
     void Start()
     {
         SpawnBlockOnTile();
-    }
-
-    private Vector3Int UnityCellToCube(Vector3Int cell)
-    {
-        var yCell = cell.x; 
-        var xCell = cell.y;
-        var x = yCell - (xCell - (xCell & 1)) / 2;
-        var z = xCell;
-        var y = -x - z;
-        return new Vector3Int(x, y, z);
     }
 }
