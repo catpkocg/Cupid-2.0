@@ -393,8 +393,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   backGround: {fileID: 1868234342}
-  tilemapList:
-  - {fileID: 1955567491342535433, guid: fd7a728efef29804684156bdf11a83c4, type: 3}
+  mapList:
+  - {fileID: 170450543494263230, guid: dde4004c384cf2d48bf5ea05bbe6dfe1, type: 3}
   cam: {fileID: 230045247}
   tilemap: {fileID: 0}
   gameConfig: {fileID: 11400000, guid: 846f0790370180f45b02758e251b7915, type: 2}

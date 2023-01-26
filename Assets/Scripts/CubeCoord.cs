@@ -40,6 +40,7 @@ public class CubeCoord : MonoBehaviour
         var y = -x - z;
         return new Vector3Int(x, y, z);
     }
+    
     private Vector3Int CubeToUnityCell(Vector3Int cube)
     {
         var x = cube.x;
@@ -49,5 +50,6 @@ public class CubeCoord : MonoBehaviour
 
         return new Vector3Int(col, row,  0);
     }
+    
 }
 

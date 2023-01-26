@@ -9,7 +9,7 @@ using Wayway.Engine.Singleton;
 public class Map : MonoSingleton<Map>
 {
     [SerializeField] private Transform backGround;
-    [SerializeField] private List<Tilemap> tilemapList;
+    [SerializeField] private List<GameObject> mapList;
     [SerializeField] private Camera cam;
 
     public Tilemap tilemap;
@@ -17,11 +17,13 @@ public class Map : MonoSingleton<Map>
     
     public List<Vector3> canSpwanPlace = new List<Vector3>();
     public Dictionary<Vector3Int, Block> BlockPlace = new Dictionary<Vector3Int, Block>();
-    private void Awake()
+
+    protected override void Awake()
     {
-        var tile = Instantiate(tilemapList[gameConfig.StageLevel], transform.position, Quaternion.identity);
-        tile.transform.SetParent(backGround);
-        tilemap = tile;
+        var presentTile = mapList[gameConfig.StageLevel].GetComponentInChildren<Tilemap>();
+        var tile = Instantiate(presentTile, transform.position, Quaternion.identity);
+        //tile.transform.SetParent(backGround);
+        tilemap = presentTile;
         FindCanPutTile();
     }
 
@@ -45,7 +47,6 @@ public class Map : MonoSingleton<Map>
                 }
             }
         }
-        
         cam.transform.GetComponent<Camera>().orthographicSize = tilemap.cellBounds.xMax - tilemap.cellBounds.xMin;
     }
 }

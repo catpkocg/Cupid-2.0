@@ -10,6 +10,7 @@ public class Spawn : MonoBehaviour
     
     private void SpawnBlockOnTile()
     {
+        
         var grid = Map.Instance.tilemap.GetComponentInParent<Grid>();
         
         for (int i = 0; i < Map.Instance.canSpwanPlace.Count; i++)
