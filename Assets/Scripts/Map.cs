@@ -50,6 +50,14 @@ public class Map : MonoSingleton<Map>
         cam.transform.GetComponent<Camera>().orthographicSize = tilemap.cellBounds.xMax - tilemap.cellBounds.xMin;
     }
 
+    public void DeleteBlockList(List<Block> sameBlockList)
+    {
+        for (int i = 0; i < sameBlockList.Count; i++)
+        {
+            DeleteBlock(sameBlockList[i].Coord);
+        }
+    }
+
     public void DeleteBlock(Vector3Int clickPos)
     {
         Destroy(BlockPlace[clickPos].gameObject);
@@ -57,11 +65,6 @@ public class Map : MonoSingleton<Map>
         Debug.Log(BlockPlace.Count);
     }
 
-    /*private bool IsSameValue(Block block)
-    {
-        //if(block.value == 
-    }*/
-    
     public List<Block> FindAllNearSameValue(Block block)
     {
         var toSearch = new List<Block>();
@@ -95,6 +98,7 @@ public class Map : MonoSingleton<Map>
         return allSameBlocks;
     }
     
+    
     public List<Block> FindNearSameValue(Block block)
     {
         List<Block> sameBlockList = new List<Block>();
@@ -102,13 +106,12 @@ public class Map : MonoSingleton<Map>
         {
             var neighbor = block.Coord + neighborPos.neighbor[i].neighborPos;
             var tilePos = Util.CubeToUnityCell(neighbor);
-            if (tilemap.HasTile(tilePos))
+            if (tilemap.HasTile(tilePos) && BlockPlace[neighbor] != null)
             {
                 var neiborValue = BlockPlace[neighbor].value;
-                if (neiborValue != null && neiborValue == block.value)
+                if (neiborValue == block.value)
                 {
                     sameBlockList.Add(BlockPlace[neighbor]);
-                    Debug.Log(neighbor);
                 }
             }
         }

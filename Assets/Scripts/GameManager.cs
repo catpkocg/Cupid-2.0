@@ -1,14 +1,22 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
+    [SerializeField] private Spawn spawnAndDelete;
+    [SerializeField] private Interaction interaction;
+    [SerializeField] private TextMeshProUGUI scoreText;
+    public int score;
+    
+    public States State { get; set; }
     // Start is called before the first frame update
     void Start()
     {
-        
+        State = States.ReadyForInteraction;
+        score = 0;
     }
 
     void Update()
@@ -17,6 +25,36 @@ public class GameManager : MonoBehaviour
         {
             HitPoint();
         }
+        
+        switch (State)
+        {
+            case States.ReadyForInteraction:
+                //interaction.ClickForMerge();
+                break;
+            case States.DeleteBlock:
+                //interaction.DeleteMergedObj(interaction.sameBlocks);
+                State = States.CreateNewBlock;
+                break;
+            case States.CreateNewBlock:
+                //spawnAndDelete.CreateNewBlockForEmptyPlaceAndCheckTarget();
+                State = States.CheckTarget;
+                break;
+            case States.CheckTarget:
+                //spawnAndDelete.CheckTarget();
+                State = States.DownNewBlock;
+                break;
+            case States.DownNewBlock:
+                //spawnAndDelete.MoveAllBlocks();
+                State = States.Waiting;
+                break;
+            case States.Waiting:
+                break;
+        }
+    }
+    
+    public void ChangeState(States stateType)
+    {
+        State = stateType;
     }
     
     private void HitPoint()
@@ -31,11 +69,20 @@ public class GameManager : MonoBehaviour
             var cellCoord = grid.WorldToCell(hitPoint);
             //Map.Instance.DeleteBlock(Util.UnityCellToCube(cellCoord));
             var blockPos = Util.UnityCellToCube(cellCoord);
-            var a = Map.Instance.BlockPlace[blockPos];
-            var b = Map.Instance.FindNearSameValue(a);
-            Debug.Log(b.Count);
-
+            var clickBlock = Map.Instance.BlockPlace[blockPos];
+            var clickBlockNeighbor = Map.Instance.FindAllNearSameValue(clickBlock);
+            Map.Instance.DeleteBlockList(clickBlockNeighbor);
         }
     }
     
+}
+public enum States
+{
+    None = 0,
+    ReadyForInteraction,
+    CheckTarget,
+    Waiting,
+    DeleteBlock,
+    CreateNewBlock,
+    DownNewBlock,
 }
