@@ -51,7 +51,7 @@ TextureImporter:
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
-  alphaIsTransparency: 0
+  alphaIsTransparency: 1
   spriteTessellationDetail: -1
   textureType: 8
   textureShape: 1
@@ -1495,7 +1495,7 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      HexTile_Sheet_BLANK_29: 808003868
+      HexTile_Sheet_BLANK_50: -2124255969
       HexTile_Sheet_BLANK_8: -461106051
       HexTile_Sheet_BLANK_32: -734201599
       HexTile_Sheet_BLANK_22: 1081446538
@@ -1558,7 +1558,7 @@ TextureImporter:
       HexTile_Sheet_BLANK_16: 2098752881
       HexTile_Sheet_BLANK_42: -653400629
       HexTile_Sheet_BLANK_5: 9821740
-      HexTile_Sheet_BLANK_50: -2124255969
+      HexTile_Sheet_BLANK_29: 808003868
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0
