@@ -1010,6 +1010,14 @@ MonoBehaviour:
   gameConfig: {fileID: 11400000, guid: 846f0790370180f45b02758e251b7915, type: 2}
   neighborPos: {fileID: 11400000, guid: 5363a2dc384001c4b9d4c514e2e37576, type: 2}
   canSpwanPlace: []
+  newBlockSpawnPos:
+  - {x: 0, y: 0, z: 0}
+  - {x: 0, y: 0, z: 0}
+  - {x: 0, y: 0, z: 0}
+  - {x: 0, y: 0, z: 0}
+  - {x: 0, y: 0, z: 0}
+  - {x: 0, y: 0, z: 0}
+  - {x: 0, y: 0, z: 0}
 --- !u!4 &641874281
 Transform:
   m_ObjectHideFlags: 0
@@ -1146,8 +1154,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a27bf7868da77564287017f425334441, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spawnAndDelete: {fileID: 0}
-  interaction: {fileID: 0}
+  spawn: {fileID: 1747731045}
+  interaction: {fileID: 324243770}
   scoreText: {fileID: 0}
   score: 0
 --- !u!1 &1497691531
@@ -1763,10 +1771,10 @@ MonoBehaviour:
   - {fileID: 4781419599595756695, guid: 13539cc7d13483a4a9ab228d165ef3f9, type: 3}
   - {fileID: 8610779722483948885, guid: 9b6186ff8b42e214691b35ea01b32ce0, type: 3}
   blockBase: {fileID: 62153274}
-  allBlock: []
   newBlocks: []
   newBlocksPos: []
-  allBlockTarget: []
+  notNewBlocks: []
+  notNewBlocksPos: []
 --- !u!1 &1868234340
 GameObject:
   m_ObjectHideFlags: 0

@@ -8,10 +8,11 @@ public class Spawn : MonoBehaviour
     [SerializeField] private List<Block> allKindsOfBlock;
     [SerializeField] private Transform blockBase;
     
-    public List<Block> allBlock;
+    //이동을 위한 변수들, 새로운 블락과 새로운블락이 이동할곳, 기존블럭과 기존블럭이 이동할곳
     public List<Block> newBlocks;
-    public List<Vector3Int> newBlocksPos;
-    public List<Vector3Int> allBlockTarget;
+    public List<Vector3> newBlocksPos;
+    public List<Block> notNewBlocks;
+    public List<Vector3> notNewBlocksPos;
     
     void Start()
     {
@@ -36,18 +37,28 @@ public class Spawn : MonoBehaviour
         }
     }
 
-    public void SpawnForEmptyPlace(List<Vector3> emptyPlace)
+    public void SpawnForEmptyPlace()
     {
         var grid = Map.Instance.tilemap.GetComponentInParent<Grid>();
-        for (int i = 0; i < emptyPlace.Count; i++)
+        for (int i = 0; i < Map.Instance.newBlockSpawnPos.Count; i++)
         {
-            var cellCoord = grid.WorldToCell(emptyPlace[i]);
-            var cubeCoord = Util.UnityCellToCube(cellCoord);
-            var random = Random.Range(0, Map.Instance.gameConfig.BlockNumber);
-            var block = Instantiate(allKindsOfBlock[random], emptyPlace[i], Quaternion.identity);
-            block.transform.SetParent(blockBase);
+            var howManyNeedToSpawn = Map.Instance.CountNullPlace(Map.Instance.newBlockSpawnPos[i]);
+            Debug.Log(i + "번 줄은 " + howManyNeedToSpawn + "개 생성해야됨");
+            for (int j = 0; j < howManyNeedToSpawn; j++)
+            {
+                var cellCoord = grid.CellToLocal(Util.CubeToUnityCell(Map.Instance.newBlockSpawnPos[i] + new Vector3Int(0,-1,1) * j));
+                Debug.Log(cellCoord);
+                var random = Random.Range(0, Map.Instance.gameConfig.BlockNumber);
+                var block = Instantiate(allKindsOfBlock[random], cellCoord, Quaternion.identity);
+                
+                newBlocks.Add(block);
+                newBlocksPos.Add(grid.CellToLocal(Util.CubeToUnityCell(Map.Instance.newBlockSpawnPos[i] + new Vector3Int(0,1,-1) * (howManyNeedToSpawn + j))));
+                
+                block.transform.SetParent(blockBase);
+            }
         }
     }
+    
     
     /*public void CreateNewBlockForEmptyPlaceAndCheckTarget()
     {
@@ -70,6 +81,24 @@ public class Spawn : MonoBehaviour
             }
         }
     }*/
+
+    public void MoveAllBlock()
+    {
+        var grid = Map.Instance.tilemap.GetComponentInParent<Grid>();
+        Dictionary<Vector3Int, Block>.KeyCollection keys = Map.Instance.BlockPlace.Keys;
+        
+        foreach (Vector3Int key in keys)
+        {
+            var moveCount = Map.Instance.CountNullPlace(key);
+            if (moveCount != 0)
+            {
+                notNewBlocks.Add(Map.Instance.BlockPlace[key]);
+                notNewBlocksPos.Add(grid.CellToLocal(Util.CubeToUnityCell(key)));
+            }
+            
+            
+        }
+    }
     
     
 }

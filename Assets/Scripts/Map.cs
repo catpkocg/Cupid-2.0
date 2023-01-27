@@ -20,11 +20,20 @@ public class Map : MonoSingleton<Map>
     public List<Vector3> canSpwanPlace = new List<Vector3>();
     public Dictionary<Vector3Int, Block> BlockPlace = new Dictionary<Vector3Int, Block>();
 
+    public List<Vector3Int> newBlockSpawnPos;
+
     protected override void Awake()
     {
         var newMap = Instantiate(mapList[gameConfig.StageLevel], transform.position, Quaternion.identity);
         var presentTile = newMap.GetComponentInChildren<Tilemap>();
         tilemap = presentTile;
+        newBlockSpawnPos = new List<Vector3Int>()
+        {
+        new Vector3Int(-3, -1, 4), new Vector3Int(-2, -2, 4), new Vector3Int(-1, -3, 4),
+        new Vector3Int(0, -4, 4), new Vector3Int(1, -4, 3), new Vector3Int(2, -4, 2),
+        new Vector3Int(3, -4, 1)
+
+        };
     }
 
     void Start()
@@ -47,7 +56,8 @@ public class Map : MonoSingleton<Map>
                 }
             }
         }
-        cam.transform.GetComponent<Camera>().orthographicSize = tilemap.cellBounds.xMax - tilemap.cellBounds.xMin;
+
+        cam.transform.GetComponent<Camera>().orthographicSize = 6f; //tilemap.cellBounds.xMax - tilemap.cellBounds.xMin;
     }
 
     public void DeleteBlockList(List<Block> sameBlockList)
@@ -117,5 +127,26 @@ public class Map : MonoSingleton<Map>
         }
         return sameBlockList;
     }
+
+    public int CountNullPlace(Vector3Int wantToCheckPos)
+    {
+        var nullCount = 0;
+        var targetPos = wantToCheckPos + new Vector3Int(0, 1, -1);
+        var tilePos = Util.CubeToUnityCell(targetPos);
+        //Debug.Log(targetPos);
+        while (tilemap.HasTile(tilePos))
+        {
+            //Debug.Log(targetPos);
+            if (BlockPlace[targetPos] == null)
+            {
+                nullCount++;
+            }
+            targetPos += new Vector3Int(0, 1, -1);
+            tilePos = Util.CubeToUnityCell(targetPos);
+        }
+        return nullCount;
+    }
+    
+    
     
 }

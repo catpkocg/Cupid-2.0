@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    [SerializeField] private Spawn spawnAndDelete;
+    [SerializeField] private Spawn spawn;
     [SerializeField] private Interaction interaction;
     [SerializeField] private TextMeshProUGUI scoreText;
     public int score;
@@ -24,6 +24,12 @@ public class GameManager : MonoBehaviour
         if (Input.GetMouseButtonDown(0))
         {
             HitPoint();
+            //State = States.CreateNewBlock;
+        }
+
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            spawn.MoveAllBlock();
         }
         
         switch (State)
@@ -36,7 +42,7 @@ public class GameManager : MonoBehaviour
                 State = States.CreateNewBlock;
                 break;
             case States.CreateNewBlock:
-                //spawnAndDelete.CreateNewBlockForEmptyPlaceAndCheckTarget();
+                //spawn.SpawnForEmptyPlace();
                 State = States.CheckTarget;
                 break;
             case States.CheckTarget:
@@ -72,6 +78,9 @@ public class GameManager : MonoBehaviour
             var clickBlock = Map.Instance.BlockPlace[blockPos];
             var clickBlockNeighbor = Map.Instance.FindAllNearSameValue(clickBlock);
             Map.Instance.DeleteBlockList(clickBlockNeighbor);
+            //Debug.Log(Map.Instance.CountNullPlace(blockPos));
+            
+            spawn.SpawnForEmptyPlace();
         }
     }
     
