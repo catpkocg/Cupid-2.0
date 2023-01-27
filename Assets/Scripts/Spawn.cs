@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using Wayway.Engine;
 
 public class Spawn : MonoBehaviour
 {
@@ -85,9 +86,9 @@ public class Spawn : MonoBehaviour
     public void MoveAllBlock()
     {
         var grid = Map.Instance.tilemap.GetComponentInParent<Grid>();
-        Dictionary<Vector3Int, Block>.KeyCollection keys = Map.Instance.BlockPlace.Keys;
+        //var keys = Map.Instance.BlockPlace.Keys;
         
-        foreach (Vector3Int key in keys)
+        Map.Instance.BlockPlace.Keys.ForEach(key =>
         {
             var moveCount = Map.Instance.CountNullPlace(key);
             if (moveCount != 0)
@@ -95,9 +96,7 @@ public class Spawn : MonoBehaviour
                 notNewBlocks.Add(Map.Instance.BlockPlace[key]);
                 notNewBlocksPos.Add(grid.CellToLocal(Util.CubeToUnityCell(key)));
             }
-            
-            
-        }
+        });
     }
     
     
