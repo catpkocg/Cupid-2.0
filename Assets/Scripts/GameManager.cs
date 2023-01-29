@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
+using Wayway.Engine.Singleton;
 
-public class GameManager : MonoBehaviour
+public class GameManager : MonoSingleton<GameManager>
 {
     [SerializeField] private Spawn spawn;
     [SerializeField] private Interaction interaction;
@@ -21,36 +22,36 @@ public class GameManager : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetMouseButtonDown(0))
-        {
-            HitPoint();
-            //State = States.CreateNewBlock;
-        }
+        
 
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            spawn.MoveAllBlock();
+            //spawn.MoveAllBlock();
         }
         
         switch (State)
         {
             case States.ReadyForInteraction:
-                //interaction.ClickForMerge();
+                if (Input.GetMouseButtonDown(0))
+                {
+                    HitPoint();
+                    //State = States.CreateNewBlock;
+                }
                 break;
             case States.DeleteBlock:
                 //interaction.DeleteMergedObj(interaction.sameBlocks);
                 State = States.CreateNewBlock;
                 break;
             case States.CreateNewBlock:
-                //spawn.SpawnForEmptyPlace();
+                spawn.SpawnForEmptyPlace();
                 State = States.CheckTarget;
                 break;
             case States.CheckTarget:
-                //spawnAndDelete.CheckTarget();
+                spawn.CheckTarget();
                 State = States.DownNewBlock;
                 break;
             case States.DownNewBlock:
-                //spawnAndDelete.MoveAllBlocks();
+                spawn.MoveAllDown();
                 State = States.Waiting;
                 break;
             case States.Waiting:
@@ -78,9 +79,8 @@ public class GameManager : MonoBehaviour
             var clickBlock = Map.Instance.BlockPlace[blockPos];
             var clickBlockNeighbor = Map.Instance.FindAllNearSameValue(clickBlock);
             Map.Instance.DeleteBlockList(clickBlockNeighbor);
-            //Debug.Log(Map.Instance.CountNullPlace(blockPos));
             
-            spawn.SpawnForEmptyPlace();
+            ChangeState(States.CreateNewBlock);
         }
     }
     

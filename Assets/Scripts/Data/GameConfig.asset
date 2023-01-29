@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: GameConfig
   m_EditorClassIdentifier: 
   stageLevel: 0
-  blockNumber: 3
+  blockNumber: 4

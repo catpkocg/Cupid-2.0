@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using TMPro;
 using UnityEngine;
 using Wayway.Engine;
@@ -14,10 +15,14 @@ public class Spawn : MonoBehaviour
     public List<Vector3> newBlocksPos;
     public List<Block> notNewBlocks;
     public List<Vector3> notNewBlocksPos;
+
+    public int moveCounter;
+    
     
     void Start()
     {
         SpawnBlockOnTile();
+        moveCounter = 0;
     }
     private void SpawnBlockOnTile()
     {
@@ -40,6 +45,8 @@ public class Spawn : MonoBehaviour
 
     public void SpawnForEmptyPlace()
     {
+        newBlocks = new List<Block>();
+        newBlocksPos = new List<Vector3>();
         var grid = Map.Instance.tilemap.GetComponentInParent<Grid>();
         for (int i = 0; i < Map.Instance.newBlockSpawnPos.Count; i++)
         {
@@ -47,57 +54,86 @@ public class Spawn : MonoBehaviour
             Debug.Log(i + "번 줄은 " + howManyNeedToSpawn + "개 생성해야됨");
             for (int j = 0; j < howManyNeedToSpawn; j++)
             {
-                var cellCoord = grid.CellToLocal(Util.CubeToUnityCell(Map.Instance.newBlockSpawnPos[i] + new Vector3Int(0,-1,1) * j));
+                var cellCoord = grid.CellToWorld(Util.CubeToUnityCell(Map.Instance.newBlockSpawnPos[i] + new Vector3Int(0,-1,1) * j));
                 Debug.Log(cellCoord);
                 var random = Random.Range(0, Map.Instance.gameConfig.BlockNumber);
                 var block = Instantiate(allKindsOfBlock[random], cellCoord, Quaternion.identity);
                 
                 newBlocks.Add(block);
-                newBlocksPos.Add(grid.CellToLocal(Util.CubeToUnityCell(Map.Instance.newBlockSpawnPos[i] + new Vector3Int(0,1,-1) * (howManyNeedToSpawn + j))));
+                newBlocksPos.Add(grid.CellToWorld(Util.CubeToUnityCell(Map.Instance.newBlockSpawnPos[i] + new Vector3Int(0,1,-1) * (howManyNeedToSpawn - j))));
                 
                 block.transform.SetParent(blockBase);
             }
         }
     }
-    
-    
-    /*public void CreateNewBlockForEmptyPlaceAndCheckTarget()
+    public void CheckTarget()
     {
-        newBlocks = new List<Block>();
-        newBlocksPos = new List<Vector3Int>();
-        var grid = Map.Instance.GetComponent<Grid>();
+        notNewBlocks = new List<Block>();
+        notNewBlocksPos = new List<Vector3>();
         
-        for (var j = 0; j < Map.Instance.Config.GridSize.y; j++)
-        {
-            var height = Map.Instance.Config.GridSize.x + (j % 2 == 0 ? 0 : -1);
-            var currentLineNullNum = CalCuNullNum(new Vector2Int(height, j));
-            for (var i = 0; i < currentLineNullNum; i++)
-            {
-                var random = Random.Range(0, Map.Instance.Config.BlockCount);
-                var pos = grid.GetCellCenterWorld(new Vector3Int(height+i, j, 0));
-                var block = Instantiate(threeKindsOfBlock[random], pos, Quaternion.identity);
-                newBlocks.Add(block);
-                newBlocksPos.Add(new Vector2Int((height+i) - currentLineNullNum,j));
-                block.transform.SetParent(blockBase.transform);
-            }
-        }
-    }*/
-
-    public void MoveAllBlock()
-    {
         var grid = Map.Instance.tilemap.GetComponentInParent<Grid>();
         //var keys = Map.Instance.BlockPlace.Keys;
         
         Map.Instance.BlockPlace.Keys.ForEach(key =>
         {
-            var moveCount = Map.Instance.CountNullPlace(key);
-            if (moveCount != 0)
+            if (Map.Instance.BlockPlace[key] != null)
             {
-                notNewBlocks.Add(Map.Instance.BlockPlace[key]);
-                notNewBlocksPos.Add(grid.CellToLocal(Util.CubeToUnityCell(key)));
+                var moveCount = Map.Instance.CountNullPlace(key);
+                if (moveCount != 0)
+                {
+                    notNewBlocks.Add(Map.Instance.BlockPlace[key]);
+                    notNewBlocksPos.Add(grid.CellToWorld(Util.CubeToUnityCell(key + (new Vector3Int(0, 1, -1) * moveCount))));
+                }
             }
         });
     }
+
+    public void MoveAllDown()
+    {
+        var grid = Map.Instance.tilemap.GetComponentInParent<Grid>();
+        
+        var sequenceAnim = DOTween.Sequence();
+        
+        for (int j = 0; j < notNewBlocks.Count; j++)
+        {
+            var pos = notNewBlocksPos[j];
+            var posForMap = grid.WorldToCell(pos);
+            sequenceAnim.Join(notNewBlocks[j].transform.DOMove(pos, 0.5f).SetEase(Ease.OutCubic));
+            var blockCoord = Util.UnityCellToCube(posForMap);
+            notNewBlocks[j].Coord = blockCoord;
+            notNewBlocks[j].GetComponentInChildren<TextMeshPro>().text = blockCoord.ToString();
+            Map.Instance.BlockPlace[blockCoord] = notNewBlocks[j];
+        }
+
+        for (int i = 0; i < newBlocks.Count; i++)
+        {
+            var pos = newBlocksPos[i];
+            var posForMap = grid.WorldToCell(pos);
+            sequenceAnim.Join(newBlocks[i].transform.DOMove(pos, 0.5f).SetEase(Ease.OutCubic));
+            var blockCoord = Util.UnityCellToCube(posForMap);
+            newBlocks[i].Coord = blockCoord;
+            newBlocks[i].GetComponentInChildren<TextMeshPro>().text = blockCoord.ToString();
+            Map.Instance.BlockPlace[blockCoord] = newBlocks[i];
+        }
+
+        moveCounter++;
+        
+        sequenceAnim.OnComplete(ChangeStatesForMove);
+    }
     
+    public void ChangeStatesForMove()
+    {
+        GameManager.Instance.State = States.ReadyForInteraction;
+    }
+
+    private void MoveNewBlock()
+    {
+        
+    }
+
+    private void MoveNotNewBlock()
+    {
+        
+    }
     
 }
