@@ -26,21 +26,26 @@ public class GameManager : MonoSingleton<GameManager>
 
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            //spawn.MoveAllBlock();
+            
         }
-        
+
         switch (State)
         {
             case States.ReadyForInteraction:
-                if (Input.GetMouseButtonDown(0))
-                {
-                    HitPoint();
-                    //State = States.CreateNewBlock;
-                }
+                //Map.Instance.MakeListForFindDir();
+                Map.Instance.DrawDirectionOnBlock();
+                //State = States.DeleteBlock;
                 break;
             case States.DeleteBlock:
-                //interaction.DeleteMergedObj(interaction.sameBlocks);
-                State = States.CreateNewBlock;
+                //Debug.Log("이거 들어옴?");
+                if (Input.GetMouseButtonDown(0))
+                {
+                    
+                    Map.Instance.DeleteAllDraw();
+                    
+                    HitPoint();
+                    
+                }
                 break;
             case States.CreateNewBlock:
                 spawn.SpawnForEmptyPlace();
@@ -78,7 +83,16 @@ public class GameManager : MonoSingleton<GameManager>
             var blockPos = Util.UnityCellToCube(cellCoord);
             var clickBlock = Map.Instance.BlockPlace[blockPos];
             var clickBlockNeighbor = Map.Instance.FindAllNearSameValue(clickBlock);
+
+            if (clickBlock.specialValue != 0)
+            {
+                
+            }
+            
+            
+            
             Map.Instance.DeleteBlockList(clickBlockNeighbor);
+            
             
             ChangeState(States.CreateNewBlock);
         }

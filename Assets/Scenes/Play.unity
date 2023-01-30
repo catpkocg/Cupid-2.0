@@ -1006,9 +1006,9 @@ MonoBehaviour:
   mapList:
   - {fileID: 170450543494263230, guid: dde4004c384cf2d48bf5ea05bbe6dfe1, type: 3}
   cam: {fileID: 230045247}
+  neighborPos: {fileID: 11400000, guid: 5363a2dc384001c4b9d4c514e2e37576, type: 2}
   tilemap: {fileID: 0}
   gameConfig: {fileID: 11400000, guid: 846f0790370180f45b02758e251b7915, type: 2}
-  neighborPos: {fileID: 11400000, guid: 5363a2dc384001c4b9d4c514e2e37576, type: 2}
   canSpwanPlace: []
   newBlockSpawnPos:
   - {x: 0, y: 0, z: 0}
@@ -1762,19 +1762,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   allKindsOfBlock:
-  - {fileID: 674540548372489643, guid: f9d79fb68e9fee147a9b12d1e3a034d9, type: 3}
-  - {fileID: 1713019916541183698, guid: d7136c2b4f0a68143be21749708e73be, type: 3}
-  - {fileID: 3991849772135740691, guid: e31ece8a095bcc643949cae6efbc65a4, type: 3}
-  - {fileID: 6477139086500871367, guid: f2d3aa1f7de9e944689c32f82c294f51, type: 3}
-  - {fileID: 6727935113405640936, guid: 9d59ccca171b35f4d995c008dfc4671c, type: 3}
-  - {fileID: 2420026022375827273, guid: 5aafd5b2f88715543b48ce596c8af45e, type: 3}
-  - {fileID: 4781419599595756695, guid: 13539cc7d13483a4a9ab228d165ef3f9, type: 3}
-  - {fileID: 8610779722483948885, guid: 9b6186ff8b42e214691b35ea01b32ce0, type: 3}
-  blockBase: {fileID: 62153274}
+  - {fileID: 8018565970626862894, guid: 918a8f0f5937a1743a47eed9e58c68d5, type: 3}
+  - {fileID: 8018565970626862894, guid: db4356df6a6432c46b7e84253d9f5794, type: 3}
+  - {fileID: 8018565970626862894, guid: f97fe4c9f4776af46943a854afb1dbf3, type: 3}
+  - {fileID: 8018565970626862894, guid: 3c42840bbf1039f40a60f21f0a270e31, type: 3}
+  - {fileID: 8018565970626862894, guid: 61868b72d73ba0e46a9a5f99ce4200fb, type: 3}
+  - {fileID: 8018565970626862894, guid: 5e952200ee50664499eaf3c4fe57d70e, type: 3}
+  - {fileID: 8018565970626862894, guid: f35c34863c0f59d489f7b9328508f31b, type: 3}
+  - {fileID: 8018565970626862894, guid: 9b26e6b50d33b564ba981737096bfaa9, type: 3}
+  blockBase: {fileID: 62153275}
+  gameConfig: {fileID: 11400000, guid: 846f0790370180f45b02758e251b7915, type: 2}
   newBlocks: []
   newBlocksPos: []
   notNewBlocks: []
   notNewBlocksPos: []
+  moveCounter: 0
 --- !u!1 &1868234340
 GameObject:
   m_ObjectHideFlags: 0

@@ -9,6 +9,10 @@ public class Spawn : MonoBehaviour
 {
     [SerializeField] private List<Block> allKindsOfBlock;
     [SerializeField] private Transform blockBase;
+    [SerializeField] private GameConfig gameConfig;
+    [SerializeField] private List<Block> specialOne;
+    [SerializeField] private Block specialTwo;
+     
     
     //이동을 위한 변수들, 새로운 블락과 새로운블락이 이동할곳, 기존블럭과 기존블럭이 이동할곳
     public List<Block> newBlocks;
@@ -24,6 +28,23 @@ public class Spawn : MonoBehaviour
         SpawnBlockOnTile();
         moveCounter = 0;
     }
+    
+
+    public void SpawnSpecialOneBlock(Vector3 putPos, int dir)
+    {
+        var specialBlock = Instantiate(specialOne[dir], putPos, Quaternion.identity);
+        
+        
+    }
+
+    public void SpawnSpecialTwoBlock(Vector3 putPos)
+    {
+        var specialBlock = Instantiate(specialTwo, putPos, Quaternion.identity);
+        
+    }
+    
+    
+    
     private void SpawnBlockOnTile()
     {
         
@@ -42,6 +63,7 @@ public class Spawn : MonoBehaviour
             Map.Instance.BlockPlace.Add(cubeCoord,block);
         }
     }
+    
 
     public void SpawnForEmptyPlace()
     {
@@ -98,7 +120,7 @@ public class Spawn : MonoBehaviour
         {
             var pos = notNewBlocksPos[j];
             var posForMap = grid.WorldToCell(pos);
-            sequenceAnim.Join(notNewBlocks[j].transform.DOMove(pos, 0.5f).SetEase(Ease.OutCubic));
+            sequenceAnim.Join(notNewBlocks[j].transform.DOMove(pos, gameConfig.AnimationSpeed).SetEase(gameConfig.EasyType));
             var blockCoord = Util.UnityCellToCube(posForMap);
             notNewBlocks[j].Coord = blockCoord;
             notNewBlocks[j].GetComponentInChildren<TextMeshPro>().text = blockCoord.ToString();
@@ -109,7 +131,7 @@ public class Spawn : MonoBehaviour
         {
             var pos = newBlocksPos[i];
             var posForMap = grid.WorldToCell(pos);
-            sequenceAnim.Join(newBlocks[i].transform.DOMove(pos, 0.5f).SetEase(Ease.OutCubic));
+            sequenceAnim.Join(newBlocks[i].transform.DOMove(pos, gameConfig.AnimationSpeed).SetEase(gameConfig.EasyType));
             var blockCoord = Util.UnityCellToCube(posForMap);
             newBlocks[i].Coord = blockCoord;
             newBlocks[i].GetComponentInChildren<TextMeshPro>().text = blockCoord.ToString();
@@ -123,17 +145,9 @@ public class Spawn : MonoBehaviour
     
     public void ChangeStatesForMove()
     {
+        Debug.Log("움직임 끝남");
         GameManager.Instance.State = States.ReadyForInteraction;
     }
 
-    private void MoveNewBlock()
-    {
-        
-    }
-
-    private void MoveNotNewBlock()
-    {
-        
-    }
     
 }

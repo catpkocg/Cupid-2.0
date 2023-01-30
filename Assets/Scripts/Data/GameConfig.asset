@@ -14,3 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   stageLevel: 0
   blockNumber: 4
+  animationSpeed: 0.75
+  specialBlock1Condition: 5
+  specialBlock2Condition: 7
+  easyType: 12

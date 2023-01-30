@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.Tilemaps;
@@ -12,15 +13,16 @@ public class Map : MonoSingleton<Map>
     [SerializeField] private Transform backGround;
     [SerializeField] private List<GameObject> mapList;
     [SerializeField] private Camera cam;
-
+    [SerializeField] private NeighborPos neighborPos;
+    
     public Tilemap tilemap;
     public GameConfig gameConfig;
-    public NeighborPos neighborPos;
+    
     
     public List<Vector3> canSpwanPlace = new List<Vector3>();
     public Dictionary<Vector3Int, Block> BlockPlace = new Dictionary<Vector3Int, Block>();
-
     public List<Vector3Int> newBlockSpawnPos;
+    private List<Block> allBlockForCheckDir;
 
     protected override void Awake()
     {
@@ -32,7 +34,6 @@ public class Map : MonoSingleton<Map>
         new Vector3Int(-3, -1, 4), new Vector3Int(-2, -2, 4), new Vector3Int(-1, -3, 4),
         new Vector3Int(0, -4, 4), new Vector3Int(1, -4, 3), new Vector3Int(2, -4, 2),
         new Vector3Int(3, -4, 1)
-
         };
     }
 
@@ -59,6 +60,14 @@ public class Map : MonoSingleton<Map>
 
         cam.transform.GetComponent<Camera>().orthographicSize = 6f; //tilemap.cellBounds.xMax - tilemap.cellBounds.xMin;
     }
+    
+    // 모든 블럭을 훑는 리스트 생성, 딕셔너리에 있는 거 다 삽입
+    //모든 블럭을 한번씩 훑는다. gameconfig.specialblock 2 number 인지 확인, 그리고 specialblock 1 인지 확인
+    
+    // 2인경우는 모든 블럭 이미지 2 number을 생성한다. 1 인경우는 모든 블럭에 이미지 1 number를 생성한다.
+    // 훑은 블럭은 리스트에서 빼준다.
+    
+    
 
     public void DeleteBlockList(List<Block> sameBlockList)
     {
@@ -67,7 +76,7 @@ public class Map : MonoSingleton<Map>
             DeleteBlock(sameBlockList[i].Coord);
         }
     }
-
+    
     public void DeleteBlock(Vector3Int clickPos)
     {
         Destroy(BlockPlace[clickPos].gameObject);
@@ -147,25 +156,193 @@ public class Map : MonoSingleton<Map>
         return nullCount;
     }
     
-    
-    
-    public void DrawSpecialBlockCanSpawn()
+    public void MakeListForFindDir()
     {
-        // 모든 블럭 리스트
-        // 리스트에서 하나씩 붙어있는 블럭을 빼줌
+        allBlockForCheckDir= new List<Block>();
+        var grid = Map.Instance.tilemap.GetComponentInParent<Grid>();
         
-        // 만약 블럭붙어있는 개수가 7개 이상이면 모든블럭 터뜨리는 블럭을 랜덤으로 생성
-        
-        // 만약 붙어있는 개수가 5개 이상 6개 미만 이면 한줄다 터지는 블럭 생성가능
+        BlockPlace.Values.ForEach(value =>
+        {
+            allBlockForCheckDir.Add(value);
+        });
+    }
 
+    public void DrawDirectionOnBlock()
+    {
+        MakeListForFindDir();
         
+        for (int i = 0; i < allBlockForCheckDir.Count; i++)
+        {
+            List<Block> sameBlock = FindAllNearSameValue(allBlockForCheckDir[i]);
+            if (sameBlock.Count >= gameConfig.SpecialBlock2Condition)
+            {
+                for (int j = 0; j < sameBlock.Count; j++)
+                {
+                    sameBlock[j].foot.SetActive(true);
+                    sameBlock[j].specialValue = (int)gameConfig.SpecialBlock2Condition;
+                }
+            }
+            else if (sameBlock.Count >= gameConfig.SpecialBlock1Condition)
+            {
+                
+                List<int> highNumDirSign = new List<int>();
+
+                List<int> allLineDif = new List<int>();
+                List<int> direction = new List<int>()
+                {
+                    1, 2, 3
+                };
+
+                List<int> allXValue = new List<int>();
+                List<int> allYValue = new List<int>();
+                List<int> allZValue = new List<int>();
+                for (int k = 0; k < sameBlock.Count; k++)
+                {
+                    allXValue.Add(sameBlock[k].Coord.x);
+                    allYValue.Add(sameBlock[k].Coord.y);
+                    allZValue.Add(sameBlock[k].Coord.z);
+                }
+                
+                allLineDif.Add(CalCulateMaxAndMinDif(allXValue));
+                allLineDif.Add(CalCulateMaxAndMinDif(allYValue));
+                allLineDif.Add(CalCulateMaxAndMinDif(allZValue));
+
+                var highValue = allLineDif.Max();
+                
+                for (int m = 0; m < allLineDif.Count; m++)
+                {
+                    if (allLineDif[m] == highValue)
+                    {
+                        highNumDirSign.Add(direction[m]);   
+                    }
+                }
+
+                if (highNumDirSign.Count > 1)
+                {
+                    
+                    highNumDirSign = new List<int>();
+                    
+                    var totalX = 0;
+                    var totalY = 0;
+                    var totalZ = 0;
+                    
+                    var xAvg = CalCulateAverage(allXValue);
+                    var yAvg = CalCulateAverage(allYValue);
+                    var zAvg = CalCulateAverage(allZValue);
+                    for (int z = 0; z < sameBlock.Count; z++)
+                    {
+                        var xAbs = Math.Abs(allXValue[z] - xAvg);
+                        var yAbs = Math.Abs(allYValue[z] - yAvg);
+                        var zAbs = Math.Abs(allZValue[z] - zAvg);
+                        totalX += xAbs;
+                        totalY += yAbs;
+                        totalZ += zAbs;
+                    }
+                    
+                    List<int> difWithAbg = new List<int>()
+                    {
+                        totalX, totalY, totalZ
+                    };
+                    
+                    var maxValue = difWithAbg.Max();
+
+                    for (int k = 0; k < difWithAbg.Count; k++)
+                    {
+                        if (difWithAbg[k] == maxValue)
+                        {
+                            highNumDirSign.Add(direction[k]);
+                        }
+                    }
+
+                    if (highNumDirSign.Count > 1)
+                    {
+                        var minValue = highNumDirSign.Min();
+                        var dirValue = 0;
+                        for (int l = 0; l < highNumDirSign.Count; l++)
+                        {
+                            if (highNumDirSign[l] == minValue)
+                            {
+                                dirValue = l;
+                            }
+                        }
+
+                        for (int j = 0; j < sameBlock.Count; j++)
+                        {
+                            sameBlock[j].dir[highNumDirSign[dirValue] - 1].SetActive(true);
+                            sameBlock[j].specialValue = highNumDirSign[dirValue];
+                        }
+                        
+                    }
+                    
+                    else
+                    {
+                        for (int j = 0; j < sameBlock.Count; j++)
+                        {
+                            sameBlock[j].dir[highNumDirSign[0] - 1].SetActive(true);
+                            sameBlock[j].specialValue = highNumDirSign[0];
+                        }
+                    
+                    }
+
+                }
+                
+                else
+                {
+                    for (int j = 0; j < sameBlock.Count; j++)
+                    {
+                        sameBlock[j].dir[highNumDirSign[0] - 1].SetActive(true);
+                        sameBlock[j].specialValue = highNumDirSign[0];
+                    }
+                }
+            }
+            
+            for (int n = 0; n < sameBlock.Count; n++)
+            {
+                allBlockForCheckDir.Remove(sameBlock[n]);
+            }
+            
+        }
         
-        
+        GameManager.Instance.ChangeState(States.DeleteBlock);
     }
     
-    // 한줄 라인 전체 지우는 공식
-    // x축이 같은 수의 블럭 개수 구함, y축이 같은 수의 블럭 개수 구함, z축이 같은 수의 블럭 개수 구함
-    // 제의 큰수의 축방향으로 삭제되는 특수블럭 생성, 만약에 제일 큰수의 값이 같으면 같은 방향 모두 삭제하는 블럭 생성
-    
+
+    private int CalCulateMaxAndMinDif(List<int> allNum)
+    {
+        var min = allNum.Min();
+        var max = allNum.Max();
+
+        var amount = max - min;
+
+        return amount;
+    }
+
+    private int CalCulateAverage(List<int> allNum)
+    {
+        int Sum = allNum.Sum();
+        int Average = Sum / allNum.Count;
+
+        return Average;
+    }
+
+    public void DeleteAllDraw()
+    {
+        allBlockForCheckDir= new List<Block>();
+        
+        BlockPlace.Values.ForEach(value =>
+        {
+            allBlockForCheckDir.Add(value);
+        });
+        
+        for (int i = 0; i < allBlockForCheckDir.Count; i++)
+        {
+            for (int j = 0; j < allBlockForCheckDir[i].dir.Count; j++)
+            {
+                allBlockForCheckDir[i].dir[j].SetActive(false);
+            }
+            allBlockForCheckDir[i].foot.SetActive(false);
+            allBlockForCheckDir[i].specialValue = 0;
+        }
+    }
     
 }
