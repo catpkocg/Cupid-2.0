@@ -1772,6 +1772,19 @@ MonoBehaviour:
   - {fileID: 8018565970626862894, guid: 9b26e6b50d33b564ba981737096bfaa9, type: 3}
   blockBase: {fileID: 62153275}
   gameConfig: {fileID: 11400000, guid: 846f0790370180f45b02758e251b7915, type: 2}
+  specialOne:
+  - {fileID: 674540548372489643, guid: 1480c8467b92f9143b52d2fa7c11b9e8, type: 3}
+  - {fileID: 674540548372489643, guid: 07c8d886a8f70c34f940aeccf985d57b, type: 3}
+  - {fileID: 674540548372489643, guid: 1ac0bd213f79eeb49b8dfec4d7b43eaf, type: 3}
+  specialTwo:
+  - {fileID: 239693368650675713, guid: da46616c9f0f4f34bbcff06ed548357c, type: 3}
+  - {fileID: 239693368650675713, guid: 04d551e0b36405a42a3423b3bc2bb3f8, type: 3}
+  - {fileID: 239693368650675713, guid: e0d8c773c97ed1d498355b1c797b7ecd, type: 3}
+  - {fileID: 239693368650675713, guid: 7312b90dae8d92f4782b2cef65fcf40f, type: 3}
+  - {fileID: 239693368650675713, guid: 36cc9589e9a91e4468bba71a29f3cb92, type: 3}
+  - {fileID: 239693368650675713, guid: dbb8b6b88eecf3744a52e36f15055bec, type: 3}
+  - {fileID: 239693368650675713, guid: 42a75930b12e8ac4c8f31bf538683a46, type: 3}
+  - {fileID: 239693368650675713, guid: 977a6932499584943bd07052161d3a4a, type: 3}
   newBlocks: []
   newBlocksPos: []
   notNewBlocks: []

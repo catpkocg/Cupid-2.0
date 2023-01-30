@@ -11,7 +11,7 @@ public class Spawn : MonoBehaviour
     [SerializeField] private Transform blockBase;
     [SerializeField] private GameConfig gameConfig;
     [SerializeField] private List<Block> specialOne;
-    [SerializeField] private Block specialTwo;
+    [SerializeField] private List<Block> specialTwo;
      
     
     //이동을 위한 변수들, 새로운 블락과 새로운블락이 이동할곳, 기존블럭과 기존블럭이 이동할곳
@@ -32,14 +32,30 @@ public class Spawn : MonoBehaviour
 
     public void SpawnSpecialOneBlock(Vector3 putPos, int dir)
     {
+        var grid = Map.Instance.tilemap.GetComponentInParent<Grid>();
+        
+        var cellCoord = grid.WorldToCell(putPos);
+        var cubeCoord = Util.UnityCellToCube(cellCoord);
         var specialBlock = Instantiate(specialOne[dir], putPos, Quaternion.identity);
-        
-        
+        specialBlock.transform.SetParent(blockBase);
+        specialBlock.Coord = cubeCoord;
+        Map.Instance.BlockPlace.Add(cubeCoord,specialBlock);
     }
 
     public void SpawnSpecialTwoBlock(Vector3 putPos)
     {
-        var specialBlock = Instantiate(specialTwo, putPos, Quaternion.identity);
+        var grid = Map.Instance.tilemap.GetComponentInParent<Grid>();
+        
+        var cellCoord = grid.WorldToCell(putPos);
+        var cubeCoord = Util.UnityCellToCube(cellCoord);
+        
+        var random = Random.Range(0, Map.Instance.gameConfig.BlockNumber);
+        var specialBlock = Instantiate(specialTwo[random], putPos, Quaternion.identity);
+        specialBlock.transform.SetParent(blockBase);
+        
+        specialBlock.Coord = cubeCoord;
+        Map.Instance.BlockPlace.Add(cubeCoord,specialBlock);
+        
         
     }
     

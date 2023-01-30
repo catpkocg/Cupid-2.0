@@ -40,10 +40,10 @@ public class GameManager : MonoSingleton<GameManager>
                 //Debug.Log("이거 들어옴?");
                 if (Input.GetMouseButtonDown(0))
                 {
-                    
+                    HitPoint();
                     Map.Instance.DeleteAllDraw();
                     
-                    HitPoint();
+                    
                     
                 }
                 break;
@@ -84,17 +84,47 @@ public class GameManager : MonoSingleton<GameManager>
             var clickBlock = Map.Instance.BlockPlace[blockPos];
             var clickBlockNeighbor = Map.Instance.FindAllNearSameValue(clickBlock);
 
+            var tilePos = Util.CubeToUnityCell(blockPos);
+            var putPos = grid.CellToWorld(tilePos);
+            
+            
+            var block = clickBlock;
+            
+            Debug.Log(block.specialValue);
+            
             if (clickBlock.specialValue != 0)
             {
-                
+                Debug.Log("0이아님");
+                if (clickBlock.value == 11)
+                {
+                    Map.Instance.DeleteBlockList(clickBlockNeighbor);
+                    spawn.SpawnSpecialOneBlock(putPos, clickBlock.value);
+                }
+                else if (clickBlock.value > 0)
+                {
+                    Map.Instance.DeleteBlockList(clickBlockNeighbor);
+                    spawn.SpawnSpecialTwoBlock(putPos);
+                }
+                else
+                {
+                    Debug.Log("Nothing");
+                }
+            }
+            else
+            {
+                if (clickBlockNeighbor.Count > 1)
+                {
+                    Map.Instance.DeleteBlockList(clickBlockNeighbor);
+
+                    ChangeState(States.CreateNewBlock);
+                }
+                else
+                {
+                    Debug.Log("한개짜리 못터뜨림");
+                }
             }
             
             
-            
-            Map.Instance.DeleteBlockList(clickBlockNeighbor);
-            
-            
-            ChangeState(States.CreateNewBlock);
         }
     }
     
