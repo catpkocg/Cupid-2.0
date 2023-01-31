@@ -76,12 +76,71 @@ public class Map : MonoSingleton<Map>
             DeleteBlock(sameBlockList[i].Coord);
         }
     }
+
+    public void DeleteLineBlock(Vector3Int clickPos, int line)
+    {
+
+        List<Block> mustDeleteBlocks = new List<Block>();
+        
+        if (line == 0)
+        {
+            BlockPlace.Keys.ForEach(keys =>
+            {
+                if (keys.x == clickPos.x)
+                {
+                    mustDeleteBlocks.Add(BlockPlace[keys]);
+                }
+            });
+        }
+        else if (line == 1)
+        {
+            BlockPlace.Keys.ForEach(keys =>
+            {
+                if (keys.y == clickPos.y)
+                {
+                    mustDeleteBlocks.Add(BlockPlace[keys]);
+                }
+            });
+        }
+        else
+        {
+            BlockPlace.Keys.ForEach(keys =>
+            {
+                if (keys.z == clickPos.z)
+                {
+                    mustDeleteBlocks.Add(BlockPlace[keys]);
+                }
+                
+            });
+        }
+        
+        DeleteBlockList(mustDeleteBlocks);
+    }
+
+
+    public void DeleteSameColor(Vector3Int clickPos, int value)
+    {
+        List<Block> mustDeleteBlocks = new List<Block>();
+        
+        BlockPlace.Keys.ForEach(keys =>
+        {
+            if (BlockPlace[keys].value == value)
+            {
+                mustDeleteBlocks.Add(BlockPlace[keys]);
+            }
+                
+        });
+        
+        DeleteBlockList(mustDeleteBlocks);
+        DeleteBlock(clickPos);
+    }
+    
     
     public void DeleteBlock(Vector3Int clickPos)
     {
         Destroy(BlockPlace[clickPos].gameObject);
         BlockPlace[clickPos] = null;
-        Debug.Log(BlockPlace.Count);
+        //Debug.Log(BlockPlace.Count);
     }
 
     public List<Block> FindAllNearSameValue(Block block)
@@ -159,7 +218,7 @@ public class Map : MonoSingleton<Map>
     public void MakeListForFindDir()
     {
         allBlockForCheckDir= new List<Block>();
-        var grid = Map.Instance.tilemap.GetComponentInParent<Grid>();
+        //var grid = Map.Instance.tilemap.GetComponentInParent<Grid>();
         
         BlockPlace.Values.ForEach(value =>
         {
@@ -169,11 +228,16 @@ public class Map : MonoSingleton<Map>
 
     public void DrawDirectionOnBlock()
     {
+        
         MakeListForFindDir();
+        
         
         for (int i = 0; i < allBlockForCheckDir.Count; i++)
         {
-            List<Block> sameBlock = FindAllNearSameValue(allBlockForCheckDir[i]);
+            if (allBlockForCheckDir[i].specialValue < gameConfig.SpecialBlock1Condition)
+            {
+                List<Block> sameBlock = FindAllNearSameValue(allBlockForCheckDir[i]);
+                
             if (sameBlock.Count >= gameConfig.SpecialBlock2Condition)
             {
                 for (int j = 0; j < sameBlock.Count; j++)
@@ -296,12 +360,15 @@ public class Map : MonoSingleton<Map>
                 }
             }
             
-            for (int n = 0; n < sameBlock.Count; n++)
-            {
-                allBlockForCheckDir.Remove(sameBlock[n]);
+                for (int n = 0; n < sameBlock.Count; n++)
+                {
+                    allBlockForCheckDir.Remove(sameBlock[n]);
+                }
+            
             }
             
         }
+        
         
         GameManager.Instance.ChangeState(States.DeleteBlock);
     }
@@ -331,18 +398,29 @@ public class Map : MonoSingleton<Map>
         
         BlockPlace.Values.ForEach(value =>
         {
-            allBlockForCheckDir.Add(value);
+            if (value != null && value.value < 10)
+            {
+                allBlockForCheckDir.Add(value);
+            }
+            
         });
         
+        
         for (int i = 0; i < allBlockForCheckDir.Count; i++)
-        {
+        { 
             for (int j = 0; j < allBlockForCheckDir[i].dir.Count; j++)
             {
                 allBlockForCheckDir[i].dir[j].SetActive(false);
             }
+            
             allBlockForCheckDir[i].foot.SetActive(false);
             allBlockForCheckDir[i].specialValue = 0;
+            
+            
         }
+        
+        //DrawDirectionOnBlock();
+        GameManager.Instance.ChangeState(States.CreateNewBlock);
     }
     
 }

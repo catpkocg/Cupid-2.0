@@ -11,6 +11,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SpecialTwo Variant 2
       objectReference: {fileID: 0}
+    - target: {fileID: 674540548372489643, guid: 54deba85d87712047802d30f244cc37e, type: 3}
+      propertyPath: value
+      value: 12
+      objectReference: {fileID: 0}
     - target: {fileID: 6653552941363074704, guid: 54deba85d87712047802d30f244cc37e, type: 3}
       propertyPath: m_RootOrder
       value: 0

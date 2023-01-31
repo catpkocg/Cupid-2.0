@@ -36,10 +36,19 @@ public class Spawn : MonoBehaviour
         
         var cellCoord = grid.WorldToCell(putPos);
         var cubeCoord = Util.UnityCellToCube(cellCoord);
-        var specialBlock = Instantiate(specialOne[dir], putPos, Quaternion.identity);
+        Debug.Log(specialOne.Count + " 왜 길이가 짧아????????");
+        var specialBlock = Instantiate(specialOne[dir-1], putPos, Quaternion.identity);
         specialBlock.transform.SetParent(blockBase);
         specialBlock.Coord = cubeCoord;
-        Map.Instance.BlockPlace.Add(cubeCoord,specialBlock);
+        specialBlock.specialValue = (int)gameConfig.SpecialBlock1Condition + dir;
+        
+        Map.Instance.BlockPlace[cubeCoord] = specialBlock;
+        
+        for (int i = 0; i < specialBlock.dir.Count; i++)
+        {
+            specialBlock.dir[i] = null;
+        }
+        specialBlock.foot = null;
     }
 
     public void SpawnSpecialTwoBlock(Vector3 putPos)
@@ -52,10 +61,17 @@ public class Spawn : MonoBehaviour
         var random = Random.Range(0, Map.Instance.gameConfig.BlockNumber);
         var specialBlock = Instantiate(specialTwo[random], putPos, Quaternion.identity);
         specialBlock.transform.SetParent(blockBase);
-        
+
+        specialBlock.specialValue = (int)gameConfig.SpecialBlock2Condition;
         specialBlock.Coord = cubeCoord;
-        Map.Instance.BlockPlace.Add(cubeCoord,specialBlock);
+        Map.Instance.BlockPlace[cubeCoord] = specialBlock;
         
+        for (int i = 0; i < specialBlock.dir.Count; i++)
+        {
+            specialBlock.dir[i] = null;
+        }
+
+        specialBlock.foot = null;
         
     }
     
@@ -162,7 +178,8 @@ public class Spawn : MonoBehaviour
     public void ChangeStatesForMove()
     {
         Debug.Log("움직임 끝남");
-        GameManager.Instance.State = States.ReadyForInteraction;
+        Map.Instance.DrawDirectionOnBlock();
+        GameManager.Instance.State = States.DeleteBlock;
     }
 
     
