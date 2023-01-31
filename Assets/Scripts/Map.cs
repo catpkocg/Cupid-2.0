@@ -24,6 +24,13 @@ public class Map : MonoSingleton<Map>
     public List<Vector3Int> newBlockSpawnPos;
     private List<Block> allBlockForCheckDir;
 
+    
+    // material 생성
+    // 이미지를 material - Albedo에 넣기
+    // Material Shader 를 Sprites default로 변경
+    // 그리고 그거 사용
+    
+    
     protected override void Awake()
     {
         var newMap = Instantiate(mapList[gameConfig.StageLevel], transform.position, Quaternion.identity);
