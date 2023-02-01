@@ -31,6 +31,7 @@ public class Interaction : MonoBehaviour
             if (clickBlock.value >= 20)
             {
                 Map.Instance.DeleteAllDraw();
+                
                 if (clickBlock.value - 20 == 0)
                 {
                     Map.Instance.DeleteLineBlock(blockPos, 0);
@@ -38,7 +39,6 @@ public class Interaction : MonoBehaviour
                 }
                 else if (clickBlock.value - 20 == 1)
                 {
-                    //y 라인 같은거 전부다 삭제
                     Map.Instance.DeleteLineBlock(blockPos, 1);
                    
                 }

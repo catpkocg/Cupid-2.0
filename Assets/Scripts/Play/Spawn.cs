@@ -10,9 +10,13 @@ public class Spawn : MonoBehaviour
     [SerializeField] private List<Block> allKindsOfBlock;
     [SerializeField] private Transform blockBase;
     [SerializeField] private GameConfig gameConfig;
+    [SerializeField] private GameObject iceBlock;
+    [SerializeField] private GameObject boxBlock;
     [SerializeField] private List<Block> specialOne;
     [SerializeField] private List<Block> specialTwo;
-     
+    
+    //아이스 블럭의 value 는 66으로 한다.
+    //박스 블럭의 value 는 77로 한다.
     
     //이동을 위한 변수들, 새로운 블락과 새로운블락이 이동할곳, 기존블럭과 기존블럭이 이동할곳
     public List<Block> newBlocks;
@@ -22,14 +26,13 @@ public class Spawn : MonoBehaviour
 
     public int moveCounter;
     
-    
     void Start()
     {
+        Map.Instance.FindCanPutTile();
         SpawnBlockOnTile();
         moveCounter = 0;
     }
     
-
     public void SpawnSpecialOneBlock(Vector3 putPos, int dir)
     {
         var grid = Map.Instance.tilemap.GetComponentInParent<Grid>();
@@ -50,7 +53,6 @@ public class Spawn : MonoBehaviour
         }
         specialBlock.foot = null;
     }
-
     public void SpawnSpecialTwoBlock(Vector3 putPos)
     {
         var grid = Map.Instance.tilemap.GetComponentInParent<Grid>();
@@ -74,52 +76,6 @@ public class Spawn : MonoBehaviour
         specialBlock.foot = null;
         
     }
-    
-    
-    
-    private void SpawnBlockOnTile()
-    {
-        
-        var grid = Map.Instance.tilemap.GetComponentInParent<Grid>();
-        
-        for (int i = 0; i < Map.Instance.canSpwanPlace.Count; i++)
-        {
-            var cellCoord = grid.WorldToCell(Map.Instance.canSpwanPlace[i]);
-            var cubeCoord = Util.UnityCellToCube(cellCoord);
-            var random = Random.Range(0, Map.Instance.gameConfig.BlockNumber);
-            var block = Instantiate(allKindsOfBlock[random], Map.Instance.canSpwanPlace[i], Quaternion.identity);
-            block.transform.SetParent(blockBase);
-            
-            block.GetComponentInChildren<TextMeshPro>().text = cubeCoord.ToString();
-            block.Coord = cubeCoord;
-            Map.Instance.BlockPlace.Add(cubeCoord,block);
-        }
-    }
-    
-
-    public void SpawnForEmptyPlace()
-    {
-        newBlocks = new List<Block>();
-        newBlocksPos = new List<Vector3>();
-        var grid = Map.Instance.tilemap.GetComponentInParent<Grid>();
-        for (int i = 0; i < Map.Instance.newBlockSpawnPos.Count; i++)
-        {
-            var howManyNeedToSpawn = Map.Instance.CountNullPlace(Map.Instance.newBlockSpawnPos[i]);
-            Debug.Log(i + "번 줄은 " + howManyNeedToSpawn + "개 생성해야됨");
-            for (int j = 0; j < howManyNeedToSpawn; j++)
-            {
-                var cellCoord = grid.CellToWorld(Util.CubeToUnityCell(Map.Instance.newBlockSpawnPos[i] + new Vector3Int(0,-1,1) * j));
-                Debug.Log(cellCoord);
-                var random = Random.Range(0, Map.Instance.gameConfig.BlockNumber);
-                var block = Instantiate(allKindsOfBlock[random], cellCoord, Quaternion.identity);
-                
-                newBlocks.Add(block);
-                newBlocksPos.Add(grid.CellToWorld(Util.CubeToUnityCell(Map.Instance.newBlockSpawnPos[i] + new Vector3Int(0,1,-1) * (howManyNeedToSpawn - j))));
-                
-                block.transform.SetParent(blockBase);
-            }
-        }
-    }
     public void CheckTarget()
     {
         notNewBlocks = new List<Block>();
@@ -141,7 +97,6 @@ public class Spawn : MonoBehaviour
             }
         });
     }
-
     public void MoveAllDown()
     {
         var grid = Map.Instance.tilemap.GetComponentInParent<Grid>();
@@ -174,13 +129,52 @@ public class Spawn : MonoBehaviour
         
         sequenceAnim.OnComplete(ChangeStatesForMove);
     }
-    
     public void ChangeStatesForMove()
     {
         Debug.Log("움직임 끝남");
         Map.Instance.DrawDirectionOnBlock();
         GameManager.Instance.State = States.DeleteBlock;
     }
-
+    public void SpawnForEmptyPlace()
+    {
+        newBlocks = new List<Block>();
+        newBlocksPos = new List<Vector3>();
+        var grid = Map.Instance.tilemap.GetComponentInParent<Grid>();
+        for (int i = 0; i < Map.Instance.newBlockSpawnPos.Count; i++)
+        {
+            var howManyNeedToSpawn = Map.Instance.CountNullPlace(Map.Instance.newBlockSpawnPos[i]);
+            Debug.Log(i + "번 줄은 " + howManyNeedToSpawn + "개 생성해야됨");
+            for (int j = 0; j < howManyNeedToSpawn; j++)
+            {
+                var cellCoord = grid.CellToWorld(Util.CubeToUnityCell(Map.Instance.newBlockSpawnPos[i] + new Vector3Int(0,-1,1) * j));
+                Debug.Log(cellCoord);
+                var random = Random.Range(0, Map.Instance.gameConfig.BlockNumber);
+                var block = Instantiate(allKindsOfBlock[random], cellCoord, Quaternion.identity);
+                
+                newBlocks.Add(block);
+                newBlocksPos.Add(grid.CellToWorld(Util.CubeToUnityCell(Map.Instance.newBlockSpawnPos[i] + new Vector3Int(0,1,-1) * (howManyNeedToSpawn - j))));
+                
+                block.transform.SetParent(blockBase);
+            }
+        }
+    }
     
+    private void SpawnBlockOnTile()
+    {
+        
+        var grid = Map.Instance.tilemap.GetComponentInParent<Grid>();
+        
+        for (int i = 0; i < Map.Instance.canSpwanPlace.Count; i++)
+        {
+            var cellCoord = grid.WorldToCell(Map.Instance.canSpwanPlace[i]);
+            var cubeCoord = Util.UnityCellToCube(cellCoord);
+            var random = Random.Range(0, Map.Instance.gameConfig.BlockNumber);
+            var block = Instantiate(allKindsOfBlock[random], Map.Instance.canSpwanPlace[i], Quaternion.identity);
+            block.transform.SetParent(blockBase);
+            
+            block.GetComponentInChildren<TextMeshPro>().text = cubeCoord.ToString();
+            block.Coord = cubeCoord;
+            Map.Instance.BlockPlace.Add(cubeCoord,block);
+        }
+    }
 }

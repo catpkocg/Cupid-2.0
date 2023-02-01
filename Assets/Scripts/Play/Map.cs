@@ -15,7 +15,11 @@ public class Map : MonoSingleton<Map>
     [SerializeField] private Camera cam;
     [SerializeField] private NeighborPos neighborPos;
     
+    
+    
+    // 기본 배경 타일맵
     public Tilemap tilemap;
+
     public GameConfig gameConfig;
     
     
@@ -23,7 +27,6 @@ public class Map : MonoSingleton<Map>
     public Dictionary<Vector3Int, Block> BlockPlace = new Dictionary<Vector3Int, Block>();
     public List<Vector3Int> newBlockSpawnPos;
     private List<Block> allBlockForCheckDir;
-
     
     // material 생성
     // 이미지를 material - Albedo에 넣기
@@ -34,8 +37,12 @@ public class Map : MonoSingleton<Map>
     protected override void Awake()
     {
         var newMap = Instantiate(mapList[gameConfig.StageLevel], transform.position, Quaternion.identity);
-        var presentTile = newMap.GetComponentInChildren<Tilemap>();
-        tilemap = presentTile;
+        //var asdf = mapList[gameConfig.StageLevel];
+        //var presentTile = newMap.GetComponentInChildren<Tilemap>();
+        var backGroundTileMap = newMap.GetComponent<MapPreset>().BackgroundMap.GetComponent<Tilemap>();
+
+        tilemap = backGroundTileMap;
+        
         newBlockSpawnPos = new List<Vector3Int>()
         {
         new Vector3Int(-3, -1, 4), new Vector3Int(-2, -2, 4), new Vector3Int(-1, -3, 4),
@@ -44,12 +51,12 @@ public class Map : MonoSingleton<Map>
         };
     }
 
-    void Start()
+    private void GenerateMapFromPreset(MapPreset preset)
     {
-        FindCanPutTile();
+        
     }
 
-    private void FindCanPutTile()
+    public void FindCanPutTile()
     {
         for (int n = tilemap.cellBounds.xMin; n < tilemap.cellBounds.xMax; n++)
         {
@@ -167,7 +174,11 @@ public class Map : MonoSingleton<Map>
                 for (var i = 0; i < sameBlocks.Count; i++)
                 {
                     var currSameBlock = sameBlocks[i];
-                    if (!searched.Contains(currSameBlock) && !toSearch.Contains(currSameBlock))
+                    
+                    
+                    
+                    if (!searched.Contains(currSameBlock)
+                        && !toSearch.Contains(currSameBlock))
                     {
                         allSameBlocks.Add(currSameBlock);
                         toSearch.Add(currSameBlock);
@@ -194,6 +205,11 @@ public class Map : MonoSingleton<Map>
             if (tilemap.HasTile(tilePos) && BlockPlace[neighbor] != null)
             {
                 var neiborValue = BlockPlace[neighbor].value;
+                
+                
+                // 블럭끼리의 값이 같은거 + 나무상자의 value일경우 같은 블럭에 넣어서 삭제할수있도록 한다.
+                
+                
                 if (neiborValue == block.value)
                 {
                     sameBlockList.Add(BlockPlace[neighbor]);

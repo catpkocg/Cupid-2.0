@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Block : MonoBehaviour
+public abstract class Block : MonoBehaviour
 {
     
     [SerializeField] public int value;
@@ -14,6 +14,7 @@ public class Block : MonoBehaviour
     // public GameObject dirY;
     // public GameObject dirZ;
     public GameObject foot;
+    public GameObject boxBlock;
     
     public Vector3Int Coord { get; set; }
 
@@ -31,4 +32,12 @@ public class Block : MonoBehaviour
     {
         
     }
+
+    public void Pang()
+    {
+        OnPang();
+    }
+    
+    public abstract void OnSpawn();
+    public abstract void OnPang();
 }
