@@ -35,7 +35,7 @@ public class Spawn : MonoBehaviour
     
     public void SpawnSpecialOneBlock(Vector3 putPos, int dir)
     {
-        var grid = Map.Instance.tilemap.GetComponentInParent<Grid>();
+        var grid = Map.Instance.Tilemap.GetComponentInParent<Grid>();
         
         var cellCoord = grid.WorldToCell(putPos);
         var cubeCoord = Util.UnityCellToCube(cellCoord);
@@ -55,12 +55,12 @@ public class Spawn : MonoBehaviour
     }
     public void SpawnSpecialTwoBlock(Vector3 putPos)
     {
-        var grid = Map.Instance.tilemap.GetComponentInParent<Grid>();
+        var grid = Map.Instance.Tilemap.GetComponentInParent<Grid>();
         
         var cellCoord = grid.WorldToCell(putPos);
         var cubeCoord = Util.UnityCellToCube(cellCoord);
         
-        var random = Random.Range(0, Map.Instance.gameConfig.BlockNumber);
+        var random = Random.Range(0, Map.Instance.GameConfig.BlockNumber);
         var specialBlock = Instantiate(specialTwo[random], putPos, Quaternion.identity);
         specialBlock.transform.SetParent(blockBase);
 
@@ -81,7 +81,7 @@ public class Spawn : MonoBehaviour
         notNewBlocks = new List<Block>();
         notNewBlocksPos = new List<Vector3>();
         
-        var grid = Map.Instance.tilemap.GetComponentInParent<Grid>();
+        var grid = Map.Instance.Tilemap.GetComponentInParent<Grid>();
         //var keys = Map.Instance.BlockPlace.Keys;
         
         Map.Instance.BlockPlace.Keys.ForEach(key =>
@@ -97,9 +97,11 @@ public class Spawn : MonoBehaviour
             }
         });
     }
+    
+    
     public void MoveAllDown()
     {
-        var grid = Map.Instance.tilemap.GetComponentInParent<Grid>();
+        var grid = Map.Instance.Tilemap.GetComponentInParent<Grid>();
         
         var sequenceAnim = DOTween.Sequence();
         
@@ -139,20 +141,20 @@ public class Spawn : MonoBehaviour
     {
         newBlocks = new List<Block>();
         newBlocksPos = new List<Vector3>();
-        var grid = Map.Instance.tilemap.GetComponentInParent<Grid>();
-        for (int i = 0; i < Map.Instance.newBlockSpawnPos.Count; i++)
+        var grid = Map.Instance.Tilemap.GetComponentInParent<Grid>();
+        for (int i = 0; i < Map.Instance.NewBlockSpawnPosList.Count; i++)
         {
-            var howManyNeedToSpawn = Map.Instance.CountNullPlace(Map.Instance.newBlockSpawnPos[i]);
+            var howManyNeedToSpawn = Map.Instance.CountNullPlace(Map.Instance.NewBlockSpawnPosList[i]);
             Debug.Log(i + "번 줄은 " + howManyNeedToSpawn + "개 생성해야됨");
             for (int j = 0; j < howManyNeedToSpawn; j++)
             {
-                var cellCoord = grid.CellToWorld(Util.CubeToUnityCell(Map.Instance.newBlockSpawnPos[i] + new Vector3Int(0,-1,1) * j));
+                var cellCoord = grid.CellToWorld(Util.CubeToUnityCell(Map.Instance.NewBlockSpawnPosList[i] + new Vector3Int(0,-1,1) * j));
                 Debug.Log(cellCoord);
-                var random = Random.Range(0, Map.Instance.gameConfig.BlockNumber);
+                var random = Random.Range(0, Map.Instance.GameConfig.BlockNumber);
                 var block = Instantiate(allKindsOfBlock[random], cellCoord, Quaternion.identity);
                 
                 newBlocks.Add(block);
-                newBlocksPos.Add(grid.CellToWorld(Util.CubeToUnityCell(Map.Instance.newBlockSpawnPos[i] + new Vector3Int(0,1,-1) * (howManyNeedToSpawn - j))));
+                newBlocksPos.Add(grid.CellToWorld(Util.CubeToUnityCell(Map.Instance.NewBlockSpawnPosList[i] + new Vector3Int(0,1,-1) * (howManyNeedToSpawn - j))));
                 
                 block.transform.SetParent(blockBase);
             }
@@ -162,18 +164,19 @@ public class Spawn : MonoBehaviour
     private void SpawnBlockOnTile()
     {
         
-        var grid = Map.Instance.tilemap.GetComponentInParent<Grid>();
+        var grid = Map.Instance.Tilemap.GetComponentInParent<Grid>();
         
-        for (int i = 0; i < Map.Instance.canSpwanPlace.Count; i++)
+        for (int i = 0; i < Map.Instance.CanSpawnPlace.Count; i++)
         {
-            var cellCoord = grid.WorldToCell(Map.Instance.canSpwanPlace[i]);
+            var cellCoord = grid.WorldToCell(Map.Instance.CanSpawnPlace[i]);
             var cubeCoord = Util.UnityCellToCube(cellCoord);
-            var random = Random.Range(0, Map.Instance.gameConfig.BlockNumber);
-            var block = Instantiate(allKindsOfBlock[random], Map.Instance.canSpwanPlace[i], Quaternion.identity);
+            var random = Random.Range(0, Map.Instance.GameConfig.BlockNumber);
+            var block = Instantiate(allKindsOfBlock[random], Map.Instance.CanSpawnPlace[i], Quaternion.identity);
             block.transform.SetParent(blockBase);
             
             block.GetComponentInChildren<TextMeshPro>().text = cubeCoord.ToString();
             block.Coord = cubeCoord;
+            
             Map.Instance.BlockPlace.Add(cubeCoord,block);
         }
     }

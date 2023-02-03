@@ -15,7 +15,7 @@ public class Interaction : MonoBehaviour
         if (plane.Raycast(ray, out var enter))
         {
             Vector3 hitPoint = ray.GetPoint(enter);
-            var grid = Map.Instance.tilemap.GetComponentInParent<Grid>();
+            var grid = Map.Instance.Tilemap.GetComponentInParent<Grid>();
             var cellCoord = grid.WorldToCell(hitPoint);
             //Map.Instance.DeleteBlock(Util.UnityCellToCube(cellCoord));
             var blockPos = Util.UnityCellToCube(cellCoord);
@@ -59,7 +59,7 @@ public class Interaction : MonoBehaviour
             {
                 if (clickBlock.specialValue != 0)
                 {
-                    if (clickBlock.specialValue == (int)Map.Instance.gameConfig.SpecialBlock2Condition)
+                    if (clickBlock.specialValue == (int)Map.Instance.GameConfig.SpecialBlock2Condition)
                     {
                         Map.Instance.DeleteAllDraw();
                         

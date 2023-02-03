@@ -14,30 +14,28 @@ public abstract class Block : MonoBehaviour
     // public GameObject dirY;
     // public GameObject dirZ;
     public GameObject foot;
-    public GameObject boxBlock;
     
     public Vector3Int Coord { get; set; }
 
     
     public int score = 1;
     
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    public abstract void Pang();
+}
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 
-    public void Pang()
+class ColorBlock : Block
+{
+    public override void Pang()
     {
-        OnPang();
+        Debug.Log("팡팡");
     }
-    
-    public abstract void OnSpawn();
-    public abstract void OnPang();
+}
+
+class SpecialBlock : Block
+{
+    public override void Pang()
+    {
+        Debug.Log("스페셜 블럭 팡팡");
+    }
 }

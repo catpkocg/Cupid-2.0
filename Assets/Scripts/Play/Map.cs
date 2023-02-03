@@ -1,5 +1,4 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEditor;
@@ -10,64 +9,36 @@ using Wayway.Engine.Singleton;
 
 public class Map : MonoSingleton<Map>
 {
+    public Tilemap Tilemap;
+    public GameConfig GameConfig;
+    public List<Vector3> CanSpawnPlace = new ();
+    public Dictionary<Vector3Int, Block> BlockPlace = new ();
+    public List<Vector3Int> NewBlockSpawnPosList;
+    
     [SerializeField] private Transform backGround;
     [SerializeField] private List<GameObject> mapList;
     [SerializeField] private Camera cam;
     [SerializeField] private NeighborPos neighborPos;
-    
-    
-    
-    // 기본 배경 타일맵
-    public Tilemap tilemap;
 
-    public GameConfig gameConfig;
+    private List<Block> allBlockForCheckDir = new();
     
+    // public property
+    // protected property
+    // private property
     
-    public List<Vector3> canSpwanPlace = new List<Vector3>();
-    public Dictionary<Vector3Int, Block> BlockPlace = new Dictionary<Vector3Int, Block>();
-    public List<Vector3Int> newBlockSpawnPos;
-    private List<Block> allBlockForCheckDir;
-    
-    // material 생성
-    // 이미지를 material - Albedo에 넣기
-    // Material Shader 를 Sprites default로 변경
-    // 그리고 그거 사용
-    
-    
-    protected override void Awake()
-    {
-        var newMap = Instantiate(mapList[gameConfig.StageLevel], transform.position, Quaternion.identity);
-        //var asdf = mapList[gameConfig.StageLevel];
-        //var presentTile = newMap.GetComponentInChildren<Tilemap>();
-        var backGroundTileMap = newMap.GetComponent<MapPreset>().BackgroundMap.GetComponent<Tilemap>();
-
-        tilemap = backGroundTileMap;
-        
-        newBlockSpawnPos = new List<Vector3Int>()
-        {
-        new Vector3Int(-3, -1, 4), new Vector3Int(-2, -2, 4), new Vector3Int(-1, -3, 4),
-        new Vector3Int(0, -4, 4), new Vector3Int(1, -4, 3), new Vector3Int(2, -4, 2),
-        new Vector3Int(3, -4, 1)
-        };
-    }
-
-    private void GenerateMapFromPreset(MapPreset preset)
-    {
-        
-    }
 
     public void FindCanPutTile()
     {
-        for (int n = tilemap.cellBounds.xMin; n < tilemap.cellBounds.xMax; n++)
+        for (int n = Tilemap.cellBounds.xMin; n < Tilemap.cellBounds.xMax; n++)
         {
-            for (int p = tilemap.cellBounds.yMin; p < tilemap.cellBounds.yMax; p++)
+            for (int p = Tilemap.cellBounds.yMin; p < Tilemap.cellBounds.yMax; p++)
             {
                 Vector3Int localPlace = new Vector3Int(n, p, 0);
-                Vector3 place = tilemap.CellToWorld(localPlace);
+                Vector3 place = Tilemap.CellToWorld(localPlace);
                 var putPlace = new Vector3(place.x, place.y, 0);
-                if (tilemap.HasTile(localPlace))
+                if (Tilemap.HasTile(localPlace))
                 {
-                    canSpwanPlace.Add(putPlace);
+                    CanSpawnPlace.Add(putPlace);
                 }
             }
         }
@@ -75,14 +46,6 @@ public class Map : MonoSingleton<Map>
         cam.transform.GetComponent<Camera>().orthographicSize = 6f; //tilemap.cellBounds.xMax - tilemap.cellBounds.xMin;
     }
     
-    // 모든 블럭을 훑는 리스트 생성, 딕셔너리에 있는 거 다 삽입
-    //모든 블럭을 한번씩 훑는다. gameconfig.specialblock 2 number 인지 확인, 그리고 specialblock 1 인지 확인
-    
-    // 2인경우는 모든 블럭 이미지 2 number을 생성한다. 1 인경우는 모든 블럭에 이미지 1 number를 생성한다.
-    // 훑은 블럭은 리스트에서 빼준다.
-    
-    
-
     public void DeleteBlockList(List<Block> sameBlockList)
     {
         for (int i = 0; i < sameBlockList.Count; i++)
@@ -90,7 +53,7 @@ public class Map : MonoSingleton<Map>
             DeleteBlock(sameBlockList[i].Coord);
         }
     }
-
+    
     public void DeleteLineBlock(Vector3Int clickPos, int line)
     {
 
@@ -131,7 +94,6 @@ public class Map : MonoSingleton<Map>
         DeleteBlockList(mustDeleteBlocks);
     }
 
-
     public void DeleteSameColor(Vector3Int clickPos, int value)
     {
         List<Block> mustDeleteBlocks = new List<Block>();
@@ -148,8 +110,7 @@ public class Map : MonoSingleton<Map>
         DeleteBlockList(mustDeleteBlocks);
         DeleteBlock(clickPos);
     }
-    
-    
+
     public void DeleteBlock(Vector3Int clickPos)
     {
         Destroy(BlockPlace[clickPos].gameObject);
@@ -193,8 +154,7 @@ public class Map : MonoSingleton<Map>
         }
         return allSameBlocks;
     }
-    
-    
+
     public List<Block> FindNearSameValue(Block block)
     {
         List<Block> sameBlockList = new List<Block>();
@@ -202,7 +162,7 @@ public class Map : MonoSingleton<Map>
         {
             var neighbor = block.Coord + neighborPos.neighbor[i].neighborPos;
             var tilePos = Util.CubeToUnityCell(neighbor);
-            if (tilemap.HasTile(tilePos) && BlockPlace[neighbor] != null)
+            if (Tilemap.HasTile(tilePos) && BlockPlace[neighbor] != null)
             {
                 var neiborValue = BlockPlace[neighbor].value;
                 
@@ -225,7 +185,7 @@ public class Map : MonoSingleton<Map>
         var targetPos = wantToCheckPos + new Vector3Int(0, 1, -1);
         var tilePos = Util.CubeToUnityCell(targetPos);
         //Debug.Log(targetPos);
-        while (tilemap.HasTile(tilePos))
+        while (Tilemap.HasTile(tilePos))
         {
             //Debug.Log(targetPos);
             if (BlockPlace[targetPos] == null)
@@ -251,25 +211,23 @@ public class Map : MonoSingleton<Map>
 
     public void DrawDirectionOnBlock()
     {
-        
         MakeListForFindDir();
-        
-        
+
         for (int i = 0; i < allBlockForCheckDir.Count; i++)
         {
-            if (allBlockForCheckDir[i].specialValue < gameConfig.SpecialBlock1Condition)
+            if (allBlockForCheckDir[i].specialValue < GameConfig.SpecialBlock1Condition)
             {
                 List<Block> sameBlock = FindAllNearSameValue(allBlockForCheckDir[i]);
                 
-            if (sameBlock.Count >= gameConfig.SpecialBlock2Condition)
+            if (sameBlock.Count >= GameConfig.SpecialBlock2Condition)
             {
                 for (int j = 0; j < sameBlock.Count; j++)
                 {
                     sameBlock[j].foot.SetActive(true);
-                    sameBlock[j].specialValue = (int)gameConfig.SpecialBlock2Condition;
+                    sameBlock[j].specialValue = (int)GameConfig.SpecialBlock2Condition;
                 }
             }
-            else if (sameBlock.Count >= gameConfig.SpecialBlock1Condition)
+            else if (sameBlock.Count >= GameConfig.SpecialBlock1Condition)
             {
                 
                 List<int> highNumDirSign = new List<int>();
@@ -387,38 +345,16 @@ public class Map : MonoSingleton<Map>
                 {
                     allBlockForCheckDir.Remove(sameBlock[n]);
                 }
-            
             }
-            
         }
-        
-        
+
         GameManager.Instance.ChangeState(States.DeleteBlock);
     }
     
-
-    private int CalCulateMaxAndMinDif(List<int> allNum)
-    {
-        var min = allNum.Min();
-        var max = allNum.Max();
-
-        var amount = max - min;
-
-        return amount;
-    }
-
-    private int CalCulateAverage(List<int> allNum)
-    {
-        int Sum = allNum.Sum();
-        int Average = Sum / allNum.Count;
-
-        return Average;
-    }
-
     public void DeleteAllDraw()
     {
-        allBlockForCheckDir= new List<Block>();
-        
+        allBlockForCheckDir.Clear();
+
         BlockPlace.Values.ForEach(value =>
         {
             if (value != null && value.value < 10)
@@ -446,4 +382,50 @@ public class Map : MonoSingleton<Map>
         GameManager.Instance.ChangeState(States.CreateNewBlock);
     }
     
+
+    protected override void Awake()
+    {
+        base.Awake();
+        
+        var newMap = Instantiate(mapList[GameConfig.StageLevel], transform.position, Quaternion.identity);
+        //var asdf = mapList[gameConfig.StageLevel];
+        //var presentTile = newMap.GetComponentInChildren<Tilemap>();
+        var backGroundTileMap = newMap.GetComponent<MapPreset>().BackgroundMap.GetComponent<Tilemap>();
+
+        Tilemap = backGroundTileMap;
+        
+        NewBlockSpawnPosList = new List<Vector3Int>()
+        {
+        new Vector3Int(-3, -1, 4), new Vector3Int(-2, -2, 4), new Vector3Int(-1, -3, 4),
+        new Vector3Int(0, -4, 4), new Vector3Int(1, -4, 3), new Vector3Int(2, -4, 2),
+        new Vector3Int(3, -4, 1)
+        };
+    }
+
+    private void GenerateMapFromPreset(MapPreset preset)
+    {
+        
+    }
+    // 모든 블럭을 훑는 리스트 생성, 딕셔너리에 있는 거 다 삽입
+    //모든 블럭을 한번씩 훑는다. gameconfig.specialblock 2 number 인지 확인, 그리고 specialblock 1 인지 확인
+    
+    // 2인경우는 모든 블럭 이미지 2 number을 생성한다. 1 인경우는 모든 블럭에 이미지 1 number를 생성한다.
+    // 훑은 블럭은 리스트에서 빼준다.
+    private int CalCulateMaxAndMinDif(List<int> allNum)
+    {
+        var min = allNum.Min();
+        var max = allNum.Max();
+
+        var amount = max - min;
+
+        return amount;
+    }
+
+    private int CalCulateAverage(List<int> allNum)
+    {
+        int Sum = allNum.Sum();
+        int Average = Sum / allNum.Count;
+
+        return Average;
+    }
 }
