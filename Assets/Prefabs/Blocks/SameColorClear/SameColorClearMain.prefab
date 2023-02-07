@@ -9,10 +9,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6653552941363074704}
-  - component: {fileID: 674540548372489643}
+  - component: {fileID: 8114491079980245775}
   - component: {fileID: 7040507236686456247}
   m_Layer: 0
-  m_Name: SpecialTwoMain
+  m_Name: SameColorClearMain
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -34,7 +34,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &674540548372489643
+--- !u!114 &8114491079980245775
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -43,17 +43,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 584802656229996678}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e8f673f42f2dc50418ba069ccd825034, type: 3}
+  m_Script: {fileID: 11500000, guid: 3b7fa3562b7cd7843a5edda21355cfaa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  value: 11
-  specialValue: 0
-  dir:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  foot: {fileID: 0}
-  score: 1
 --- !u!212 &7040507236686456247
 SpriteRenderer:
   m_ObjectHideFlags: 0

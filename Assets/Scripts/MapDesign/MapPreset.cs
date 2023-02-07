@@ -16,64 +16,90 @@ public class MapPreset : MonoBehaviour
     public int StageNumber = 0;
     public MapLayer BackgroundMap;
     public List<MapLayer> MapLayerList = new();
-    public List<Vector3> SpawnPlaceList;
-    public Dictionary<Vector3Int, Vector3> BackGroundPositions = new ();
-    public Dictionary<Vector3Int, Vector3> IceBlockerPositions = new ();
-    public Dictionary<Vector3Int, Vector3> WoodBlockerPositions = new ();
+    // Map information
+    public List<Vector3Int> MapBounds;
+    public Dictionary<Vector3Int, Block> MovableBlocks;
+    public Dictionary<Vector3Int, Block> UnMovableBlocks;
 
     private Grid grid => transform.GetComponent<Grid>();
 
     [Button(ButtonSizes.Gigantic)]
     private void CreateMapPrefab()
     {
-        CheckBackGround();
-        CheckMapLayer();
+        MapBounds = new List<Vector3Int>();
+        MovableBlocks = new Dictionary<Vector3Int, Block>();
+        UnMovableBlocks = new Dictionary<Vector3Int, Block>();
+
+        FindValidPosition(MapBounds);
+        
+        //Spawn On Tile? and Check Blocks Positions
+        CreateMovableBlocks(MovableBlocks);
+        CreateUnMovableBlocks(UnMovableBlocks);
+        
+        
         var Map = gameObject;
         PrefabUtility.SaveAsPrefabAsset(Map, "Assets/Prefabs/Prefabs.prefab");
     }
-    
-    [Button(ButtonSizes.Gigantic)]
-    private void Initialize()
+
+    private void FindValidPosition(List<Vector3Int> mapBounds)
     {
-        SpawnPlaceList = new List<Vector3>();
-        BackGroundPositions = new Dictionary<Vector3Int, Vector3>();
-        IceBlockerPositions = new Dictionary<Vector3Int, Vector3>();
-        WoodBlockerPositions = new Dictionary<Vector3Int, Vector3>();
+        var tilemap = BackgroundMap.transform.GetComponent<Tilemap>();
     }
 
-    private void CheckBackGround()
+    private void CreateMovableBlocks(Dictionary<Vector3Int, Block> movableBlocks)
     {
-        var Tilemap = BackgroundMap.transform.GetComponent<Tilemap>();
-        CalculateTiledPos(Tilemap, BackGroundPositions);
-        BackGroundPositions.Values.ForEach(value =>
-        {
-            SpawnPlaceList.Add(value);
-        });
+        
+    }
+
+    private void FindMovableBlockPos()
+    {
+        
+    }
+
+    private void CreateUnMovableBlocks(Dictionary<Vector3Int, Block> unMovableBlocks)
+    {
+        
+    }
+
+    private void FindUnMovableBlockPos()
+    {
+        
     }
     
-    // 얼음의 value 값일 경우는 
-    // 특수 장애물 을 추가하는 경우?
-    // checkMapLayer에 조건 추가, 딕셔너리 한개 추가;
     
-    private void CheckMapLayer()
-    {
-        if (MapLayerList.Count != 0)
-        {
-            for (var i = 0; i < MapLayerList.Count; i++)
-            {
-                var tileMap = MapLayerList[i].GetComponent<Tilemap>();
-                if (MapLayerList[i].value == 66)
-                {
-                    CalculateTiledPos(tileMap, WoodBlockerPositions);
-                }
-                else if (MapLayerList[i].value == 77)
-                {
-                    CalculateTiledPos(tileMap, IceBlockerPositions);
-                }
-                
-            }
-        }
-    }
+    // private void CheckBackGround()
+    // {
+    //     
+    //     CalculateTiledPos(Tilemap, BackGroundPositions);
+    //     BackGroundPositions.Values.ForEach(value =>
+    //     {
+    //         SpawnPlaceList.Add(value);
+    //     });
+    // }
+    //
+    // // 얼음의 value 값일 경우는 
+    // // 특수 장애물 을 추가하는 경우?
+    // // checkMapLayer에 조건 추가, 딕셔너리 한개 추가;
+    //
+    // private void CheckMapLayer()
+    // {
+    //     if (MapLayerList.Count != 0)
+    //     {
+    //         for (var i = 0; i < MapLayerList.Count; i++)
+    //         {
+    //             var tileMap = MapLayerList[i].GetComponent<Tilemap>();
+    //             if (MapLayerList[i].value == 66)
+    //             {
+    //                 CalculateTiledPos(tileMap, WoodBlockerPositions);
+    //             }
+    //             else if (MapLayerList[i].value == 77)
+    //             {
+    //                 CalculateTiledPos(tileMap, IceBlockerPositions);
+    //             }
+    //             
+    //         }
+    //     }
+    // }
 
     private void CalculateTiledPos(Tilemap tilemap, Dictionary<Vector3Int,Vector3> blockerPos)
     {
@@ -92,6 +118,5 @@ public class MapPreset : MonoBehaviour
             }
         }
     }
-    
     
 }

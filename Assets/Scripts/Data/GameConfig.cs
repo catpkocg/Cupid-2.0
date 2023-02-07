@@ -8,11 +8,9 @@ public class GameConfig : ScriptableObject
     
     [SerializeField] private int stageLevel;
     [SerializeField] private int blockNumber;
-
     [SerializeField] private float animationSpeed;
-    [SerializeField] private int specialBlock1Condition;
-    [SerializeField] private int specialBlock2Condition;
-
+    [SerializeField] private int lineClearBlockCondition;
+    [SerializeField] private int sameColorClearBlockCondition;
     [SerializeField] private Ease easyType;
     
     //[SerializeField] private int addMaxCount = 30;
@@ -20,12 +18,11 @@ public class GameConfig : ScriptableObject
     
     public int StageLevel => stageLevel;
     public int BlockNumber => blockNumber;
-
     public float AnimationSpeed => animationSpeed;
-    public float SpecialBlock1Condition => specialBlock1Condition;
-    public float SpecialBlock2Condition => specialBlock2Condition;
-
+    public float LineClearBlockCondition => lineClearBlockCondition;
+    public float SameColorClearBlockCondition => sameColorClearBlockCondition;
     public Ease EasyType => easyType;
+    
     //public int AddMaxCount => addMaxCount;
     //public int BlockCount => blockCount;
 

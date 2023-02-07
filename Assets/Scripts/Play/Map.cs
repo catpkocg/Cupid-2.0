@@ -166,9 +166,7 @@ public class Map : MonoSingleton<Map>
             {
                 var neiborValue = BlockPlace[neighbor].value;
                 
-                
                 // 블럭끼리의 값이 같은거 + 나무상자의 value일경우 같은 블럭에 넣어서 삭제할수있도록 한다.
-                
                 
                 if (neiborValue == block.value)
                 {
@@ -209,178 +207,176 @@ public class Map : MonoSingleton<Map>
         });
     }
 
-    public void DrawDirectionOnBlock()
-    {
-        MakeListForFindDir();
-
-        for (int i = 0; i < allBlockForCheckDir.Count; i++)
-        {
-            if (allBlockForCheckDir[i].specialValue < GameConfig.SpecialBlock1Condition)
-            {
-                List<Block> sameBlock = FindAllNearSameValue(allBlockForCheckDir[i]);
-                
-            if (sameBlock.Count >= GameConfig.SpecialBlock2Condition)
-            {
-                for (int j = 0; j < sameBlock.Count; j++)
-                {
-                    sameBlock[j].foot.SetActive(true);
-                    sameBlock[j].specialValue = (int)GameConfig.SpecialBlock2Condition;
-                }
-            }
-            else if (sameBlock.Count >= GameConfig.SpecialBlock1Condition)
-            {
-                
-                List<int> highNumDirSign = new List<int>();
-
-                List<int> allLineDif = new List<int>();
-                List<int> direction = new List<int>()
-                {
-                    1, 2, 3
-                };
-
-                List<int> allXValue = new List<int>();
-                List<int> allYValue = new List<int>();
-                List<int> allZValue = new List<int>();
-                for (int k = 0; k < sameBlock.Count; k++)
-                {
-                    allXValue.Add(sameBlock[k].Coord.x);
-                    allYValue.Add(sameBlock[k].Coord.y);
-                    allZValue.Add(sameBlock[k].Coord.z);
-                }
-                
-                allLineDif.Add(CalCulateMaxAndMinDif(allXValue));
-                allLineDif.Add(CalCulateMaxAndMinDif(allYValue));
-                allLineDif.Add(CalCulateMaxAndMinDif(allZValue));
-
-                var highValue = allLineDif.Max();
-                
-                for (int m = 0; m < allLineDif.Count; m++)
-                {
-                    if (allLineDif[m] == highValue)
-                    {
-                        highNumDirSign.Add(direction[m]);   
-                    }
-                }
-
-                if (highNumDirSign.Count > 1)
-                {
-                    
-                    highNumDirSign = new List<int>();
-                    
-                    var totalX = 0;
-                    var totalY = 0;
-                    var totalZ = 0;
-                    
-                    var xAvg = CalCulateAverage(allXValue);
-                    var yAvg = CalCulateAverage(allYValue);
-                    var zAvg = CalCulateAverage(allZValue);
-                    for (int z = 0; z < sameBlock.Count; z++)
-                    {
-                        var xAbs = Math.Abs(allXValue[z] - xAvg);
-                        var yAbs = Math.Abs(allYValue[z] - yAvg);
-                        var zAbs = Math.Abs(allZValue[z] - zAvg);
-                        totalX += xAbs;
-                        totalY += yAbs;
-                        totalZ += zAbs;
-                    }
-                    
-                    List<int> difWithAbg = new List<int>()
-                    {
-                        totalX, totalY, totalZ
-                    };
-                    
-                    var maxValue = difWithAbg.Max();
-
-                    for (int k = 0; k < difWithAbg.Count; k++)
-                    {
-                        if (difWithAbg[k] == maxValue)
-                        {
-                            highNumDirSign.Add(direction[k]);
-                        }
-                    }
-
-                    if (highNumDirSign.Count > 1)
-                    {
-                        var minValue = highNumDirSign.Min();
-                        var dirValue = 0;
-                        for (int l = 0; l < highNumDirSign.Count; l++)
-                        {
-                            if (highNumDirSign[l] == minValue)
-                            {
-                                dirValue = l;
-                            }
-                        }
-
-                        for (int j = 0; j < sameBlock.Count; j++)
-                        {
-                            sameBlock[j].dir[highNumDirSign[dirValue] - 1].SetActive(true);
-                            sameBlock[j].specialValue = highNumDirSign[dirValue];
-                        }
-                        
-                    }
-                    
-                    else
-                    {
-                        for (int j = 0; j < sameBlock.Count; j++)
-                        {
-                            sameBlock[j].dir[highNumDirSign[0] - 1].SetActive(true);
-                            sameBlock[j].specialValue = highNumDirSign[0];
-                        }
-                    
-                    }
-
-                }
-                
-                else
-                {
-                    for (int j = 0; j < sameBlock.Count; j++)
-                    {
-                        sameBlock[j].dir[highNumDirSign[0] - 1].SetActive(true);
-                        sameBlock[j].specialValue = highNumDirSign[0];
-                    }
-                }
-            }
-            
-                for (int n = 0; n < sameBlock.Count; n++)
-                {
-                    allBlockForCheckDir.Remove(sameBlock[n]);
-                }
-            }
-        }
-
-        GameManager.Instance.ChangeState(States.DeleteBlock);
-    }
+    // public void DrawDirectionOnBlock()
+    // {
+    //     MakeListForFindDir();
+    //
+    //     for (int i = 0; i < allBlockForCheckDir.Count; i++)
+    //     {
+    //         if (allBlockForCheckDir[i].specialValue < GameConfig.SpecialBlock1Condition)
+    //         {
+    //             List<Block> sameBlock = FindAllNearSameValue(allBlockForCheckDir[i]);
+    //             
+    //         if (sameBlock.Count >= GameConfig.SpecialBlock2Condition)
+    //         {
+    //             for (int j = 0; j < sameBlock.Count; j++)
+    //             {
+    //                 sameBlock[j].foot.SetActive(true);
+    //                 sameBlock[j].specialValue = (int)GameConfig.SpecialBlock2Condition;
+    //             }
+    //         }
+    //         else if (sameBlock.Count >= GameConfig.SpecialBlock1Condition)
+    //         {
+    //             
+    //             List<int> highNumDirSign = new List<int>();
+    //
+    //             List<int> allLineDif = new List<int>();
+    //             List<int> direction = new List<int>()
+    //             {
+    //                 1, 2, 3
+    //             };
+    //
+    //             List<int> allXValue = new List<int>();
+    //             List<int> allYValue = new List<int>();
+    //             List<int> allZValue = new List<int>();
+    //             for (int k = 0; k < sameBlock.Count; k++)
+    //             {
+    //                 allXValue.Add(sameBlock[k].Coord.x);
+    //                 allYValue.Add(sameBlock[k].Coord.y);
+    //                 allZValue.Add(sameBlock[k].Coord.z);
+    //             }
+    //             
+    //             allLineDif.Add(CalCulateMaxAndMinDif(allXValue));
+    //             allLineDif.Add(CalCulateMaxAndMinDif(allYValue));
+    //             allLineDif.Add(CalCulateMaxAndMinDif(allZValue));
+    //
+    //             var highValue = allLineDif.Max();
+    //             
+    //             for (int m = 0; m < allLineDif.Count; m++)
+    //             {
+    //                 if (allLineDif[m] == highValue)
+    //                 {
+    //                     highNumDirSign.Add(direction[m]);   
+    //                 }
+    //             }
+    //
+    //             if (highNumDirSign.Count > 1)
+    //             {
+    //                 
+    //                 highNumDirSign = new List<int>();
+    //                 
+    //                 var totalX = 0;
+    //                 var totalY = 0;
+    //                 var totalZ = 0;
+    //                 
+    //                 var xAvg = CalCulateAverage(allXValue);
+    //                 var yAvg = CalCulateAverage(allYValue);
+    //                 var zAvg = CalCulateAverage(allZValue);
+    //                 for (int z = 0; z < sameBlock.Count; z++)
+    //                 {
+    //                     var xAbs = Math.Abs(allXValue[z] - xAvg);
+    //                     var yAbs = Math.Abs(allYValue[z] - yAvg);
+    //                     var zAbs = Math.Abs(allZValue[z] - zAvg);
+    //                     totalX += xAbs;
+    //                     totalY += yAbs;
+    //                     totalZ += zAbs;
+    //                 }
+    //                 
+    //                 List<int> difWithAbg = new List<int>()
+    //                 {
+    //                     totalX, totalY, totalZ
+    //                 };
+    //                 
+    //                 var maxValue = difWithAbg.Max();
+    //
+    //                 for (int k = 0; k < difWithAbg.Count; k++)
+    //                 {
+    //                     if (difWithAbg[k] == maxValue)
+    //                     {
+    //                         highNumDirSign.Add(direction[k]);
+    //                     }
+    //                 }
+    //
+    //                 if (highNumDirSign.Count > 1)
+    //                 {
+    //                     var minValue = highNumDirSign.Min();
+    //                     var dirValue = 0;
+    //                     for (int l = 0; l < highNumDirSign.Count; l++)
+    //                     {
+    //                         if (highNumDirSign[l] == minValue)
+    //                         {
+    //                             dirValue = l;
+    //                         }
+    //                     }
+    //
+    //                     for (int j = 0; j < sameBlock.Count; j++)
+    //                     {
+    //                         sameBlock[j].dir[highNumDirSign[dirValue] - 1].SetActive(true);
+    //                         sameBlock[j].specialValue = highNumDirSign[dirValue];
+    //                     }
+    //                     
+    //                 }
+    //                 
+    //                 else
+    //                 {
+    //                     for (int j = 0; j < sameBlock.Count; j++)
+    //                     {
+    //                         sameBlock[j].dir[highNumDirSign[0] - 1].SetActive(true);
+    //                         sameBlock[j].specialValue = highNumDirSign[0];
+    //                     }
+    //                 
+    //                 }
+    //
+    //             }
+    //             
+    //             else
+    //             {
+    //                 for (int j = 0; j < sameBlock.Count; j++)
+    //                 {
+    //                     sameBlock[j].dir[highNumDirSign[0] - 1].SetActive(true);
+    //                     sameBlock[j].specialValue = highNumDirSign[0];
+    //                 }
+    //             }
+    //         }
+    //         
+    //             for (int n = 0; n < sameBlock.Count; n++)
+    //             {
+    //                 allBlockForCheckDir.Remove(sameBlock[n]);
+    //             }
+    //         }
+    //     }
+    //
+    //     GameManager.Instance.ChangeState(States.DeleteBlock);
+    // }
     
-    public void DeleteAllDraw()
-    {
-        allBlockForCheckDir.Clear();
-
-        BlockPlace.Values.ForEach(value =>
-        {
-            if (value != null && value.value < 10)
-            {
-                allBlockForCheckDir.Add(value);
-            }
-            
-        });
-        
-        
-        for (int i = 0; i < allBlockForCheckDir.Count; i++)
-        { 
-            for (int j = 0; j < allBlockForCheckDir[i].dir.Count; j++)
-            {
-                allBlockForCheckDir[i].dir[j].SetActive(false);
-            }
-            
-            allBlockForCheckDir[i].foot.SetActive(false);
-            allBlockForCheckDir[i].specialValue = 0;
-            
-            
-        }
-        
-        //DrawDirectionOnBlock();
-        GameManager.Instance.ChangeState(States.CreateNewBlock);
-    }
+    // public void DeleteAllDraw()
+    // {
+    //     allBlockForCheckDir.Clear();
+    //
+    //     BlockPlace.Values.ForEach(value =>
+    //     {
+    //         if (value != null && value.value < 10)
+    //         {
+    //             allBlockForCheckDir.Add(value);
+    //         }
+    //         
+    //     });
+    //     
+    //     
+    //     for (int i = 0; i < allBlockForCheckDir.Count; i++)
+    //     { 
+    //         for (int j = 0; j < allBlockForCheckDir[i].dir.Count; j++)
+    //         {
+    //             allBlockForCheckDir[i].dir[j].SetActive(false);
+    //         }
+    //         
+    //         allBlockForCheckDir[i].foot.SetActive(false);
+    //         allBlockForCheckDir[i].specialValue = 0;
+    //     }
+    //     
+    //     //DrawDirectionOnBlock();
+    //     GameManager.Instance.ChangeState(States.CreateNewBlock);
+    // }
     
 
     protected override void Awake()

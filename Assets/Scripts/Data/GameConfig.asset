@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a405f2d6474572468f20b1bb3bf5745, type: 3}
   m_Name: GameConfig
   m_EditorClassIdentifier: 
-  stageLevel: 0
-  blockNumber: 4
-  animationSpeed: 0.75
-  specialBlock1Condition: 5
-  specialBlock2Condition: 7
-  easyType: 12
+  stageLevel: 14
+  blockNumber: 0
+  animationSpeed: 0
+  specialBlock1Condition: 0
+  specialBlock2Condition: 0
+  easyType: 0
