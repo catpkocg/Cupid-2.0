@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Blocker : MonoBehaviour
+public class Blocker : Block
 {
     public Vector3Int CubeCoord;
     public Vector3 BlockerPos;
@@ -14,9 +14,10 @@ public class Blocker : MonoBehaviour
     //Pang
 
 
-
-
-
+    public override void Pang()
+    {
+        Debug.Log("blocker pang");
+    }
 }
 
 public enum BlockerType

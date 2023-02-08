@@ -6,6 +6,6 @@ using UnityEngine;
 public class BackGroundBlock : MonoBehaviour
 {
     public Vector3Int CubeCoord { get; set; }
-    public Vector3 BasePosition { get; set; }
+    //public Vector3 BasePosition { get; set; }
     
 }

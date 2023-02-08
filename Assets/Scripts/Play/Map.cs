@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 using Wayway.Engine;
@@ -29,13 +28,14 @@ public class Map : MonoSingleton<Map>
 
     public void FindCanPutTile()
     {
-        for (int n = Tilemap.cellBounds.xMin; n < Tilemap.cellBounds.xMax; n++)
+        for (var n = Tilemap.cellBounds.xMin; n < Tilemap.cellBounds.xMax; n++)
         {
-            for (int p = Tilemap.cellBounds.yMin; p < Tilemap.cellBounds.yMax; p++)
+            for (var p = Tilemap.cellBounds.yMin; p < Tilemap.cellBounds.yMax; p++)
             {
-                Vector3Int localPlace = new Vector3Int(n, p, 0);
-                Vector3 place = Tilemap.CellToWorld(localPlace);
+                var localPlace = new Vector3Int(n, p, 0);
+                var place = Tilemap.CellToWorld(localPlace);
                 var putPlace = new Vector3(place.x, place.y, 0);
+
                 if (Tilemap.HasTile(localPlace))
                 {
                     CanSpawnPlace.Add(putPlace);
@@ -48,7 +48,7 @@ public class Map : MonoSingleton<Map>
     
     public void DeleteBlockList(List<Block> sameBlockList)
     {
-        for (int i = 0; i < sameBlockList.Count; i++)
+        for (var i = 0; i < sameBlockList.Count; i++)
         {
             DeleteBlock(sameBlockList[i].Coord);
         }
@@ -56,48 +56,51 @@ public class Map : MonoSingleton<Map>
     
     public void DeleteLineBlock(Vector3Int clickPos, int line)
     {
-
-        List<Block> mustDeleteBlocks = new List<Block>();
-        
-        if (line == 0)
+        BlockPlace.Keys.ForEach(pos =>
         {
-            BlockPlace.Keys.ForEach(keys =>
-            {
-                if (keys.x == clickPos.x)
-                {
-                    mustDeleteBlocks.Add(BlockPlace[keys]);
-                }
-            });
-        }
-        else if (line == 1)
-        {
-            BlockPlace.Keys.ForEach(keys =>
-            {
-                if (keys.y == clickPos.y)
-                {
-                    mustDeleteBlocks.Add(BlockPlace[keys]);
-                }
-            });
-        }
-        else
-        {
-            BlockPlace.Keys.ForEach(keys =>
-            {
-                if (keys.z == clickPos.z)
-                {
-                    mustDeleteBlocks.Add(BlockPlace[keys]);
-                }
-                
-            });
-        }
-        
-        DeleteBlockList(mustDeleteBlocks);
+            if (Util.GetAxisValue(pos, clickPos, line)) DeleteBlock(BlockPlace[pos].Coord);
+        });
     }
+
+    
+
+    // private int OutPutAxis(int axis, Vector3Int pos)
+    // {
+    //     return axis switch
+    //     {
+    //         0 => pos.x,
+    //         1 => pos.y,
+    //         _ => pos.z
+    //     };
+    // }
+    //
+    // private void AddForDeleteList(Vector3Int clickPos, int line)
+    // {
+    //     switch (blockAxis)
+    //     {
+    //         case 0 : 
+    //     }
+    //     
+    //     // var targetAxis => axis switch
+    //     // {
+    //     //     0 => pos.x,
+    //     //     1 => pos.y,
+    //     //     _ => pos.z
+    //     // }; 
+    //     
+    //     BlockPlace.Keys.ForEach(pos =>
+    //     {
+    //         if (OutPutAxis(blockAxis, pos) == clickAxis)
+    //         {
+    //             mustDeleteBlocks.Add(BlockPlace[pos]);
+    //         }
+    //     });
+    //          
+    // }
 
     public void DeleteSameColor(Vector3Int clickPos, int value)
     {
         List<Block> mustDeleteBlocks = new List<Block>();
-        
         BlockPlace.Keys.ForEach(keys =>
         {
             if (BlockPlace[keys].value == value)
@@ -106,7 +109,6 @@ public class Map : MonoSingleton<Map>
             }
                 
         });
-        
         DeleteBlockList(mustDeleteBlocks);
         DeleteBlock(clickPos);
     }
@@ -379,24 +381,24 @@ public class Map : MonoSingleton<Map>
     // }
     
 
-    protected override void Awake()
-    {
-        base.Awake();
-        
-        var newMap = Instantiate(mapList[GameConfig.StageLevel], transform.position, Quaternion.identity);
-        //var asdf = mapList[gameConfig.StageLevel];
-        //var presentTile = newMap.GetComponentInChildren<Tilemap>();
-        var backGroundTileMap = newMap.GetComponent<MapPreset>().BackgroundMap.GetComponent<Tilemap>();
-
-        Tilemap = backGroundTileMap;
-        
-        NewBlockSpawnPosList = new List<Vector3Int>()
-        {
-        new Vector3Int(-3, -1, 4), new Vector3Int(-2, -2, 4), new Vector3Int(-1, -3, 4),
-        new Vector3Int(0, -4, 4), new Vector3Int(1, -4, 3), new Vector3Int(2, -4, 2),
-        new Vector3Int(3, -4, 1)
-        };
-    }
+    // protected override void Awake()
+    // {
+    //     base.Awake();
+    //     
+    //     var newMap = Instantiate(mapList[GameConfig.StageLevel], transform.position, Quaternion.identity);
+    //     //var asdf = mapList[gameConfig.StageLevel];
+    //     //var presentTile = newMap.GetComponentInChildren<Tilemap>();
+    //     var backGroundTileMap = newMap.GetComponent<MapPreset>().BackgroundMap.GetComponent<Tilemap>();
+    //
+    //     Tilemap = backGroundTileMap;
+    //     
+    //     NewBlockSpawnPosList = new List<Vector3Int>()
+    //     {
+    //     new Vector3Int(-3, -1, 4), new Vector3Int(-2, -2, 4), new Vector3Int(-1, -3, 4),
+    //     new Vector3Int(0, -4, 4), new Vector3Int(1, -4, 3), new Vector3Int(2, -4, 2),
+    //     new Vector3Int(3, -4, 1)
+    //     };
+    // }
 
     private void GenerateMapFromPreset(MapPreset preset)
     {

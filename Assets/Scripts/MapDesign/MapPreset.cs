@@ -1,7 +1,9 @@
 
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Sirenix.OdinInspector;
+using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.Tilemaps;
@@ -13,6 +15,7 @@ using Wayway.Engine;
 
 public class MapPreset : MonoBehaviour
 {
+    
     public int StageNumber = 0;
     public MapLayer BackgroundMap;
     public List<MapLayer> MapLayerList = new();
@@ -20,6 +23,15 @@ public class MapPreset : MonoBehaviour
     public List<Vector3Int> MapBounds;
     public Dictionary<Vector3Int, Block> MovableBlocks;
     public Dictionary<Vector3Int, Block> UnMovableBlocks;
+    
+    public Dictionary<Vector3Int, Block> allBlocks = new ();
+    public Dictionary<Vector3Int, Blocker> Blockers= new ();
+    
+    
+    [SerializeField] private MapDesignSpawn spawn;
+
+    
+
 
     private Grid grid => transform.GetComponent<Grid>();
 
@@ -39,6 +51,62 @@ public class MapPreset : MonoBehaviour
         
         var Map = gameObject;
         PrefabUtility.SaveAsPrefabAsset(Map, "Assets/Prefabs/Prefabs.prefab");
+    }
+    
+
+    private void Start()
+    {
+        spawn.SpawnOnTileMap();
+    }
+
+
+    private void Update()
+    {
+        // if (Input.GetMouseButtonDown(0))
+        // {
+        //     var plane = new Plane();
+        //     plane.Set3Points(Vector3.zero, Vector3.up, Vector3.right);
+        //     Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        //     if (plane.Raycast(ray, out var enter))
+        //     {
+        //         Vector3 hitPoint = ray.GetPoint(enter);
+        //         var cellCoord = grid.WorldToCell(hitPoint);
+        //         var blockPos = Util.UnityCellToCube(cellCoord);
+        //         
+        //         
+        //         
+        //         
+        //         //var clickBlock = Map.Instance.BlockPlace[blockPos];
+        //         //var tilePos = Util.CubeToUnityCell(blockPos);
+        //         //var putPos = grid.CellToWorld(tilePos);
+        //
+        //         
+        //         
+        //         //var block = clickBlock;
+        //     }
+        // }
+        
+        if (Input.GetMouseButtonDown(0))
+        {
+            RaycastHit hit;
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+
+            if (Physics.Raycast(ray, out hit))
+            {
+                if (hit.collider != null)
+                {
+                    var a = hit.collider.gameObject.transform.position;
+                    var b = new Vector3Int((int)a.x, (int)a.y, (int)a.z);
+                    var c = allBlocks[b];
+                    
+                    //var d = Blockers[b];
+                    c.Pang();
+                    //d.Pang();
+                }
+            }
+        }
+        
+        
     }
 
     private void FindValidPosition(List<Vector3Int> mapBounds)

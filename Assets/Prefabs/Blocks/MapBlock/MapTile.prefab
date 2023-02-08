@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 6653552941363074704}
   - component: {fileID: 8191214279217033756}
   - component: {fileID: 7040507236686456247}
+  - component: {fileID: 5579108274255867534}
   m_Layer: 0
   m_Name: MapTile
   m_TagString: Untagged
@@ -97,3 +98,34 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!60 &5579108274255867534
+PolygonCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 584802656229996678}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 1.0095239, y: 0.9047619}
+    newSize: {x: 0.99523807, y: 0.9}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Points:
+    m_Paths:
+    - - {x: -0.47481614, y: 0.0013489779}
+      - {x: -0.24477762, y: -0.40699652}
+      - {x: 0.23842782, y: -0.40844792}
+      - {x: 0.4660356, y: -0.0034499764}
+      - {x: 0.23141862, y: 0.41601706}
+      - {x: -0.23618053, y: 0.41601706}

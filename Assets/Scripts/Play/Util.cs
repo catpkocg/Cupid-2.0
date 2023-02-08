@@ -31,6 +31,17 @@ public static class Util
     //     return result;
     // }
     
+    public static bool GetAxisValue(Vector3Int target, Vector3Int current, int line)
+    {
+        return line switch
+        {
+            0 => target.x == current.x,
+            1 => target.y == current.y,
+            2 => target.z == current.z,
+            _ => false
+        };
+    }
+    
     public static Vector3Int UnityCellToCube(Vector3Int cell)
     {
         

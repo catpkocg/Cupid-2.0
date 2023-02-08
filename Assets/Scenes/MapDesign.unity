@@ -966,6 +966,64 @@ Transform:
   m_Father: {fileID: 1818836982}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1220239890
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1220239892}
+  - component: {fileID: 1220239891}
+  m_Layer: 0
+  m_Name: SpawnManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1220239891
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1220239890}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 969ec00c21a194d46ae0d806af6b18ad, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  BackGround: {fileID: 810050800}
+  mapPreset: {fileID: 1818836980}
+  normalBlocks:
+  - {fileID: 7966491647598909453, guid: 918a8f0f5937a1743a47eed9e58c68d5, type: 3}
+  - {fileID: 7966491647598909453, guid: db4356df6a6432c46b7e84253d9f5794, type: 3}
+  - {fileID: 7966491647598909453, guid: f97fe4c9f4776af46943a854afb1dbf3, type: 3}
+  - {fileID: 7966491647598909453, guid: 3c42840bbf1039f40a60f21f0a270e31, type: 3}
+  - {fileID: 7966491647598909453, guid: 61868b72d73ba0e46a9a5f99ce4200fb, type: 3}
+  - {fileID: 7966491647598909453, guid: 5e952200ee50664499eaf3c4fe57d70e, type: 3}
+  - {fileID: 7966491647598909453, guid: f35c34863c0f59d489f7b9328508f31b, type: 3}
+  - {fileID: 7966491647598909453, guid: 9b26e6b50d33b564ba981737096bfaa9, type: 3}
+  blockers:
+  - {fileID: 9175182463109503961, guid: 69ea62bd65ee0944b961751b89d60671, type: 3}
+  - {fileID: 4579845961607652804, guid: 9dc369a8b671fed418a52217bf521911, type: 3}
+--- !u!4 &1220239892
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1220239890}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1818836979
 GameObject:
   m_ObjectHideFlags: 0
@@ -1002,6 +1060,7 @@ MonoBehaviour:
   - {fileID: 714058928}
   - {fileID: 1023960046}
   MapBounds: []
+  spawn: {fileID: 1220239891}
 --- !u!156049354 &1818836981
 Grid:
   m_ObjectHideFlags: 0
