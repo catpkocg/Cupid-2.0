@@ -8,15 +8,10 @@ using Wayway.Engine.Singleton;
 
 public class Map : MonoSingleton<Map>
 {
-    public Tilemap Tilemap;
     public GameConfig GameConfig;
-    public List<Vector3> CanSpawnPlace = new ();
+    public List<Vector3> SpawnPlace = new ();
     public Dictionary<Vector3Int, Block> BlockPlace = new ();
-    public List<Vector3Int> NewBlockSpawnPosList;
     
-    [SerializeField] private Transform backGround;
-    [SerializeField] private List<GameObject> mapList;
-    [SerializeField] private Camera cam;
     [SerializeField] private NeighborPos neighborPos;
 
     private List<Block> allBlockForCheckDir = new();
@@ -25,26 +20,6 @@ public class Map : MonoSingleton<Map>
     // protected property
     // private property
     
-
-    public void FindCanPutTile()
-    {
-        for (var n = Tilemap.cellBounds.xMin; n < Tilemap.cellBounds.xMax; n++)
-        {
-            for (var p = Tilemap.cellBounds.yMin; p < Tilemap.cellBounds.yMax; p++)
-            {
-                var localPlace = new Vector3Int(n, p, 0);
-                var place = Tilemap.CellToWorld(localPlace);
-                var putPlace = new Vector3(place.x, place.y, 0);
-
-                if (Tilemap.HasTile(localPlace))
-                {
-                    CanSpawnPlace.Add(putPlace);
-                }
-            }
-        }
-
-        cam.transform.GetComponent<Camera>().orthographicSize = 6f; //tilemap.cellBounds.xMax - tilemap.cellBounds.xMin;
-    }
     
     public void DeleteBlockList(List<Block> sameBlockList)
     {
@@ -120,83 +95,83 @@ public class Map : MonoSingleton<Map>
         //Debug.Log(BlockPlace.Count);
     }
 
-    public List<Block> FindAllNearSameValue(Block block)
-    {
-        var toSearch = new List<Block>();
-        var searched = new List<Block>();
-        var allSameBlocks = new List<Block>();
-        toSearch.Add(block);
-        allSameBlocks.Add(block);
-        var tempCount = 0;
-        while (!toSearch.IsNullOrEmpty())
-        {
-            var currSearchTarget = toSearch[0];
-            var sameBlocks = FindNearSameValue(currSearchTarget);
-            if (!sameBlocks.IsNullOrEmpty())
-            {
-                for (var i = 0; i < sameBlocks.Count; i++)
-                {
-                    var currSameBlock = sameBlocks[i];
-                    
-                    
-                    
-                    if (!searched.Contains(currSameBlock)
-                        && !toSearch.Contains(currSameBlock))
-                    {
-                        allSameBlocks.Add(currSameBlock);
-                        toSearch.Add(currSameBlock);
-                    }
-                }
-            }
-            searched.Add(currSearchTarget);
-            toSearch.Remove(currSearchTarget);
+    // public List<Block> FindAllNearSameValue(Block block)
+    // {
+    //     var toSearch = new List<Block>();
+    //     var searched = new List<Block>();
+    //     var allSameBlocks = new List<Block>();
+    //     toSearch.Add(block);
+    //     allSameBlocks.Add(block);
+    //     var tempCount = 0;
+    //     while (!toSearch.IsNullOrEmpty())
+    //     {
+    //         var currSearchTarget = toSearch[0];
+    //         var sameBlocks = FindNearSameValue(currSearchTarget);
+    //         if (!sameBlocks.IsNullOrEmpty())
+    //         {
+    //             for (var i = 0; i < sameBlocks.Count; i++)
+    //             {
+    //                 var currSameBlock = sameBlocks[i];
+    //                 
+    //                 
+    //                 
+    //                 if (!searched.Contains(currSameBlock)
+    //                     && !toSearch.Contains(currSameBlock))
+    //                 {
+    //                     allSameBlocks.Add(currSameBlock);
+    //                     toSearch.Add(currSameBlock);
+    //                 }
+    //             }
+    //         }
+    //         searched.Add(currSearchTarget);
+    //         toSearch.Remove(currSearchTarget);
+    //
+    //         if(500 < tempCount) break;
+    //         tempCount++;
+    //     }
+    //     return allSameBlocks;
+    // }
 
-            if(500 < tempCount) break;
-            tempCount++;
-        }
-        return allSameBlocks;
-    }
+    // public List<Block> FindNearSameValue(Block block)
+    // {
+    //     List<Block> sameBlockList = new List<Block>();
+    //     for (int i = 0; i < neighborPos.neighbor.Count; i++)
+    //     {
+    //         var neighbor = block.Coord + neighborPos.neighbor[i].neighborPos;
+    //         var tilePos = Util.CubeToUnityCell(neighbor);
+    //         if (Tilemap.HasTile(tilePos) && BlockPlace[neighbor] != null)
+    //         {
+    //             var neiborValue = BlockPlace[neighbor].value;
+    //             
+    //             // 블럭끼리의 값이 같은거 + 나무상자의 value일경우 같은 블럭에 넣어서 삭제할수있도록 한다.
+    //             
+    //             if (neiborValue == block.value)
+    //             {
+    //                 sameBlockList.Add(BlockPlace[neighbor]);
+    //             }
+    //         }
+    //     }
+    //     return sameBlockList;
+    // }
 
-    public List<Block> FindNearSameValue(Block block)
-    {
-        List<Block> sameBlockList = new List<Block>();
-        for (int i = 0; i < neighborPos.neighbor.Count; i++)
-        {
-            var neighbor = block.Coord + neighborPos.neighbor[i].neighborPos;
-            var tilePos = Util.CubeToUnityCell(neighbor);
-            if (Tilemap.HasTile(tilePos) && BlockPlace[neighbor] != null)
-            {
-                var neiborValue = BlockPlace[neighbor].value;
-                
-                // 블럭끼리의 값이 같은거 + 나무상자의 value일경우 같은 블럭에 넣어서 삭제할수있도록 한다.
-                
-                if (neiborValue == block.value)
-                {
-                    sameBlockList.Add(BlockPlace[neighbor]);
-                }
-            }
-        }
-        return sameBlockList;
-    }
-
-    public int CountNullPlace(Vector3Int wantToCheckPos)
-    {
-        var nullCount = 0;
-        var targetPos = wantToCheckPos + new Vector3Int(0, 1, -1);
-        var tilePos = Util.CubeToUnityCell(targetPos);
-        //Debug.Log(targetPos);
-        while (Tilemap.HasTile(tilePos))
-        {
-            //Debug.Log(targetPos);
-            if (BlockPlace[targetPos] == null)
-            {
-                nullCount++;
-            }
-            targetPos += new Vector3Int(0, 1, -1);
-            tilePos = Util.CubeToUnityCell(targetPos);
-        }
-        return nullCount;
-    }
+    // public int CountNullPlace(Vector3Int wantToCheckPos)
+    // {
+    //     var nullCount = 0;
+    //     var targetPos = wantToCheckPos + new Vector3Int(0, 1, -1);
+    //     var tilePos = Util.CubeToUnityCell(targetPos);
+    //     //Debug.Log(targetPos);
+    //     while (Tilemap.HasTile(tilePos))
+    //     {
+    //         //Debug.Log(targetPos);
+    //         if (BlockPlace[targetPos] == null)
+    //         {
+    //             nullCount++;
+    //         }
+    //         targetPos += new Vector3Int(0, 1, -1);
+    //         tilePos = Util.CubeToUnityCell(targetPos);
+    //     }
+    //     return nullCount;
+    // }
     
     public void MakeListForFindDir()
     {

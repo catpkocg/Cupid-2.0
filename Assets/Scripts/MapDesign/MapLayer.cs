@@ -9,5 +9,7 @@ public class MapLayer : MonoBehaviour
 {
     public bool IsBackground = false;
     public int value;
+    public bool IsMovable;
+    public bool CanBeOverLap;
     
 }

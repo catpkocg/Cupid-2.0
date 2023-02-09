@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: GameConfig
   m_EditorClassIdentifier: 
   stageLevel: 14
-  blockNumber: 0
+  blockNumber: 7
   animationSpeed: 0
-  specialBlock1Condition: 0
-  specialBlock2Condition: 0
+  lineClearBlockCondition: 0
+  sameColorClearBlockCondition: 0
   easyType: 0

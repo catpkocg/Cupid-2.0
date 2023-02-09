@@ -134,11 +134,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: acea0cb0ed7e61f47818d4ee97c33e55, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  value: 0
-  specialValue: 0
+  ShapeValue: 0
   dir: []
   foot: {fileID: 0}
+  Coord: {x: 0, y: 0, z: 0}
   score: 1
+  value: 0
 --- !u!212 &7040507236686456247
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -179,7 +180,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: -1191927583, guid: 4d5a3bb1d5669984a852d9488bfa85f8, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0

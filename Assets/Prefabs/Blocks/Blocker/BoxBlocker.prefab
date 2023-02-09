@@ -7,6 +7,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -596173840558064534, guid: 3f629fce939dba748ae634fd9aa8ac2c, type: 3}
+      propertyPath: ShapeValue
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7358689762836298486, guid: 3f629fce939dba748ae634fd9aa8ac2c, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -55,6 +59,10 @@ PrefabInstance:
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: -1317583534, guid: 4d5a3bb1d5669984a852d9488bfa85f8, type: 3}
+    - target: {fileID: 7358689762836298488, guid: 3f629fce939dba748ae634fd9aa8ac2c, type: 3}
+      propertyPath: m_SortingOrder
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7358689762836298489, guid: 3f629fce939dba748ae634fd9aa8ac2c, type: 3}
       propertyPath: m_Name
       value: BoxBlocker

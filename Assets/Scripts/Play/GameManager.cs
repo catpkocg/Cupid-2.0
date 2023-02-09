@@ -10,6 +10,8 @@ public class GameManager : MonoSingleton<GameManager>
     [SerializeField] private Spawn spawn;
     [SerializeField] private Interaction interaction;
     [SerializeField] private TextMeshProUGUI scoreText;
+    [SerializeField] private List<Map> mapList;
+
     public int score;
     
     public States State { get; set; }
@@ -18,7 +20,7 @@ public class GameManager : MonoSingleton<GameManager>
     {
         State = States.ReadyForInteraction;
         score = 0;
-        
+        Instantiate(mapList[0], transform.position, Quaternion.identity);
     }
 
     void Update()
