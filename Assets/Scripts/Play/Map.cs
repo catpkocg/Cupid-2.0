@@ -11,16 +11,22 @@ public class Map : MonoSingleton<Map>
     public GameConfig GameConfig;
     public List<Vector3> SpawnPlace = new ();
     public Dictionary<Vector3Int, Block> BlockPlace = new ();
+
+    [SerializeField] private List<Block> movableBlockData = new();
+    [SerializeField] private List<Block> unmovableBlockData = new();
     
     [SerializeField] private NeighborPos neighborPos;
 
     private List<Block> allBlockForCheckDir = new();
     
     // public property
+    private List<Block> MovableBlockData => movableBlockData;
+    private List<Block> UnmovableBlockData => unmovableBlockData;
+    
     // protected property
     // private property
-    
-    
+
+
     public void DeleteBlockList(List<Block> sameBlockList)
     {
         for (var i = 0; i < sameBlockList.Count; i++)
