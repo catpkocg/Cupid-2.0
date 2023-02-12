@@ -170,7 +170,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   IsBackground: 0
-  value: 71
+  value: 0
   IsMovable: 0
   CanBeOverLap: 0
 --- !u!483693784 &140238846
@@ -948,14 +948,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   BackgroundMap: {fileID: 1934833949}
+  SpawnPlace: {fileID: 140238845}
   MapLayerList:
   - {fileID: 714058928}
   - {fileID: 1023960046}
   movableBlocks: []
   unmovableBlocks: []
-  setStageNumber: 2
-  spawn: {fileID: 0}
-  mapContainer: {fileID: 0}
 --- !u!156049354 &1818836981
 Grid:
   m_ObjectHideFlags: 0
@@ -999,21 +997,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 969ec00c21a194d46ae0d806af6b18ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mapTemplate: {fileID: 4547788687210984903, guid: 6ec3db7096651074e907f81336b81836, type: 3}
+  mapDesignTemplate: {fileID: 4547788687210984903, guid: 6ec3db7096651074e907f81336b81836, type: 3}
   mapTilePrefab: {fileID: 584802656229996678, guid: 1a14dd943870e1b4bade1f4440db81c6, type: 3}
-  normalBlockPrefabList:
-  - {fileID: 7966491647598909453, guid: 918a8f0f5937a1743a47eed9e58c68d5, type: 3}
-  - {fileID: 7966491647598909453, guid: db4356df6a6432c46b7e84253d9f5794, type: 3}
-  - {fileID: 7966491647598909453, guid: f97fe4c9f4776af46943a854afb1dbf3, type: 3}
-  - {fileID: 7966491647598909453, guid: 3c42840bbf1039f40a60f21f0a270e31, type: 3}
-  - {fileID: 7966491647598909453, guid: 61868b72d73ba0e46a9a5f99ce4200fb, type: 3}
-  - {fileID: 7966491647598909453, guid: 5e952200ee50664499eaf3c4fe57d70e, type: 3}
-  - {fileID: 7966491647598909453, guid: f35c34863c0f59d489f7b9328508f31b, type: 3}
-  - {fileID: 7966491647598909453, guid: 9b26e6b50d33b564ba981737096bfaa9, type: 3}
   blockerPrefabList:
   - {fileID: 9175182463109503961, guid: 69ea62bd65ee0944b961751b89d60671, type: 3}
   - {fileID: 4579845961607652804, guid: 9dc369a8b671fed418a52217bf521911, type: 3}
-  gameConfig: {fileID: 11400000, guid: 8f3c5492dc7270e4bb4e5b1d351b3425, type: 2}
+  setStageNumber: 2
 --- !u!1 &1934833948
 GameObject:
   m_ObjectHideFlags: 0

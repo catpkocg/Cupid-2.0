@@ -8,6 +8,7 @@ using UnityEngine.Tilemaps;
 public class MapPreset : MonoBehaviour
 {
     public MapLayer BackgroundMap;
+    public MapLayer SpawnPlace;
     public List<MapLayer> MapLayerList;
 
     public List<Block> movableBlocks;
@@ -15,9 +16,6 @@ public class MapPreset : MonoBehaviour
 
     private Dictionary<Vector3Int, List<Block>> BlockPlace = new ();
     
-    [SerializeField] private int setStageNumber;
-    [SerializeField] private MapGenerator spawn;
-    [SerializeField] private GameObject mapContainer;
     
     private void ChangeToDictionary(List<Block> blocks)
     {

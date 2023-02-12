@@ -11,9 +11,8 @@ public class GameManager : MonoSingleton<GameManager>
     [SerializeField] private Interaction interaction;
     [SerializeField] private TextMeshProUGUI scoreText;
     [SerializeField] private List<Map> mapList;
-
-    public int score;
     
+    public int score;
     public States State { get; set; }
     // Start is called before the first frame update
     void Start()

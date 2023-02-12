@@ -1,47 +1,38 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using UnityEngine.Tilemaps;
-using Wayway.Engine;
 using Wayway.Engine.Singleton;
 
 public class Map : MonoSingleton<Map>
 {
     public GameConfig GameConfig;
     public List<Vector3> SpawnPlace = new ();
-    public Dictionary<Vector3Int, Block> BlockPlace = new ();
-
-    [SerializeField] private List<Block> movableBlockData = new();
-    [SerializeField] private List<Block> unmovableBlockData = new();
+    public Dictionary<Vector3Int, List<Block>> BlockOnMapTile = new ();
     
     [SerializeField] private NeighborPos neighborPos;
 
     private List<Block> allBlockForCheckDir = new();
     
     // public property
-    private List<Block> MovableBlockData => movableBlockData;
-    private List<Block> UnmovableBlockData => unmovableBlockData;
-    
     // protected property
     // private property
 
 
-    public void DeleteBlockList(List<Block> sameBlockList)
-    {
-        for (var i = 0; i < sameBlockList.Count; i++)
-        {
-            DeleteBlock(sameBlockList[i].Coord);
-        }
-    }
-    
-    public void DeleteLineBlock(Vector3Int clickPos, int line)
-    {
-        BlockPlace.Keys.ForEach(pos =>
-        {
-            if (Util.GetAxisValue(pos, clickPos, line)) DeleteBlock(BlockPlace[pos].Coord);
-        });
-    }
+    // public void DeleteBlockList(List<Block> sameBlockList)
+    // {
+    //     for (var i = 0; i < sameBlockList.Count; i++)
+    //     {
+    //         DeleteBlock(sameBlockList[i].Coord);
+    //     }
+    // }
+    //
+    // public void DeleteLineBlock(Vector3Int clickPos, int line)
+    // {
+    //     BlockPlace.Keys.ForEach(pos =>
+    //     {
+    //         if (Util.GetAxisValue(pos, clickPos, line)) DeleteBlock(BlockPlace[pos].Coord);
+    //     });
+    // }
 
     
 
@@ -79,27 +70,27 @@ public class Map : MonoSingleton<Map>
     //          
     // }
 
-    public void DeleteSameColor(Vector3Int clickPos, int value)
-    {
-        List<Block> mustDeleteBlocks = new List<Block>();
-        BlockPlace.Keys.ForEach(keys =>
-        {
-            if (BlockPlace[keys].value == value)
-            {
-                mustDeleteBlocks.Add(BlockPlace[keys]);
-            }
-                
-        });
-        DeleteBlockList(mustDeleteBlocks);
-        DeleteBlock(clickPos);
-    }
-
-    public void DeleteBlock(Vector3Int clickPos)
-    {
-        Destroy(BlockPlace[clickPos].gameObject);
-        BlockPlace[clickPos] = null;
-        //Debug.Log(BlockPlace.Count);
-    }
+    // public void DeleteSameColor(Vector3Int clickPos, int value)
+    // {
+    //     List<Block> mustDeleteBlocks = new List<Block>();
+    //     BlockPlace.Keys.ForEach(keys =>
+    //     {
+    //         if (BlockPlace[keys].value == value)
+    //         {
+    //             mustDeleteBlocks.Add(BlockPlace[keys]);
+    //         }
+    //             
+    //     });
+    //     DeleteBlockList(mustDeleteBlocks);
+    //     DeleteBlock(clickPos);
+    // }
+    //
+    // public void DeleteBlock(Vector3Int clickPos)
+    // {
+    //     Destroy(BlockPlace[clickPos].gameObject);
+    //     BlockPlace[clickPos] = null;
+    //     //Debug.Log(BlockPlace.Count);
+    // }
 
     // public List<Block> FindAllNearSameValue(Block block)
     // {
@@ -179,16 +170,16 @@ public class Map : MonoSingleton<Map>
     //     return nullCount;
     // }
     
-    public void MakeListForFindDir()
-    {
-        allBlockForCheckDir= new List<Block>();
-        //var grid = Map.Instance.tilemap.GetComponentInParent<Grid>();
-        
-        BlockPlace.Values.ForEach(value =>
-        {
-            allBlockForCheckDir.Add(value);
-        });
-    }
+    // public void MakeListForFindDir()
+    // {
+    //     allBlockForCheckDir= new List<Block>();
+    //     //var grid = Map.Instance.tilemap.GetComponentInParent<Grid>();
+    //     
+    //     BlockPlace.Values.ForEach(value =>
+    //     {
+    //         allBlockForCheckDir.Add(value);
+    //     });
+    // }
 
     // public void DrawDirectionOnBlock()
     // {
