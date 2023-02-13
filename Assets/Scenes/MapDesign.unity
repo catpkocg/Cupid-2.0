@@ -998,11 +998,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mapDesignTemplate: {fileID: 4547788687210984903, guid: 6ec3db7096651074e907f81336b81836, type: 3}
-  mapTilePrefab: {fileID: 584802656229996678, guid: 1a14dd943870e1b4bade1f4440db81c6, type: 3}
+  mapTilePrefab: {fileID: 973169118494938177, guid: b2c90a1e8cf9aee4a8a9fdaa7a2cb378, type: 3}
   blockerPrefabList:
   - {fileID: 9175182463109503961, guid: 69ea62bd65ee0944b961751b89d60671, type: 3}
   - {fileID: 4579845961607652804, guid: 9dc369a8b671fed418a52217bf521911, type: 3}
-  setStageNumber: 2
+  setStageNumber: 5
 --- !u!1 &1934833948
 GameObject:
   m_ObjectHideFlags: 0

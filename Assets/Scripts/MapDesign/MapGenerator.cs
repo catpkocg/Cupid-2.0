@@ -1,9 +1,11 @@
+using System;
 using System.Collections.Generic;
 using Sirenix.OdinInspector;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.Serialization;
 using UnityEngine.Tilemaps;
+using Wayway.Engine;
 
 public class MapGenerator : MonoBehaviour
 {
@@ -19,18 +21,20 @@ public class MapGenerator : MonoBehaviour
     public void GenerateMap()
     {
         // 인스턴스 한다
-        var temPlate = Instantiate(mapDesignTemplate, new Vector3(0, 0, 0), Quaternion.identity);
+        var template = Instantiate(mapDesignTemplate, new Vector3(0, 0, 0), Quaternion.identity);
         // 맵의 범위를 설정하고 배경오브젝트를 깐다.
-        GenerateFromPreset(transform.GetComponent<MapPreset>(), temPlate.transform);
+        GenerateFromPreset(transform.GetComponent<MapPreset>(), template);
         // 저장
-        PrefabUtility.SaveAsPrefabAsset(temPlate.gameObject, "Assets/Prefabs/Maps/Map"+setStageNumber+".prefab");
+        PrefabUtility.SaveAsPrefabAsset(template.gameObject, "Assets/Prefabs/Maps/Map"+setStageNumber+".prefab");
         //삭제
-        DestroyImmediate(temPlate.gameObject);
+        DestroyImmediate(template.gameObject);
     }
-    public void GenerateFromPreset(MapPreset mapPreset, Transform temPlate)
+    
+    public void GenerateFromPreset(MapPreset mapPreset, Map template)
     {
         var backGroundTileMap = mapPreset.BackgroundMap.GetComponent<Tilemap>();
-        SettingMapTile(backGroundTileMap, mapTilePrefab, temPlate);
+        
+        SetMapTile(backGroundTileMap, mapTilePrefab, template.transform);
         
         var otherTileMapList = mapPreset.MapLayerList;
         if (otherTileMapList.Count != 0)
@@ -38,13 +42,16 @@ public class MapGenerator : MonoBehaviour
             for (var i = 0; i < otherTileMapList.Count; i++)
             {
                 var tileMap = otherTileMapList[i].GetComponent<Tilemap>();
-                SettingObjectOnTile(tileMap, blockerPrefabList[i], temPlate);
+                // SettingObjectOnTile(tileMap, blockerPrefabList[i], template);
+                SetMapTile(tileMap, blockerPrefabList[i].gameObject, template.transform);
             }
         }
         var spawnPlace = mapPreset.SpawnPlace.GetComponent<Tilemap>();
-        SettingSpawnPlace(spawnPlace);
+        SettingSpawnPlace(spawnPlace, template);
     }
-    private void SettingMapTile(Tilemap tilemap, GameObject mapTile, Transform temPlate)
+    
+    
+    private void SetMapTile(Tilemap tilemap, GameObject targetObject, Transform temPlate)
     {
         for (var i = tilemap.cellBounds.xMin; i < tilemap.cellBounds.xMax; i++)
         {
@@ -58,11 +65,41 @@ public class MapGenerator : MonoBehaviour
                 
                 if (tilemap.HasTile(currTileMapCoord))
                 {
-                    Instantiate(mapTile, currPos, Quaternion.identity, temPlate.transform);
+                    var instance = PrefabUtility.InstantiatePrefab(targetObject, temPlate.transform) as GameObject;
+                    if (instance == null)
+                    {
+                        Debug.LogWarning("Casting to GameObject failed. Tile instance is null");
+                    }
+                    else
+                    {
+                        instance.transform.position = currPos;
+                    }
                 }
             }
         }
     }
+
+
+    private void SettingMapTile(Tilemap tilemap, Transform temPlate)
+    {
+        for (var i = tilemap.cellBounds.xMin; i < tilemap.cellBounds.xMax; i++)
+        {
+            for (var j = tilemap.cellBounds.yMin; j < tilemap.cellBounds.yMax; j++)
+            {
+                var currTileMapCoord = new Vector3Int(i, j, 0);
+                var currCoord = Util.UnityCellToCube(currTileMapCoord);
+                
+                var currPos = tilemap.CellToWorld(currTileMapCoord);
+                currPos = new Vector3(currPos.x, currPos.y, 0);
+                
+                if (tilemap.HasTile(currTileMapCoord))
+                {
+                    Instantiate(mapTilePrefab, currPos, Quaternion.identity, temPlate.transform);
+                }
+            }
+        }
+    }
+    
     private void SettingObjectOnTile(Tilemap tilemap, Block blocks, Transform temPlate)
     {
         for (var i = tilemap.cellBounds.xMin; i < tilemap.cellBounds.xMax; i++)
@@ -84,19 +121,21 @@ public class MapGenerator : MonoBehaviour
             }
         }
     }
-    private void SettingSpawnPlace(Tilemap tilemap)
+    
+    private void SettingSpawnPlace(Tilemap tilemap, Map mapTileInstance)
     {
         for (var i = tilemap.cellBounds.xMin; i < tilemap.cellBounds.xMax; i++)
         {
             for (var j = tilemap.cellBounds.yMin; j < tilemap.cellBounds.yMax; j++)
             {
                 var currTileMapCoord = new Vector3Int(i, j, 0);
-                var currCoord = Util.UnityCellToCube(currTileMapCoord);
                 var currPos = tilemap.CellToWorld(currTileMapCoord);
+                
+                currPos = new Vector3(currPos.x, currPos.y, 0);
                 
                 if (tilemap.HasTile(currTileMapCoord))
                 {
-                    mapDesignTemplate.SpawnPlace.Add(currPos);
+                    mapTileInstance.SpawnPlace.Add(currPos);
                 }
             }
         }

@@ -1,4 +1,4 @@
-using System.Collections;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -12,9 +12,13 @@ public abstract class Block : MonoBehaviour
     public int score;
     
     [SerializeField] public int value;
-    
-    
-    public abstract void Pang();
+
+    protected Action OnPang;
+
+    public void Pang()
+    {
+        OnPang?.Invoke();
+    }
     //이동 구현
     
     

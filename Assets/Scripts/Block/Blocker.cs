@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,14 +8,13 @@ public class Blocker : Block
     public Vector3Int CubeCoord;
     public Vector3 BlockerPos;
     
-
     //Move
 
 
     //Pang
 
-
-    public override void Pang()
+    //
+    public void Pang()
     {
         Debug.Log("blocker pang");
     }

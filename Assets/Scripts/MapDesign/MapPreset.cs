@@ -16,37 +16,36 @@ public class MapPreset : MonoBehaviour
 
     private Dictionary<Vector3Int, List<Block>> BlockPlace = new ();
     
-    
-    private void ChangeToDictionary(List<Block> blocks)
-    {
-        BlockPlace = new Dictionary<Vector3Int, List<Block>>();
-        for (var i = 0; i < blocks.Count; i++)
-        {
-            BlockPlace.Add(blocks[i].Coord, CreateBlockList(blocks[i].Coord));
-        }
-    }
-
-    private List<Block> CreateBlockList(Vector3Int coord)
-    {
-        var samePosBlocks = new List<Block>();
-        foreach (var t in movableBlocks)
-        {
-            var movableBlockCoord = t.Coord;
-            if (movableBlockCoord == coord)
-            {
-                samePosBlocks.Add(t);
-            }
-        }
-        foreach (var t in unmovableBlocks)
-        {
-            var unmovableBlockCoord = t.Coord;
-            if (unmovableBlockCoord == coord)
-            {
-                samePosBlocks.Add(t);
-            }
-        }
-        return samePosBlocks;
-    }
+    // private void ChangeToDictionary(List<Block> blocks)
+    // {
+    //     BlockPlace = new Dictionary<Vector3Int, List<Block>>();
+    //     for (var i = 0; i < blocks.Count; i++)
+    //     {
+    //         BlockPlace.Add(blocks[i].Coord, CreateBlockList(blocks[i].Coord));
+    //     }
+    // }
+    //
+    // private List<Block> CreateBlockList(Vector3Int coord)
+    // {
+    //     var samePosBlocks = new List<Block>();
+    //     foreach (var t in movableBlocks)
+    //     {
+    //         var movableBlockCoord = t.Coord;
+    //         if (movableBlockCoord == coord)
+    //         {
+    //             samePosBlocks.Add(t);
+    //         }
+    //     }
+    //     foreach (var t in unmovableBlocks)
+    //     {
+    //         var unmovableBlockCoord = t.Coord;
+    //         if (unmovableBlockCoord == coord)
+    //         {
+    //             samePosBlocks.Add(t);
+    //         }
+    //     }
+    //     return samePosBlocks;
+    // }
     
     // private void _ChangeToDictionary(List<Block> blocks)
     // {

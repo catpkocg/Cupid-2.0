@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class SpecialBlock : Block
 {
-    public override void Pang()
-    {
-        throw new System.NotImplementedException();
-    }
+    // public override void Pang()
+    // {
+    //     throw new System.NotImplementedException();
+    // }
 }
