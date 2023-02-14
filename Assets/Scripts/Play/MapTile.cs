@@ -5,6 +5,6 @@ using UnityEngine;
 public class MapTile : MonoBehaviour
 {
     public Vector3Int MapTileCoord;
-    public List<Block> BlocksOnMapTile;
-    
+    public Block MovableBlockOnMapTile;
+    public Block UnMovalbleBlockOnMapTile;
 }

@@ -11,7 +11,7 @@ public class MapGenerator : MonoBehaviour
 {
     [TitleGroup("Prefabs")]
     [SerializeField] private Map mapDesignTemplate;
-    [SerializeField] private GameObject mapTilePrefab;
+    [SerializeField] private MapTile mapTilePrefab;
     [SerializeField] private List<Block> blockerPrefabList;
     
     [TitleGroup("StageNumber")]
@@ -34,7 +34,7 @@ public class MapGenerator : MonoBehaviour
     {
         var backGroundTileMap = mapPreset.BackgroundMap.GetComponent<Tilemap>();
         
-        SetMapTile(backGroundTileMap, mapTilePrefab, template.transform);
+        var mapTemplate = SetMapTile(backGroundTileMap, mapTilePrefab, template.transform, template);
         
         var otherTileMapList = mapPreset.MapLayerList;
         if (otherTileMapList.Count != 0)
@@ -43,7 +43,7 @@ public class MapGenerator : MonoBehaviour
             {
                 var tileMap = otherTileMapList[i].GetComponent<Tilemap>();
                 // SettingObjectOnTile(tileMap, blockerPrefabList[i], template);
-                SetMapTile(tileMap, blockerPrefabList[i].gameObject, template.transform);
+                SetOtherTile(tileMap, blockerPrefabList[i], template.transform, mapTemplate);
             }
         }
         var spawnPlace = mapPreset.SpawnPlace.GetComponent<Tilemap>();
@@ -51,7 +51,7 @@ public class MapGenerator : MonoBehaviour
     }
     
     
-    private void SetMapTile(Tilemap tilemap, GameObject targetObject, Transform temPlate)
+    private Map SetMapTile(Tilemap tilemap, MapTile targetObject, Transform temPlate, Map template)
     {
         for (var i = tilemap.cellBounds.xMin; i < tilemap.cellBounds.xMax; i++)
         {
@@ -65,7 +65,7 @@ public class MapGenerator : MonoBehaviour
                 
                 if (tilemap.HasTile(currTileMapCoord))
                 {
-                    var instance = PrefabUtility.InstantiatePrefab(targetObject, temPlate.transform) as GameObject;
+                    var instance = PrefabUtility.InstantiatePrefab(targetObject, temPlate.transform) as MapTile;
                     if (instance == null)
                     {
                         Debug.LogWarning("Casting to GameObject failed. Tile instance is null");
@@ -73,34 +73,17 @@ public class MapGenerator : MonoBehaviour
                     else
                     {
                         instance.transform.position = currPos;
+                        instance.MapTileCoord = currCoord;
+                        template.MapTiles.Add(currCoord, instance);
                     }
                 }
             }
         }
+
+        return template;
     }
 
-
-    private void SettingMapTile(Tilemap tilemap, Transform temPlate)
-    {
-        for (var i = tilemap.cellBounds.xMin; i < tilemap.cellBounds.xMax; i++)
-        {
-            for (var j = tilemap.cellBounds.yMin; j < tilemap.cellBounds.yMax; j++)
-            {
-                var currTileMapCoord = new Vector3Int(i, j, 0);
-                var currCoord = Util.UnityCellToCube(currTileMapCoord);
-                
-                var currPos = tilemap.CellToWorld(currTileMapCoord);
-                currPos = new Vector3(currPos.x, currPos.y, 0);
-                
-                if (tilemap.HasTile(currTileMapCoord))
-                {
-                    Instantiate(mapTilePrefab, currPos, Quaternion.identity, temPlate.transform);
-                }
-            }
-        }
-    }
-    
-    private void SettingObjectOnTile(Tilemap tilemap, Block blocks, Transform temPlate)
+    private void SetOtherTile(Tilemap tilemap, Block blocks, Transform temPlate, Map template)
     {
         for (var i = tilemap.cellBounds.xMin; i < tilemap.cellBounds.xMax; i++)
         {
@@ -117,6 +100,25 @@ public class MapGenerator : MonoBehaviour
                 if (tilemap.HasTile(currTileMapCoord))
                 {
                     Instantiate(blocks, currPos, Quaternion.identity, temPlate.transform);
+                    
+                    var instance = PrefabUtility.InstantiatePrefab(blocks, temPlate.transform) as Block;
+                    if (instance == null)
+                    {
+                        Debug.LogWarning("Casting to GameObject failed. Tile instance is null");
+                    }
+                    else
+                    {
+                        instance.transform.position = currPos;
+                        if (instance.IsMovable)
+                        {
+                            template.MapTiles[currCoord].MovableBlockOnMapTile = instance;
+                        }
+                        else
+                        {
+                            template.MapTiles[currCoord].UnMovalbleBlockOnMapTile = instance;
+                        }
+                        
+                    }
                 }
             }
         }

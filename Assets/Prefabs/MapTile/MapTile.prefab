@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6653552941363074704}
-  - component: {fileID: 8191214279217033756}
+  - component: {fileID: 5806762878841095539}
   - component: {fileID: 7040507236686456247}
   - component: {fileID: 5579108274255867534}
   m_Layer: 0
@@ -34,7 +34,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8191214279217033756
+--- !u!114 &5806762878841095539
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -43,9 +43,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 584802656229996678}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a08cd1abeedda5c44ac753fee53ef586, type: 3}
+  m_Script: {fileID: 11500000, guid: 9ec2c1a53afd3cf499f09edddde59e61, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  MapTileCoord: {x: 0, y: 0, z: 0}
+  MovableBlockOnMapTile: {fileID: 0}
+  UnMovalbleBlockOnMapTile: {fileID: 0}
 --- !u!212 &7040507236686456247
 SpriteRenderer:
   m_ObjectHideFlags: 0

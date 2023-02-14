@@ -10,11 +10,6 @@ public class MapPreset : MonoBehaviour
     public MapLayer BackgroundMap;
     public MapLayer SpawnPlace;
     public List<MapLayer> MapLayerList;
-
-    public List<Block> movableBlocks;
-    public List<Block> unmovableBlocks;
-
-    private Dictionary<Vector3Int, List<Block>> BlockPlace = new ();
     
     // private void ChangeToDictionary(List<Block> blocks)
     // {
@@ -59,9 +54,6 @@ public class MapPreset : MonoBehaviour
     //     }
     // }
 }
-
-
-
 
 
 // c# 이벤트, 유니티 이벤트 

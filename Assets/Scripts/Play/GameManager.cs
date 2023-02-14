@@ -67,8 +67,6 @@ public class GameManager : MonoSingleton<GameManager>
         State = stateType;
     }
     
-    
-    
 }
 public enum States
 {

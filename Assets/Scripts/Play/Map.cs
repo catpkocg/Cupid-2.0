@@ -7,8 +7,11 @@ public class Map : MonoSingleton<Map>
 {
     public GameConfig GameConfig;
     public List<Vector3> SpawnPlace = new ();
-    public Dictionary<Vector3Int, List<Block>> BlockOnMapTile = new ();
-    
+    public Dictionary<Vector3Int, MapTile> MapTiles = new ();
+    public List<Block> MovableBlocks = new();
+    public List<Block> UnMovableBlocks = new();
+
+
     [SerializeField] private NeighborPos neighborPos;
 
     private List<Block> allBlockForCheckDir = new();
