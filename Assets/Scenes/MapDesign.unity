@@ -171,7 +171,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   IsBackground: 0
   value: 0
-  IsMovable: 0
   CanBeOverLap: 0
 --- !u!483693784 &140238846
 TilemapRenderer:
@@ -391,7 +390,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   IsBackground: 0
   value: 61
-  IsMovable: 1
   CanBeOverLap: 0
 --- !u!483693784 &714058929
 TilemapRenderer:
@@ -724,7 +722,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   IsBackground: 0
   value: 71
-  IsMovable: 0
   CanBeOverLap: 0
 --- !u!483693784 &1023960047
 TilemapRenderer:
@@ -952,8 +949,6 @@ MonoBehaviour:
   MapLayerList:
   - {fileID: 714058928}
   - {fileID: 1023960046}
-  movableBlocks: []
-  unmovableBlocks: []
 --- !u!156049354 &1818836981
 Grid:
   m_ObjectHideFlags: 0
@@ -998,7 +993,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mapDesignTemplate: {fileID: 4547788687210984903, guid: 6ec3db7096651074e907f81336b81836, type: 3}
-  mapTilePrefab: {fileID: 973169118494938177, guid: b2c90a1e8cf9aee4a8a9fdaa7a2cb378, type: 3}
+  mapTilePrefab: {fileID: 5806762878841095539, guid: 1a14dd943870e1b4bade1f4440db81c6, type: 3}
   blockerPrefabList:
   - {fileID: 9175182463109503961, guid: 69ea62bd65ee0944b961751b89d60671, type: 3}
   - {fileID: 4579845961607652804, guid: 9dc369a8b671fed418a52217bf521911, type: 3}
@@ -1036,7 +1031,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   IsBackground: 1
   value: 0
-  IsMovable: 0
   CanBeOverLap: 0
 --- !u!483693784 &1934833950
 TilemapRenderer:

@@ -1,22 +1,49 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SocialPlatforms;
 using Wayway.Engine;
+using Random = UnityEngine.Random;
 
 public class Spawn : MonoBehaviour
 {
     public int moveCounter;
     
     [SerializeField] private GameConfig gameConfig;
-    [SerializeField] private Transform blockBase;
+    [SerializeField] private Transform blockContainer;
     [SerializeField] private List<Block> normalBlocks;
-    [SerializeField] private List<Blocker> Blockers;
     [SerializeField] private List<SpecialBlock> lineClearBlocks;
     [SerializeField] private List<SpecialBlock> sameColorClearBlocks;
     
-    
+    // 시작하면 맵에 있는 정보를 통해, 이동할수있는 블럭이 없는곳에 블럭생성
+
+    private void Start()
+    {
+        
+    }
+
+
+    public void SpawnBlockOnTile(Map map)
+    {
+        Debug.Log("ㅆ씨발");
+        var mapTiles = map.MapTiles;
+        mapTiles.Keys.ForEach(mapTilePos =>
+        {
+            Debug.Log("이거 실행ㅇㄹㅇㄴ됨?");
+            if (mapTiles[mapTilePos].MovableBlockOnMapTile == null)
+            {
+                Debug.Log("이거 실행됨?");
+                var normalBlock =
+                    Instantiate(normalBlocks[Random.Range(0, map.GameConfig.BlockNumber)],
+                        mapTiles[mapTilePos].transform.position, Quaternion.identity);
+                mapTiles[mapTilePos].MovableBlockOnMapTile = normalBlock;
+            }
+        });
+        
+    }
     
     //아이스 블럭의 value 는 66으로 한다.
     //박스 블럭의 value 는 77로 한다.
@@ -160,23 +187,6 @@ public class Spawn : MonoBehaviour
     //     }
     // }
     //
-    // private void SpawnBlockOnTile()
-    // {
-    //     
-    //     var grid = Map.Instance.Tilemap.GetComponentInParent<Grid>();
-    //     
-    //     for (int i = 0; i < Map.Instance.CanSpawnPlace.Count; i++)
-    //     {
-    //         var cellCoord = grid.WorldToCell(Map.Instance.CanSpawnPlace[i]);
-    //         var cubeCoord = Util.UnityCellToCube(cellCoord);
-    //         var random = Random.Range(0, Map.Instance.GameConfig.BlockNumber);
-    //         var block = Instantiate(allKindsOfBlock[random], Map.Instance.CanSpawnPlace[i], Quaternion.identity);
-    //         block.transform.SetParent(blockBase);
-    //         
-    //         block.GetComponentInChildren<TextMeshPro>().text = cubeCoord.ToString();
-    //         block.Coord = cubeCoord;
-    //         
-    //         Map.Instance.BlockPlace.Add(cubeCoord,block);
-    //     }
-    // }
+    
+    
 }

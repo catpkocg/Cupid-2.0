@@ -152,7 +152,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &70498445
 GameObject:
@@ -220,7 +220,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &70882870
 GameObject:
@@ -320,7 +320,7 @@ RectTransform:
   - {fileID: 351074964}
   - {fileID: 1170366708}
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -805,7 +805,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &324243770
 MonoBehaviour:
@@ -974,53 +974,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 385687897}
   m_CullTransparentMesh: 1
---- !u!1 &641874279
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 641874281}
-  - component: {fileID: 641874280}
-  m_Layer: 0
-  m_Name: MapManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &641874280
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 641874279}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b5c0fc8f9d7fe1843ac1f564eab7fadb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  GameConfig: {fileID: 0}
-  SpawnPlace: []
-  neighborPos: {fileID: 11400000, guid: 5363a2dc384001c4b9d4c514e2e37576, type: 2}
---- !u!4 &641874281
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 641874279}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0.5}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 3
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1170366707
 GameObject:
   m_ObjectHideFlags: 0
@@ -1146,7 +1099,7 @@ MonoBehaviour:
   interaction: {fileID: 324243770}
   scoreText: {fileID: 0}
   mapList:
-  - {fileID: 557010439, guid: 58f5c2301d9169f448827b0ac904ac14, type: 3}
+  - {fileID: 7628116602195684731, guid: a21dd93744698514da50fbc2dba58e11, type: 3}
   score: 0
 --- !u!1 &1497691531
 GameObject:
@@ -1737,7 +1690,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1747731045
 MonoBehaviour:
@@ -1753,7 +1706,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveCounter: 0
   gameConfig: {fileID: 11400000, guid: 8f3c5492dc7270e4bb4e5b1d351b3425, type: 2}
-  blockBase: {fileID: 62153275}
+  blockContainer: {fileID: 62153275}
   normalBlocks:
   - {fileID: 7966491647598909453, guid: 918a8f0f5937a1743a47eed9e58c68d5, type: 3}
   - {fileID: 7966491647598909453, guid: db4356df6a6432c46b7e84253d9f5794, type: 3}
@@ -1763,9 +1716,6 @@ MonoBehaviour:
   - {fileID: 7966491647598909453, guid: 5e952200ee50664499eaf3c4fe57d70e, type: 3}
   - {fileID: 7966491647598909453, guid: f35c34863c0f59d489f7b9328508f31b, type: 3}
   - {fileID: 7966491647598909453, guid: 9b26e6b50d33b564ba981737096bfaa9, type: 3}
-  Blockers:
-  - {fileID: 9175182463109503961, guid: 69ea62bd65ee0944b961751b89d60671, type: 3}
-  - {fileID: 4579845961607652804, guid: 9dc369a8b671fed418a52217bf521911, type: 3}
   lineClearBlocks:
   - {fileID: 2758528030593267918, guid: ed36f408246e0224e9aad5d121d03f6d, type: 3}
   - {fileID: 6587972973151826024, guid: 321dc2622e6d54f46b0453981888d799, type: 3}

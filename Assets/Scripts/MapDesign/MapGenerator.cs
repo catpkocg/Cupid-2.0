@@ -33,7 +33,6 @@ public class MapGenerator : MonoBehaviour
     public void GenerateFromPreset(MapPreset mapPreset, Map template)
     {
         var backGroundTileMap = mapPreset.BackgroundMap.GetComponent<Tilemap>();
-        
         var mapTemplate = SetMapTile(backGroundTileMap, mapTilePrefab, template.transform, template);
         
         var otherTileMapList = mapPreset.MapLayerList;
@@ -49,8 +48,7 @@ public class MapGenerator : MonoBehaviour
         var spawnPlace = mapPreset.SpawnPlace.GetComponent<Tilemap>();
         SettingSpawnPlace(spawnPlace, template);
     }
-    
-    
+
     private Map SetMapTile(Tilemap tilemap, MapTile targetObject, Transform temPlate, Map template)
     {
         for (var i = tilemap.cellBounds.xMin; i < tilemap.cellBounds.xMax; i++)
@@ -79,7 +77,6 @@ public class MapGenerator : MonoBehaviour
                 }
             }
         }
-
         return template;
     }
 
@@ -117,7 +114,6 @@ public class MapGenerator : MonoBehaviour
                         {
                             template.MapTiles[currCoord].UnMovalbleBlockOnMapTile = instance;
                         }
-                        
                     }
                 }
             }
@@ -142,7 +138,4 @@ public class MapGenerator : MonoBehaviour
             }
         }
     }
-    
-    
-    
 }

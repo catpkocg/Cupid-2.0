@@ -19,17 +19,16 @@ public class GameManager : MonoSingleton<GameManager>
     {
         State = States.ReadyForInteraction;
         score = 0;
-        Instantiate(mapList[0], transform.position, Quaternion.identity);
+        var map = Instantiate(mapList[0], transform.position, Quaternion.identity);
+        spawn.SpawnBlockOnTile(map);
     }
 
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            
-            //Map.Instance.DeleteAllDraw();
-            //Map.Instance.DrawDirectionOnBlock();
-            Debug.Log("실행중");
+            var a = mapList[0].MapTiles.Count;
+            Debug.Log(a);
         }
 
         // switch (State)
