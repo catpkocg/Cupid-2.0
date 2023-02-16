@@ -15,7 +15,7 @@ public class NormalBlock : Block
         OnPang -= Pang;
     }
 
-    public void Pang()
+    private void Pang()
     {
         Debug.Log("일반 블럭");
     }

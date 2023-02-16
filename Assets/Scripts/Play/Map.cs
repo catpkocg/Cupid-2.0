@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -7,15 +8,22 @@ public class Map : MonoSingleton<Map>
 {
     public GameConfig GameConfig;
     public List<Vector3> SpawnPlace = new ();
+    public List<Vector3Int> MapTileKey = new List<Vector3Int>();
+    public List<MapTile> MapTileValue = new List<MapTile>();
     public Dictionary<Vector3Int, MapTile> MapTiles = new ();
     public List<Block> MovableBlocks = new();
     public List<Block> UnMovableBlocks = new();
-
-
+    
     [SerializeField] private NeighborPos neighborPos;
 
     private List<Block> allBlockForCheckDir = new();
-    
+
+
+    private void Start()
+    {
+        
+    }
+
     // public property
     // protected property
     // private property

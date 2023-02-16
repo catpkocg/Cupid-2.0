@@ -997,6 +997,7 @@ MonoBehaviour:
   blockerPrefabList:
   - {fileID: 9175182463109503961, guid: 69ea62bd65ee0944b961751b89d60671, type: 3}
   - {fileID: 4579845961607652804, guid: 9dc369a8b671fed418a52217bf521911, type: 3}
+  testMap: {fileID: 4346781749286540088, guid: a21dd93744698514da50fbc2dba58e11, type: 3}
   setStageNumber: 5
 --- !u!1 &1934833948
 GameObject:

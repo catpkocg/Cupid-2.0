@@ -7,17 +7,40 @@ using UnityEngine.Serialization;
 using UnityEngine.Tilemaps;
 using Wayway.Engine;
 
+
+
 public class MapGenerator : MonoBehaviour
 {
     [TitleGroup("Prefabs")]
     [SerializeField] private Map mapDesignTemplate;
     [SerializeField] private MapTile mapTilePrefab;
     [SerializeField] private List<Block> blockerPrefabList;
+
+    [SerializeField] private Map testMap;
     
     [TitleGroup("StageNumber")]
     [SerializeField] private int setStageNumber;
 
+
+    private void Start()
+    {
+        
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            var a = testMap.MapTiles.Count;
+            var b = testMap.SpawnPlace.Count;
+            
+            Debug.Log(a);
+            Debug.Log(b);
+        }
+    }
+    
     [Button(ButtonSizes.Gigantic), GUIColor(0.2f, 1f, 0.2f)]
+    
     public void GenerateMap()
     {
         // 인스턴스 한다
@@ -32,6 +55,7 @@ public class MapGenerator : MonoBehaviour
     
     public void GenerateFromPreset(MapPreset mapPreset, Map template)
     {
+        template.MapTiles = new Dictionary<Vector3Int, MapTile>();
         var backGroundTileMap = mapPreset.BackgroundMap.GetComponent<Tilemap>();
         var mapTemplate = SetMapTile(backGroundTileMap, mapTilePrefab, template.transform, template);
         
@@ -41,12 +65,13 @@ public class MapGenerator : MonoBehaviour
             for (var i = 0; i < otherTileMapList.Count; i++)
             {
                 var tileMap = otherTileMapList[i].GetComponent<Tilemap>();
-                // SettingObjectOnTile(tileMap, blockerPrefabList[i], template);
+                
                 SetOtherTile(tileMap, blockerPrefabList[i], template.transform, mapTemplate);
             }
         }
         var spawnPlace = mapPreset.SpawnPlace.GetComponent<Tilemap>();
         SettingSpawnPlace(spawnPlace, template);
+        template.MapTiles = mapTemplate.MapTiles;
     }
 
     private Map SetMapTile(Tilemap tilemap, MapTile targetObject, Transform temPlate, Map template)
@@ -72,7 +97,9 @@ public class MapGenerator : MonoBehaviour
                     {
                         instance.transform.position = currPos;
                         instance.MapTileCoord = currCoord;
-                        template.MapTiles.Add(currCoord, instance);
+                        template.MapTiles.Add(currCoord,instance);
+                        template.MapTileKey.Add(currCoord);
+                        template.MapTileValue.Add(instance);
                     }
                 }
             }
@@ -96,8 +123,6 @@ public class MapGenerator : MonoBehaviour
                 
                 if (tilemap.HasTile(currTileMapCoord))
                 {
-                    Instantiate(blocks, currPos, Quaternion.identity, temPlate.transform);
-                    
                     var instance = PrefabUtility.InstantiatePrefab(blocks, temPlate.transform) as Block;
                     if (instance == null)
                     {

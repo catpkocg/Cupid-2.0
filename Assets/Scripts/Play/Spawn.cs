@@ -19,17 +19,11 @@ public class Spawn : MonoBehaviour
     [SerializeField] private List<SpecialBlock> sameColorClearBlocks;
     
     // 시작하면 맵에 있는 정보를 통해, 이동할수있는 블럭이 없는곳에 블럭생성
-
-    private void Start()
-    {
-        
-    }
-
-
     public void SpawnBlockOnTile(Map map)
     {
         Debug.Log("ㅆ씨발");
         var mapTiles = map.MapTiles;
+        Debug.Log(mapTiles.Count);
         mapTiles.Keys.ForEach(mapTilePos =>
         {
             Debug.Log("이거 실행ㅇㄹㅇㄴ됨?");
@@ -42,7 +36,6 @@ public class Spawn : MonoBehaviour
                 mapTiles[mapTilePos].MovableBlockOnMapTile = normalBlock;
             }
         });
-        
     }
     
     //아이스 블럭의 value 는 66으로 한다.
@@ -54,8 +47,6 @@ public class Spawn : MonoBehaviour
     // public List<Block> notNewBlocks;
     // public List<Vector3> notNewBlocksPos;
 
-    
-    
     //remodeling
     
     

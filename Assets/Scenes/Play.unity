@@ -298,7 +298,7 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
-  m_AdditionalShaderChannelsFlag: 25
+  m_AdditionalShaderChannelsFlag: 0
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
@@ -1099,7 +1099,8 @@ MonoBehaviour:
   interaction: {fileID: 324243770}
   scoreText: {fileID: 0}
   mapList:
-  - {fileID: 7628116602195684731, guid: a21dd93744698514da50fbc2dba58e11, type: 3}
+  - {fileID: 4346781749286540088, guid: a21dd93744698514da50fbc2dba58e11, type: 3}
+  cam: {fileID: 230045247}
   score: 0
 --- !u!1 &1497691531
 GameObject:
