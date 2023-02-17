@@ -7,8 +7,6 @@ using UnityEngine.Serialization;
 using UnityEngine.Tilemaps;
 using Wayway.Engine;
 
-
-
 public class MapGenerator : MonoBehaviour
 {
     [TitleGroup("Prefabs")]
@@ -21,23 +19,6 @@ public class MapGenerator : MonoBehaviour
     [TitleGroup("StageNumber")]
     [SerializeField] private int setStageNumber;
 
-
-    private void Start()
-    {
-        
-    }
-
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            var a = testMap.MapTiles.Count;
-            var b = testMap.SpawnPlace.Count;
-            
-            Debug.Log(a);
-            Debug.Log(b);
-        }
-    }
     
     [Button(ButtonSizes.Gigantic), GUIColor(0.2f, 1f, 0.2f)]
     
@@ -50,6 +31,9 @@ public class MapGenerator : MonoBehaviour
         // 저장
         PrefabUtility.SaveAsPrefabAsset(template.gameObject, "Assets/Prefabs/Maps/Map"+setStageNumber+".prefab");
         //삭제
+        
+        // 스크립터블 오브젝트 정보 저장 하고 삭제
+        
         DestroyImmediate(template.gameObject);
     }
     
@@ -98,8 +82,7 @@ public class MapGenerator : MonoBehaviour
                         instance.transform.position = currPos;
                         instance.MapTileCoord = currCoord;
                         template.MapTiles.Add(currCoord,instance);
-                        template.MapTileKey.Add(currCoord);
-                        template.MapTileValue.Add(instance);
+                        template.MapTilePresetDataList.Add(new MapTilePresetData(currCoord, instance));
                     }
                 }
             }

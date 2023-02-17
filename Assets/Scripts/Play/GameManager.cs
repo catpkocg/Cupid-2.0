@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -9,73 +10,59 @@ using Wayway.Engine.Singleton;
 public class GameManager : MonoSingleton<GameManager>
 {
     [SerializeField] private Spawn spawn;
-    [SerializeField] private Interaction interaction;
     [SerializeField] private TextMeshProUGUI scoreText;
     [SerializeField] private List<Map> mapList;
     [SerializeField] private Camera cam;
-
+    
+    public GameConfig gameConfig;
+    public Interaction interaction;
     public Map map;
     public int score;
     public States State { get; set; }
-    
-    protected override void Awake()
+
+
+    private void Start()
     {
+        State = States.ReadyForInteraction;
+        Debug.Log(gameConfig.StageLevel);
         SettingStart();
     }
 
+
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        switch (State)
         {
-            var a = mapList[0].MapTiles.Count;
-            Debug.Log(a);
+            case States.ReadyForInteraction:
+                break;
+            case States.CreateNewBlock:
+                //빈곳찾아서 계산하고 새로운 애들 생성
+                //spawn.SpawnForEmptyPlace();
+                State = States.CheckTarget;
+                break;
+            case States.CheckTarget:
+                // 애들이 이동할곳이랑 이동할 애들 계산
+                //spawn.CheckTarget();
+                State = States.DownNewBlock;
+                break;
+            
+            case States.DownNewBlock:
+                //애들 내리기
+                //spawn.MoveAllDown();
+                State = States.Waiting;
+                break;
+            case States.Waiting:
+                
+                //애니메이션 끝나는지 확인
+                //애니메이션 꿑나면 readyforinteraction으로 스테이트 변환
+                
+                break;
         }
-        
-        if (Input.GetMouseButton(0))
-        {
-            var mousePosition = Input.mousePosition;
-            mousePosition = Camera.main.ScreenToWorldPoint(mousePosition);
-            Ray ray = new Ray(mousePosition, transform.forward * 1000);
-            Debug.DrawRay(ray.origin, Vector3.forward * 1000, Color.red);
-            RaycastHit2D hit = Physics2D.Raycast(ray.origin, transform.forward * 1000);
-            if (hit)
-            {
-                var a = hit.collider.transform.position;
-                var b = new Vector3Int((int)a.x, (int)a.y, (int)a.z);
-                map.MapTiles[b].MovableBlockOnMapTile.Pang();
-                Debug.Log(hit.collider.transform.gameObject);
-            }
-        }
-        
-        // switch (State)
-        // {
-        //     case States.ReadyForInteraction:
-        //         Map.Instance.DrawDirectionOnBlock();
-        //         break;
-        //     case States.DeleteBlock:
-        //         
-        //         if (Input.GetMouseButtonDown(0))
-        //         {
-        //             interaction.ClickBlock();
-        //             
-        //         }
-        //         break;
-        //     case States.CreateNewBlock:
-        //         spawn.SpawnForEmptyPlace();
-        //         State = States.CheckTarget;
-        //         break;
-        //     case States.CheckTarget:
-        //         spawn.CheckTarget();
-        //         State = States.DownNewBlock;
-        //         break;
-        //     case States.DownNewBlock:
-        //         spawn.MoveAllDown();
-        //         State = States.Waiting;
-        //         break;
-        //     case States.Waiting:
-        //         break;
-        // }
     }
+
+    
+    
+    
     public void ChangeState(States stateType)
     {
         State = stateType;
@@ -83,12 +70,11 @@ public class GameManager : MonoSingleton<GameManager>
 
     private void SettingStart()
     {
-        map = Instantiate(mapList[0], transform.position, Quaternion.identity);
-        for (int i = 0; i < map.MapTileKey.Count; i++)
+        map = Instantiate(mapList[gameConfig.StageLevel-1], transform.position, Quaternion.identity);
+        map.MapTilePresetDataList.ForEach(x =>
         {
-            Debug.Log(1);
-            map.MapTiles.Add(map.MapTileKey[i],map.MapTileValue[i]);
-        }
+            map.MapTiles.Add(x.Coord, x.MapTile);
+        });
         State = States.ReadyForInteraction;
         score = 0;
         spawn.SpawnBlockOnTile(map);
@@ -97,7 +83,7 @@ public class GameManager : MonoSingleton<GameManager>
 }
 public enum States
 {
-    None = 0,
+    
     ReadyForInteraction,
     CheckTarget,
     Waiting,

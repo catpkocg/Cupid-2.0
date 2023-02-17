@@ -17,6 +17,7 @@ public class NormalBlock : Block
 
     private void Pang()
     {
+        Destroy(gameObject);
         Debug.Log("일반 블럭");
     }
 }

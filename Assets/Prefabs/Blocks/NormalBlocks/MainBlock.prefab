@@ -134,6 +134,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: acea0cb0ed7e61f47818d4ee97c33e55, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  IsMovable: 0
   ShapeValue: 0
   dir: []
   foot: {fileID: 0}
@@ -354,7 +355,7 @@ MeshRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 2
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!114 &7866082306466735750
 MonoBehaviour:

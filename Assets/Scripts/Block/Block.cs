@@ -18,6 +18,7 @@ public abstract class Block : MonoBehaviour
 
     protected Action OnPang;
     protected Action MoveBlock;
+    
     public void Pang()
     {
         OnPang?.Invoke();

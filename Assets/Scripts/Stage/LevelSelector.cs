@@ -1,20 +1,20 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class LevelSelector : MonoBehaviour
 {
-    
-    
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    [SerializeField] private int stageNumber;
+    public GameConfig gameConfig;
 
-    // Update is called once per frame
-    void Update()
+    private int StageNumber => stageNumber;
+
+    public void LoadPlayScene()
     {
+        gameConfig.StageLevel = StageNumber;
+        Debug.Log(StageNumber);
+        SceneManager.LoadScene(1);
         
     }
 }

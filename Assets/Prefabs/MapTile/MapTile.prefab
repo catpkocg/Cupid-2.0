@@ -46,6 +46,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ec2c1a53afd3cf499f09edddde59e61, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interaction: {fileID: 0}
   MapTileCoord: {x: 0, y: 0, z: 0}
   MovableBlockOnMapTile: {fileID: 0}
   UnMovalbleBlockOnMapTile: {fileID: 0}

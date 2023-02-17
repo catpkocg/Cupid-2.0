@@ -8,12 +8,6 @@ public class Blocker : Block
     public Vector3Int CubeCoord;
     public Vector3 BlockerPos;
     
-    //Move
-
-
-    //Pang
-
-    //
     public void Pang()
     {
         Debug.Log("blocker pang");
