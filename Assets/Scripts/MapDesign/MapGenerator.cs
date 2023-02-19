@@ -14,8 +14,6 @@ public class MapGenerator : MonoBehaviour
     [SerializeField] private MapTile mapTilePrefab;
     [SerializeField] private List<Block> blockerPrefabList;
 
-    [SerializeField] private Map testMap;
-    
     [TitleGroup("StageNumber")]
     [SerializeField] private int setStageNumber;
 
@@ -135,13 +133,15 @@ public class MapGenerator : MonoBehaviour
             for (var j = tilemap.cellBounds.yMin; j < tilemap.cellBounds.yMax; j++)
             {
                 var currTileMapCoord = new Vector3Int(i, j, 0);
-                var currPos = tilemap.CellToWorld(currTileMapCoord);
                 
-                currPos = new Vector3(currPos.x, currPos.y, 0);
+                var currCoord = Util.UnityCellToCube(currTileMapCoord);
+                
+                var currPos = tilemap.CellToWorld(currTileMapCoord);
+                // currPos = new Vector3(currPos.x, currPos.y, 0);
                 
                 if (tilemap.HasTile(currTileMapCoord))
                 {
-                    mapTileInstance.SpawnPlace.Add(currPos);
+                    mapTileInstance.SpawnPlace.Add(currCoord);
                 }
             }
         }

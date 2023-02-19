@@ -8,7 +8,7 @@ using Wayway.Engine.Singleton;
 public class Map : MonoSingleton<Map>
 {
     public GameConfig GameConfig;
-    public List<Vector3> SpawnPlace = new ();
+    public List<Vector3Int> SpawnPlace = new ();
     public List<MapTilePresetData> MapTilePresetDataList = new();
     // public List<Vector3Int> MapTileKey = new List<Vector3Int>();
     // public List<MapTile> MapTileValue = new List<MapTile>();

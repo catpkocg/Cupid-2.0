@@ -23,15 +23,16 @@ public class NormalBlock : Block
     private void Pang()
     {
         Destroy(gameObject);
-        GameManager.Instance.map.MapTiles[Coord] = null;
+        GameManager.Instance.map.MapTiles[Coord].MovableBlockOnMapTile = null;
         Debug.Log("일반 블럭");
     }
 
-    private void Move(MapTile mapTile)
+    private void Move(Block block, MapTile mapTile)
     {
         IsMoving = true;
-        var  gameConfig = GameManager.Instance.gameConfig;
-        mapTile.MovableBlockOnMapTile = this;
+        var gameConfig = GameManager.Instance.gameConfig;
+        mapTile.MovableBlockOnMapTile = block;
+        mapTile.MovableBlockOnMapTile.Coord = mapTile.MapTileCoord;
         transform.DOMove(mapTile.transform.position, gameConfig.AnimationSpeed).SetEase(gameConfig.EasyType).OnComplete(ChangeCondition);
     }
 

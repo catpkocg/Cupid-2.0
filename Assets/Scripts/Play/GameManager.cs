@@ -31,13 +31,25 @@ public class GameManager : MonoSingleton<GameManager>
 
     void Update()
     {
+        if (Input.GetMouseButtonDown(0))
+        {
+            
+        }
+
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            spawn.MoveAllBlock();
+        }
+        
+        
+        
         switch (State)
         {
             case States.ReadyForInteraction:
                 break;
             case States.CreateNewBlock:
-                //빈곳찾아서 계산하고 새로운 애들 생성
-                //spawn.SpawnForEmptyPlace();
+                spawn.CheckTarget();
+                spawn.SpawnForEmptyPlace();
                 State = States.CheckTarget;
                 break;
             case States.CheckTarget:

@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Net.NetworkInformation;
 using DG.Tweening;
 using TMPro;
 using UnityEngine;
@@ -18,6 +19,7 @@ public class Spawn : MonoBehaviour
     
     public int moveCounter;
     // 시작하면 맵에 있는 정보를 통해, 이동할수있는 블럭이 없는곳에 블럭생성
+    private const float UpPosNum = (float)0.865977;
     public void SpawnBlockOnTile(Map map)
     {
         var mapTiles = map.MapTiles;
@@ -40,10 +42,10 @@ public class Spawn : MonoBehaviour
     //박스 블럭의 value 는 77로 한다.
     
     //이동을 위한 변수들, 새로운 블락과 새로운블락이 이동할곳, 기존블럭과 기존블럭이 이동할곳
-    public List<Block> newBlocks;
-    public List<Vector3> newBlocksPos;
-    public List<Block> notNewBlocks;
-    public List<Vector3> notNewBlocksPos;
+    public List<Block> newBlocks = new ();
+    public List<Vector3Int> newBlocksPos = new ();
+    public List<Block> notNewBlocks = new ();
+    public List<Vector3Int> notNewBlocksPos = new ();
 
     //remodeling
     
@@ -94,22 +96,37 @@ public class Spawn : MonoBehaviour
     public void CheckTarget()
     {
         notNewBlocks = new List<Block>();
-        notNewBlocksPos = new List<Vector3>();
-        //var keys = Map.Instance.BlockPlace.Keys;
+        notNewBlocksPos = new List<Vector3Int>();
         var mapTiles = GameManager.Instance.map.MapTiles;
         mapTiles.Keys.ForEach(key =>
         {
-            if (mapTiles[key] != null)
+            if (mapTiles[key].MovableBlockOnMapTile != null)
             {
                 var moveCount = CountNullPlace(mapTiles, key);
                 if (moveCount != 0)
                 {
                     notNewBlocks.Add(mapTiles[key].MovableBlockOnMapTile);
-                    //notNewBlocksPos.Add(grid.CellToWorld(Util.CubeToUnityCell(key + (new Vector3Int(0, 1, -1) * moveCount))));
+                    notNewBlocksPos.Add((key + (new Vector3Int(0, 1, -1) * moveCount)));
                 }
             }
         });
+
     }
+
+    public void MoveAllBlock()
+    {
+        var mapTiles = GameManager.Instance.map.MapTiles;
+        for (var i = 0; i < notNewBlocks.Count; i++)
+        {
+            notNewBlocks[i].Move(notNewBlocks[i],mapTiles[notNewBlocksPos[i]]);
+        }
+
+        for (var j = 0; j < newBlocks.Count; j++)
+        {
+            newBlocks[j].Move(newBlocks[j], mapTiles[newBlocksPos[j]]);
+        }
+    }
+    
     
     public int CountNullPlace(Dictionary<Vector3Int, MapTile> mapTiles, Vector3Int wantToCheckPos)
     {
@@ -117,7 +134,7 @@ public class Spawn : MonoBehaviour
         var targetPos = wantToCheckPos + new Vector3Int(0, 1, -1);
         while (mapTiles.ContainsKey(targetPos))
         {
-            if (mapTiles[targetPos] == null)
+            if (mapTiles[targetPos].MovableBlockOnMapTile == null)
             {
                 nullCount++;
             }
@@ -126,8 +143,28 @@ public class Spawn : MonoBehaviour
         return nullCount;
     }
     
-    
-    
+    public void SpawnForEmptyPlace()
+    {
+        newBlocks = new List<Block>();
+        newBlocksPos = new List<Vector3Int>();
+        var spawnPlace = GameManager.Instance.map.SpawnPlace;
+        var mapTiles = GameManager.Instance.map.MapTiles;
+        for (int i = 0; i < spawnPlace.Count; i++)
+        {
+            var howManyNeedToSpawn = CountNullPlace(mapTiles, spawnPlace[i]);
+            Debug.Log(i + "번 줄은 " + howManyNeedToSpawn + "개 생성해야됨");
+            for (int j = 0; j < howManyNeedToSpawn; j++)
+            {
+                var spawnPos = mapTiles[(spawnPlace[i] + new Vector3Int(0, 1, -1))].transform.position +
+                               (new Vector3(0, UpPosNum, 0) * (j+1));
+                var random = Random.Range(0, GameManager.Instance.gameConfig.BlockNumber);
+                var block = Instantiate(normalBlocks[random], spawnPos, Quaternion.identity);
+                
+                newBlocks.Add(block);
+                newBlocksPos.Add((spawnPlace[i] + new Vector3Int(0,1,-1) * (howManyNeedToSpawn - j)));
+            }
+        }
+    }
     
     // public void MoveAllDown()
     // {
@@ -167,30 +204,4 @@ public class Spawn : MonoBehaviour
     //     Map.Instance.DrawDirectionOnBlock();
     //     GameManager.Instance.State = States.DeleteBlock;
     // }
-    // public void SpawnForEmptyPlace()
-    // {
-    //     newBlocks = new List<Block>();
-    //     newBlocksPos = new List<Vector3>();
-    //     var grid = Map.Instance.Tilemap.GetComponentInParent<Grid>();
-    //     for (int i = 0; i < Map.Instance.NewBlockSpawnPosList.Count; i++)
-    //     {
-    //         var howManyNeedToSpawn = Map.Instance.CountNullPlace(Map.Instance.NewBlockSpawnPosList[i]);
-    //         Debug.Log(i + "번 줄은 " + howManyNeedToSpawn + "개 생성해야됨");
-    //         for (int j = 0; j < howManyNeedToSpawn; j++)
-    //         {
-    //             var cellCoord = grid.CellToWorld(Util.CubeToUnityCell(Map.Instance.NewBlockSpawnPosList[i] + new Vector3Int(0,-1,1) * j));
-    //             Debug.Log(cellCoord);
-    //             var random = Random.Range(0, Map.Instance.GameConfig.BlockNumber);
-    //             var block = Instantiate(allKindsOfBlock[random], cellCoord, Quaternion.identity);
-    //             
-    //             newBlocks.Add(block);
-    //             newBlocksPos.Add(grid.CellToWorld(Util.CubeToUnityCell(Map.Instance.NewBlockSpawnPosList[i] + new Vector3Int(0,1,-1) * (howManyNeedToSpawn - j))));
-    //             
-    //             block.transform.SetParent(blockBase);
-    //         }
-    //     }
-    // }
-    //
-    
-    
 }

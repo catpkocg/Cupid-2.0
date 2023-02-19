@@ -17,16 +17,16 @@ public abstract class Block : MonoBehaviour
     [SerializeField] public int value;
 
     protected Action OnPang;
-    protected Action MoveBlock;
+    protected Action<Block, MapTile> MoveBlock;
     
     public void Pang()
     {
         OnPang?.Invoke();
     }
     //이동 구현
-    public void Move()
+    public void Move(Block block, MapTile mapTile)
     {
-        MoveBlock?.Invoke();
+        MoveBlock?.Invoke(block, mapTile);
     }
     
     
