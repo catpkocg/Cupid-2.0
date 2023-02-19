@@ -10,26 +10,22 @@ using Random = UnityEngine.Random;
 
 public class Spawn : MonoBehaviour
 {
-    public int moveCounter;
-    
     [SerializeField] private GameConfig gameConfig;
     [SerializeField] private Transform blockContainer;
     [SerializeField] private List<Block> normalBlocks;
     [SerializeField] private List<SpecialBlock> lineClearBlocks;
     [SerializeField] private List<SpecialBlock> sameColorClearBlocks;
     
+    public int moveCounter;
     // 시작하면 맵에 있는 정보를 통해, 이동할수있는 블럭이 없는곳에 블럭생성
     public void SpawnBlockOnTile(Map map)
     {
-        Debug.Log("ㅆ씨발");
         var mapTiles = map.MapTiles;
         Debug.Log(mapTiles.Count);
         mapTiles.Keys.ForEach(mapTilePos =>
         {
-            Debug.Log("이거 실행ㅇㄹㅇㄴ됨?");
             if (mapTiles[mapTilePos].MovableBlockOnMapTile == null)
             {
-                Debug.Log("이거 실행됨?");
                 var normalBlock =
                     Instantiate(normalBlocks[Random.Range(0, map.GameConfig.BlockNumber)],
                         mapTiles[mapTilePos].transform.position, Quaternion.identity);
@@ -44,10 +40,10 @@ public class Spawn : MonoBehaviour
     //박스 블럭의 value 는 77로 한다.
     
     //이동을 위한 변수들, 새로운 블락과 새로운블락이 이동할곳, 기존블럭과 기존블럭이 이동할곳
-    // public List<Block> newBlocks;
-    // public List<Vector3> newBlocksPos;
-    // public List<Block> notNewBlocks;
-    // public List<Vector3> notNewBlocksPos;
+    public List<Block> newBlocks;
+    public List<Vector3> newBlocksPos;
+    public List<Block> notNewBlocks;
+    public List<Vector3> notNewBlocksPos;
 
     //remodeling
     
@@ -95,29 +91,44 @@ public class Spawn : MonoBehaviour
     //     specialBlock.foot = null;
     //     
     // }
-    // public void CheckTarget()
-    // {
-    //     notNewBlocks = new List<Block>();
-    //     notNewBlocksPos = new List<Vector3>();
-    //     
-    //     var grid = Map.Instance.Tilemap.GetComponentInParent<Grid>();
-    //     //var keys = Map.Instance.BlockPlace.Keys;
-    //     
-    //     Map.Instance.BlockPlace.Keys.ForEach(key =>
-    //     {
-    //         if (Map.Instance.BlockPlace[key] != null)
-    //         {
-    //             var moveCount = Map.Instance.CountNullPlace(key);
-    //             if (moveCount != 0)
-    //             {
-    //                 notNewBlocks.Add(Map.Instance.BlockPlace[key]);
-    //                 notNewBlocksPos.Add(grid.CellToWorld(Util.CubeToUnityCell(key + (new Vector3Int(0, 1, -1) * moveCount))));
-    //             }
-    //         }
-    //     });
-    // }
-    //
-    //
+    public void CheckTarget()
+    {
+        notNewBlocks = new List<Block>();
+        notNewBlocksPos = new List<Vector3>();
+        //var keys = Map.Instance.BlockPlace.Keys;
+        var mapTiles = GameManager.Instance.map.MapTiles;
+        mapTiles.Keys.ForEach(key =>
+        {
+            if (mapTiles[key] != null)
+            {
+                var moveCount = CountNullPlace(mapTiles, key);
+                if (moveCount != 0)
+                {
+                    notNewBlocks.Add(mapTiles[key].MovableBlockOnMapTile);
+                    //notNewBlocksPos.Add(grid.CellToWorld(Util.CubeToUnityCell(key + (new Vector3Int(0, 1, -1) * moveCount))));
+                }
+            }
+        });
+    }
+    
+    public int CountNullPlace(Dictionary<Vector3Int, MapTile> mapTiles, Vector3Int wantToCheckPos)
+    {
+        var nullCount = 0;
+        var targetPos = wantToCheckPos + new Vector3Int(0, 1, -1);
+        while (mapTiles.ContainsKey(targetPos))
+        {
+            if (mapTiles[targetPos] == null)
+            {
+                nullCount++;
+            }
+            targetPos += new Vector3Int(0, 1, -1);
+        }
+        return nullCount;
+    }
+    
+    
+    
+    
     // public void MoveAllDown()
     // {
     //     var grid = Map.Instance.Tilemap.GetComponentInParent<Grid>();

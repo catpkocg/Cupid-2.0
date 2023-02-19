@@ -11,17 +11,15 @@ public class Interaction : MonoBehaviour
     {
         var mapTile = GameManager.Instance.map.MapTiles[coord];
         var sameBlockList = FindAllNearSameValue(mapTile.MovableBlockOnMapTile);
-        Debug.Log(sameBlockList.Count);
         if (sameBlockList.Count > 1)
         {
             for (int i = 0; i < sameBlockList.Count; i++)
             {
                 sameBlockList[i].Pang();
             }
+            
+            GameManager.Instance.ChangeState(States.CreateNewBlock);
         }
-        
-        GameManager.Instance.ChangeState(States.CreateNewBlock);
-        //mapTile.MovableBlockOnMapTile.Pang();
     }
     
     public List<Block> FindAllNearSameValue(Block block)
