@@ -20,7 +20,7 @@ public class SameColorClearBlock : SpecialBlock
         //같은 색깔 전체 삭제
         
         Destroy(gameObject);
-        Debug.Log("일반 블럭");
+        Debug.Log("특수 블럭2");
     }
     
     

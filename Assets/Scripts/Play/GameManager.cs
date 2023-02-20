@@ -11,12 +11,10 @@ public class GameManager : MonoSingleton<GameManager>
 {
     [SerializeField] private Spawn spawn;
     [SerializeField] private TextMeshProUGUI scoreText;
-    [SerializeField] private List<Map> mapList;
     [SerializeField] private Camera cam;
     
     public GameConfig gameConfig;
     public Interaction interaction;
-    public Map map;
     public int score;
     public States State { get; set; }
 
@@ -24,11 +22,8 @@ public class GameManager : MonoSingleton<GameManager>
     private void Start()
     {
         State = States.ReadyForInteraction;
-        Debug.Log(gameConfig.StageLevel);
-        SettingStart();
     }
-
-
+    
     void Update()
     {
         if (Input.GetMouseButtonDown(0))
@@ -38,33 +33,31 @@ public class GameManager : MonoSingleton<GameManager>
 
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            spawn.MoveAllBlock();
+            MapManager.Instance.MoveAllBlock();
         }
-        
-        
         
         switch (State)
         {
             case States.ReadyForInteraction:
                 break;
-            case States.CreateNewBlock:
-                spawn.CheckTarget();
-                spawn.SpawnForEmptyPlace();
-                State = States.CheckTarget;
-                break;
             case States.CheckTarget:
-                // 애들이 이동할곳이랑 이동할 애들 계산
-                //spawn.CheckTarget();
-                State = States.DownNewBlock;
+                MapManager.Instance.CheckTarget();
+                State = States.CreateNewBlock;
                 break;
-            
-            case States.DownNewBlock:
-                //애들 내리기
-                //spawn.MoveAllDown();
+            case States.CreateNewBlock:
+                spawn.SpawnForEmptyPlace();
+                State = States.DownAllBlock;
+                break;
+            case States.DownAllBlock:
+                MapManager.Instance.MoveAllBlock();
                 State = States.Waiting;
                 break;
             case States.Waiting:
-                
+                if (!MapManager.Instance.IsThereMovingPang())
+                {
+                    Debug.Log("바뀜");
+                    State = States.ReadyForInteraction;
+                }
                 //애니메이션 끝나는지 확인
                 //애니메이션 꿑나면 readyforinteraction으로 스테이트 변환
                 
@@ -72,26 +65,10 @@ public class GameManager : MonoSingleton<GameManager>
         }
     }
 
-    
-    
-    
     public void ChangeState(States stateType)
     {
         State = stateType;
     }
-
-    private void SettingStart()
-    {
-        map = Instantiate(mapList[gameConfig.StageLevel-1], transform.position, Quaternion.identity);
-        map.MapTilePresetDataList.ForEach(x =>
-        {
-            map.MapTiles.Add(x.Coord, x.MapTile);
-        });
-        State = States.ReadyForInteraction;
-        score = 0;
-        spawn.SpawnBlockOnTile(map);
-    }
-    
 }
 public enum States
 {
@@ -101,5 +78,5 @@ public enum States
     Waiting,
     DeleteBlock,
     CreateNewBlock,
-    DownNewBlock,
+    DownAllBlock,
 }

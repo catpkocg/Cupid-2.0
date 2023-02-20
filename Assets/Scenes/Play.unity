@@ -1077,6 +1077,67 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 238215449}
   m_CullTransparentMesh: 1
+--- !u!1 &304314897
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 304314899}
+  - component: {fileID: 304314898}
+  m_Layer: 0
+  m_Name: MapManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &304314898
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 304314897}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: faf49db64bdc3cd418dcadc3bf41923a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mapList:
+  - {fileID: 3653192420709823533, guid: 69151f18030c7e6469568bce890ad66e, type: 3}
+  - {fileID: 7078772734374785912, guid: d2263016ad3415546ada38a48c06bd81, type: 3}
+  - {fileID: 4726970149370788896, guid: 39b9cf10e6b50df47b47a777bcb4100d, type: 3}
+  - {fileID: 6864603130720871619, guid: 281f52f8c170870429993cc0d66f3470, type: 3}
+  - {fileID: 4333050961432135361, guid: a21dd93744698514da50fbc2dba58e11, type: 3}
+  - {fileID: 9060947024269975355, guid: b8ed2369fd5999e4a9209f5ab5d7ec3c, type: 3}
+  - {fileID: 8887861553003495765, guid: 9ffd706e588f0984d89a880205827e5c, type: 3}
+  - {fileID: 3211530580547241267, guid: a16bc065b5863604ba008b585433b223, type: 3}
+  - {fileID: 1516362380822368976, guid: 40682624fc09b1f49aee12fc110e7cb6, type: 3}
+  - {fileID: 5740905361169618848, guid: 784ef617707c3894d97dfbcdc86f805e, type: 3}
+  gameConfig: {fileID: 11400000, guid: 8f3c5492dc7270e4bb4e5b1d351b3425, type: 2}
+  spawn: {fileID: 1747731045}
+  neighborPos: {fileID: 11400000, guid: 5363a2dc384001c4b9d4c514e2e37576, type: 2}
+  map: {fileID: 0}
+  WhatWillMove: []
+  WhereToMove: []
+--- !u!4 &304314899
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 304314897}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 8
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &324243768
 GameObject:
   m_ObjectHideFlags: 0
@@ -1121,7 +1182,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0171095778684624b8947a3a2d70afcd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  neighborPos: {fileID: 11400000, guid: 5363a2dc384001c4b9d4c514e2e37576, type: 2}
 --- !u!1 &351074963
 GameObject:
   m_ObjectHideFlags: 0
@@ -1399,21 +1459,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spawn: {fileID: 1747731045}
   scoreText: {fileID: 0}
-  mapList:
-  - {fileID: 3653192420709823533, guid: 69151f18030c7e6469568bce890ad66e, type: 3}
-  - {fileID: 7078772734374785912, guid: d2263016ad3415546ada38a48c06bd81, type: 3}
-  - {fileID: 4726970149370788896, guid: 39b9cf10e6b50df47b47a777bcb4100d, type: 3}
-  - {fileID: 6864603130720871619, guid: 281f52f8c170870429993cc0d66f3470, type: 3}
-  - {fileID: 4333050961432135361, guid: a21dd93744698514da50fbc2dba58e11, type: 3}
-  - {fileID: 9060947024269975355, guid: b8ed2369fd5999e4a9209f5ab5d7ec3c, type: 3}
-  - {fileID: 8887861553003495765, guid: 9ffd706e588f0984d89a880205827e5c, type: 3}
-  - {fileID: 3211530580547241267, guid: a16bc065b5863604ba008b585433b223, type: 3}
-  - {fileID: 1516362380822368976, guid: 40682624fc09b1f49aee12fc110e7cb6, type: 3}
-  - {fileID: 5740905361169618848, guid: 784ef617707c3894d97dfbcdc86f805e, type: 3}
   cam: {fileID: 230045247}
   gameConfig: {fileID: 11400000, guid: 8f3c5492dc7270e4bb4e5b1d351b3425, type: 2}
   interaction: {fileID: 324243770}
-  map: {fileID: 0}
   score: 0
 --- !u!1 &1497691531
 GameObject:
@@ -2018,8 +2066,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cdf9d81bb3f518e4e92b3425914673ef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveCounter: 0
-  gameConfig: {fileID: 11400000, guid: 8f3c5492dc7270e4bb4e5b1d351b3425, type: 2}
   blockContainer: {fileID: 62153275}
   normalBlocks:
   - {fileID: 7966491647598909453, guid: 918a8f0f5937a1743a47eed9e58c68d5, type: 3}
@@ -2043,3 +2089,4 @@ MonoBehaviour:
   - {fileID: 8832555517817270437, guid: dbb8b6b88eecf3744a52e36f15055bec, type: 3}
   - {fileID: 8832555517817270437, guid: 42a75930b12e8ac4c8f31bf538683a46, type: 3}
   - {fileID: 8832555517817270437, guid: 977a6932499584943bd07052161d3a4a, type: 3}
+  moveCounter: 0

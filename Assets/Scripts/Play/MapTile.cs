@@ -20,7 +20,11 @@ public class MapTile : MonoBehaviour, IPointerClickHandler
     public void OnPointerClick(PointerEventData eventData)
     {
         Debug.Log(MapTileCoord);
-        interaction.OnTileClickHandler(MapTileCoord);
+        if (GameManager.Instance.State == States.ReadyForInteraction)
+        {
+            interaction.OnTileClickHandler(MapTileCoord);
+        }
+        
     }
     
 }

@@ -2,35 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public static class Util
+public static class CoordUtil
 {
-    // public static List<Vector3Int> GetNeighbors(Vector3Int unityCell, int range)
-    // {
-    //     var centerCubePos = UnityCellToCube(unityCell);
-    //
-    //     var result = new List<Vector3Int>();
-    //
-    //     int min = -range, max = range;
-    //
-    //     for (int x = min; x <= max; x++)
-    //     {
-    //         for (int y = min; y <= max; y++)
-    //         {
-    //             var z = -x - y;
-    //             if (z < min || z > max)
-    //             {
-    //                 continue;
-    //             }
-    //
-    //             var cubePosOffset = new Vector3Int(x, y, z);
-    //             result.Add(CubeToUnityCell(centerCubePos + cubePosOffset));
-    //         }
-    //
-    //     }
-    //
-    //     return result;
-    // }
-    
     public static bool GetAxisValue(Vector3Int target, Vector3Int current, int line)
     {
         return line switch
@@ -62,6 +35,33 @@ public static class Util
 
         return new Vector3Int( col,row,  0);
     }
+
+    // public static List<Vector3Int> GetNeighbors(Vector3Int unityCell, int range)
+    // {
+    //     var centerCubePos = UnityCellToCube(unityCell);
+    //
+    //     var result = new List<Vector3Int>();
+    //
+    //     int min = -range, max = range;
+    //
+    //     for (int x = min; x <= max; x++)
+    //     {
+    //         for (int y = min; y <= max; y++)
+    //         {
+    //             var z = -x - y;
+    //             if (z < min || z > max)
+    //             {
+    //                 continue;
+    //             }
+    //
+    //             var cubePosOffset = new Vector3Int(x, y, z);
+    //             result.Add(CubeToUnityCell(centerCubePos + cubePosOffset));
+    //         }
+    //
+    //     }
+    //
+    //     return result;
+    // }
     
 }
 

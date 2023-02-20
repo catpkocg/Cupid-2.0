@@ -13,7 +13,8 @@ public class MapGenerator : MonoBehaviour
     [SerializeField] private Map mapDesignTemplate;
     [SerializeField] private MapTile mapTilePrefab;
     [SerializeField] private List<Block> blockerPrefabList;
-
+    [SerializeField] private SpawnPos spawnPos;
+    
     [TitleGroup("StageNumber")]
     [SerializeField] private int setStageNumber;
 
@@ -31,7 +32,6 @@ public class MapGenerator : MonoBehaviour
         //삭제
         
         // 스크립터블 오브젝트 정보 저장 하고 삭제
-        
         DestroyImmediate(template.gameObject);
     }
     
@@ -63,7 +63,7 @@ public class MapGenerator : MonoBehaviour
             for (var j = tilemap.cellBounds.yMin; j < tilemap.cellBounds.yMax; j++)
             {
                 var currTileMapCoord = new Vector3Int(i, j, 0);
-                var currCoord = Util.UnityCellToCube(currTileMapCoord);
+                var currCoord = CoordUtil.UnityCellToCube(currTileMapCoord);
                 
                 var currPos = tilemap.CellToWorld(currTileMapCoord);
                 currPos = new Vector3(currPos.x, currPos.y, 0);
@@ -96,7 +96,7 @@ public class MapGenerator : MonoBehaviour
             {
                 // 맵의 범위를 설정한다.
                 var currTileMapCoord = new Vector3Int(i, j, 0);
-                var currCoord = Util.UnityCellToCube(currTileMapCoord);
+                var currCoord = CoordUtil.UnityCellToCube(currTileMapCoord);
                 
                 // 해당 좌표의 위치를 계산한다.
                 var currPos = tilemap.CellToWorld(currTileMapCoord);
@@ -126,7 +126,7 @@ public class MapGenerator : MonoBehaviour
         }
     }
     
-    private void SettingSpawnPlace(Tilemap tilemap, Map mapTileInstance)
+    private void SettingSpawnPlace(Tilemap tilemap, Map template)
     {
         for (var i = tilemap.cellBounds.xMin; i < tilemap.cellBounds.xMax; i++)
         {
@@ -134,14 +134,20 @@ public class MapGenerator : MonoBehaviour
             {
                 var currTileMapCoord = new Vector3Int(i, j, 0);
                 
-                var currCoord = Util.UnityCellToCube(currTileMapCoord);
+                var currCoord = CoordUtil.UnityCellToCube(currTileMapCoord);
                 
                 var currPos = tilemap.CellToWorld(currTileMapCoord);
                 // currPos = new Vector3(currPos.x, currPos.y, 0);
                 
                 if (tilemap.HasTile(currTileMapCoord))
                 {
-                    mapTileInstance.SpawnPlace.Add(currCoord);
+                    var instance = PrefabUtility.InstantiatePrefab(spawnPos, template.transform) as SpawnPos;
+                    if (instance != null)
+                    {
+                        instance.transform.position = currPos;
+                        instance.SpawnPosCoord = currCoord;
+                        template.SpawnPlace.Add(instance);
+                    }
                 }
             }
         }

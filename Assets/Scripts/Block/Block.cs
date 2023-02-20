@@ -8,6 +8,8 @@ public abstract class Block : MonoBehaviour
 
     public bool IsMovable;
     
+    public bool IsMoving;
+    
     public int ShapeValue;
     public List<GameObject> dir;
     public GameObject foot;
@@ -17,18 +19,17 @@ public abstract class Block : MonoBehaviour
     [SerializeField] public int value;
 
     protected Action OnPang;
-    protected Action<Block, MapTile> MoveBlock;
+    protected Action<MapTile> MoveBlock;
     
     public void Pang()
     {
         OnPang?.Invoke();
     }
     //이동 구현
-    public void Move(Block block, MapTile mapTile)
+    public void Move(MapTile mapTile)
     {
-        MoveBlock?.Invoke(block, mapTile);
+        MoveBlock?.Invoke(mapTile);
     }
-    
     
 }
 

@@ -9,9 +9,11 @@ using UnityEngine.SocialPlatforms;
 using Wayway.Engine;
 using Random = UnityEngine.Random;
 
+/// <summary>
+/// 스폰을 담당한다.
+/// </summary>
 public class Spawn : MonoBehaviour
 {
-    [SerializeField] private GameConfig gameConfig;
     [SerializeField] private Transform blockContainer;
     [SerializeField] private List<Block> normalBlocks;
     [SerializeField] private List<SpecialBlock> lineClearBlocks;
@@ -19,7 +21,13 @@ public class Spawn : MonoBehaviour
     
     public int moveCounter;
     // 시작하면 맵에 있는 정보를 통해, 이동할수있는 블럭이 없는곳에 블럭생성
-    private const float UpPosNum = (float)0.865977;
+    
+    private const float UpPosNum = 0.865977f;
+
+    //아이스 블럭의 value 는 66으로 한다.
+    //박스 블럭의 value 는 77로 한다.
+    //이동을 위한 변수들, 새로운 블락과 새로운블락이 이동할곳, 기존블럭과 기존블럭이 이동할곳
+    
     public void SpawnBlockOnTile(Map map)
     {
         var mapTiles = map.MapTiles;
@@ -38,18 +46,30 @@ public class Spawn : MonoBehaviour
         });
     }
     
-    //아이스 블럭의 value 는 66으로 한다.
-    //박스 블럭의 value 는 77로 한다.
-    
-    //이동을 위한 변수들, 새로운 블락과 새로운블락이 이동할곳, 기존블럭과 기존블럭이 이동할곳
-    public List<Block> newBlocks = new ();
-    public List<Vector3Int> newBlocksPos = new ();
-    public List<Block> notNewBlocks = new ();
-    public List<Vector3Int> notNewBlocksPos = new ();
+    public void SpawnForEmptyPlace()
+    {
+        var spawnPlace = MapManager.Instance.map.SpawnPlace;
+        var mapTiles = MapManager.Instance.map.MapTiles;
+        for (int i = 0; i < spawnPlace.Count; i++)
+        {
+            var howManyNeedToSpawn = MapUtil.CountNullPlace(mapTiles, spawnPlace[i].SpawnPosCoord);
+            Debug.Log(i + "번 줄은 " + howManyNeedToSpawn + "개 생성해야됨");
+            for (int j = 0; j < howManyNeedToSpawn; j++)
+            {
+                var spawnPos = spawnPlace[i].transform.position +
+                               (new Vector3(0, UpPosNum, 0) * (j));
+                var random = Random.Range(0, GameManager.Instance.gameConfig.BlockNumber);
+                var block = Instantiate(normalBlocks[random], spawnPos, Quaternion.identity);
+                
+                MapManager.Instance.WhatWillMove.Add(block);
+                MapManager.Instance.WhereToMove.Add((spawnPlace[i].SpawnPosCoord 
+                                                     + new Vector3Int(0,1,-1) * (howManyNeedToSpawn - j)));
+            }
+        }
+    }
 
     //remodeling
-    
-    
+
     // public void SpawnSpecialOneBlock(Vector3 putPos, int dir)
     // {
     //     var grid = Map.Instance.Tilemap.GetComponentInParent<Grid>();
@@ -93,78 +113,6 @@ public class Spawn : MonoBehaviour
     //     specialBlock.foot = null;
     //     
     // }
-    public void CheckTarget()
-    {
-        notNewBlocks = new List<Block>();
-        notNewBlocksPos = new List<Vector3Int>();
-        var mapTiles = GameManager.Instance.map.MapTiles;
-        mapTiles.Keys.ForEach(key =>
-        {
-            if (mapTiles[key].MovableBlockOnMapTile != null)
-            {
-                var moveCount = CountNullPlace(mapTiles, key);
-                if (moveCount != 0)
-                {
-                    notNewBlocks.Add(mapTiles[key].MovableBlockOnMapTile);
-                    notNewBlocksPos.Add((key + (new Vector3Int(0, 1, -1) * moveCount)));
-                }
-            }
-        });
-
-    }
-
-    public void MoveAllBlock()
-    {
-        var mapTiles = GameManager.Instance.map.MapTiles;
-        for (var i = 0; i < notNewBlocks.Count; i++)
-        {
-            notNewBlocks[i].Move(notNewBlocks[i],mapTiles[notNewBlocksPos[i]]);
-        }
-
-        for (var j = 0; j < newBlocks.Count; j++)
-        {
-            newBlocks[j].Move(newBlocks[j], mapTiles[newBlocksPos[j]]);
-        }
-    }
-    
-    
-    public int CountNullPlace(Dictionary<Vector3Int, MapTile> mapTiles, Vector3Int wantToCheckPos)
-    {
-        var nullCount = 0;
-        var targetPos = wantToCheckPos + new Vector3Int(0, 1, -1);
-        while (mapTiles.ContainsKey(targetPos))
-        {
-            if (mapTiles[targetPos].MovableBlockOnMapTile == null)
-            {
-                nullCount++;
-            }
-            targetPos += new Vector3Int(0, 1, -1);
-        }
-        return nullCount;
-    }
-    
-    public void SpawnForEmptyPlace()
-    {
-        newBlocks = new List<Block>();
-        newBlocksPos = new List<Vector3Int>();
-        var spawnPlace = GameManager.Instance.map.SpawnPlace;
-        var mapTiles = GameManager.Instance.map.MapTiles;
-        for (int i = 0; i < spawnPlace.Count; i++)
-        {
-            var howManyNeedToSpawn = CountNullPlace(mapTiles, spawnPlace[i]);
-            Debug.Log(i + "번 줄은 " + howManyNeedToSpawn + "개 생성해야됨");
-            for (int j = 0; j < howManyNeedToSpawn; j++)
-            {
-                var spawnPos = mapTiles[(spawnPlace[i] + new Vector3Int(0, 1, -1))].transform.position +
-                               (new Vector3(0, UpPosNum, 0) * (j+1));
-                var random = Random.Range(0, GameManager.Instance.gameConfig.BlockNumber);
-                var block = Instantiate(normalBlocks[random], spawnPos, Quaternion.identity);
-                
-                newBlocks.Add(block);
-                newBlocksPos.Add((spawnPlace[i] + new Vector3Int(0,1,-1) * (howManyNeedToSpawn - j)));
-            }
-        }
-    }
     
     // public void MoveAllDown()
     // {
