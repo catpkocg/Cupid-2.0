@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
 using UnityEngine;
+using Wayway.Engine;
 
 public class SameColorClearBlock : SpecialBlock
 {
@@ -19,12 +20,11 @@ public class SameColorClearBlock : SpecialBlock
 
     private void Pang()
     {
+        var mapTile = MapManager.Instance.map.MapTiles[Coord];
+        
         Destroy(gameObject);
         MapManager.Instance.map.MapTiles[Coord].MovableBlockOnMapTile = null;
-        
-        //맵매니저에서 같은색깔 전체 삭제하는 메소드 구현
-        
-        //같은 색깔 전체 삭제
+        DeleteSameColorBlock(mapTile);
         
         Debug.Log("특수 블럭2");
     }
@@ -41,6 +41,29 @@ public class SameColorClearBlock : SpecialBlock
     private void ChangeCondition()
     {
         IsMoving = false;
+    }
+    
+    private void DeleteSameColorBlock(MapTile mapTile)
+    {
+        List<Block> sameColorBlocks = new List<Block>();
+        var mapTiles = MapManager.Instance.map.MapTiles;
+        int randomNumber = Random.Range(0, MapManager.Instance.gameConfig.BlockNumber);
+        //var direction = mapTile.MovableBlockOnMapTile.value - 20;
+        mapTiles.Keys.ForEach(pos =>
+        {
+            if (mapTiles[pos].MovableBlockOnMapTile != null)
+            {
+                if (mapTiles[pos].MovableBlockOnMapTile.value == randomNumber)
+                {
+                    sameColorBlocks.Add(mapTiles[pos].MovableBlockOnMapTile);
+                }
+            }
+        });
+
+        for (int i = 0; i < sameColorBlocks.Count; i++)
+        {
+            sameColorBlocks[i].Pang();
+        }
     }
     
     

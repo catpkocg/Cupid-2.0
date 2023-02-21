@@ -20,7 +20,11 @@ public class LineClearBlock : SpecialBlock
     private void Pang()
     {
         var mapTile = MapManager.Instance.map.MapTiles[Coord];
-        DeleteSameLineBlock(mapTile, mapTile.MovableBlockOnMapTile.value - 20);
+        var axis = mapTile.MovableBlockOnMapTile.value - 20;
+        Destroy(gameObject);
+        MapManager.Instance.map.MapTiles[Coord].MovableBlockOnMapTile = null;
+        
+        DeleteSameLineBlock(mapTile, axis);
         Debug.Log("특수 블럭2");
     }
 
