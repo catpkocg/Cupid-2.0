@@ -17,7 +17,7 @@ public class LineClearBlock : Block
         MoveBlock += Move;
     }
 
-    private void Pang()
+    public override void Pang()
     {
         var mapTile = MapManager.Instance.map.MapTiles[Coord];
         var axis = mapTile.MovableBlockOnMapTile.value - 20;
@@ -25,14 +25,11 @@ public class LineClearBlock : Block
         PangMainBlock(this);
         PangNearBoxBlock(mapTile);
         PangIceOnBlock(mapTile);
-        // Destroy(gameObject);
-        // MapManager.Instance.map.MapTiles[Coord].MovableBlockOnMapTile = null;
         
         DeleteSameLineBlock(mapTile, axis);
-        Debug.Log("특수 블럭2");
     }
 
-    private void Move(MapTile mapTile)
+    public override void Move(MapTile mapTile)
     {
         IsMoving = true;
         var gameConfig = GameManager.Instance.gameConfig;
@@ -50,52 +47,14 @@ public class LineClearBlock : Block
     {
         List<Block> sameLineBlocks = new List<Block>();
         var mapTiles = MapManager.Instance.map.MapTiles;
-        //var direction = mapTile.MovableBlockOnMapTile.value - 20;
         mapTiles.Keys.ForEach(pos =>
         {
-            if (mapTiles[pos].MovableBlockOnMapTile != null)
+            if (mapTiles[pos].MovableBlockOnMapTile == null) return;
+            if (CoordUtil.GetAxisValue(pos, mapTile.MapTileCoord, line))
             {
-                if (CoordUtil.GetAxisValue(pos, mapTile.MapTileCoord, line))
-                {
-                    sameLineBlocks.Add(mapTiles[pos].MovableBlockOnMapTile);
-                }
+                mapTiles[pos].MovableBlockOnMapTile.Pang();
             }
         });
-
-        for (int i = 0; i < sameLineBlocks.Count; i++)
-        {
-            sameLineBlocks[i].Pang();
-        }
-    }
-    
-    private void PangNearBoxBlock(MapTile mapTile)
-    {
-        var mapTiles = MapManager.Instance.map.MapTiles;
-        var nearPosList = MapManager.Instance.neighborPos.neighbor;
-        for (int i = 0; i < nearPosList.Count; i++)
-        {
-            var nearPos = mapTile.MapTileCoord + nearPosList[i].neighborPos;
-            if (mapTiles.ContainsKey(nearPos))
-            {
-                var nearTile = mapTiles[nearPos];
-                if (nearTile.MovableBlockOnMapTile != null && nearTile.MovableBlockOnMapTile.value == 61)
-                {
-                    nearTile.MovableBlockOnMapTile.Pang();
-                }
-            }
-        }
-
-    }
-
-    private void PangIceOnBlock(MapTile mapTile)
-    {
-        if (mapTile.UnMovalbleBlockOnMapTile != null)
-        {
-            if (mapTile.UnMovalbleBlockOnMapTile.value == 71)
-            {
-                mapTile.UnMovalbleBlockOnMapTile.Pang();
-            }
-        }
     }
     
 }

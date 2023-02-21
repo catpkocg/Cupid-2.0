@@ -17,7 +17,6 @@ public class Interaction : MonoBehaviour
                 DeleteClickedBlocks(mapTile);
                 if (target.drawValue == gameConfig.SameColorClearBlockCondition)
                 {
-                    //DeleteClickedBlocks(mapTile);
                     var footBlock = Instantiate(spawn.sameColorClearBlocks[Random.Range(0, gameConfig.BlockNumber)],
                         mapTile.transform.position, Quaternion.identity);
                     mapTile.MovableBlockOnMapTile = footBlock;
@@ -25,7 +24,6 @@ public class Interaction : MonoBehaviour
                 }
                 else if (target.drawValue > 0)
                 {
-                    //DeleteClickedBlocks(mapTile);
                     var lindBlock = Instantiate(spawn.lineClearBlocks[target.drawValue-1], mapTile.transform.position,
                         Quaternion.identity);
                     mapTile.MovableBlockOnMapTile = lindBlock;
@@ -33,7 +31,7 @@ public class Interaction : MonoBehaviour
                 }
                 GameManager.Instance.ChangeState(States.CheckTarget);
                 break;
-            case >10:
+            case >10 and <30:
                 mapTile.MovableBlockOnMapTile.Pang();
                 GameManager.Instance.ChangeState(States.CheckTarget);
                 break;

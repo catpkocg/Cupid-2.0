@@ -16,7 +16,7 @@ public class IceBlocker : Block
         OnPang -= Pang;
     }
 
-    private void Pang()
+    public override void Pang()
     {
         MapManager.Instance.map.MapTiles[Coord].UnMovalbleBlockOnMapTile = null;
         Destroy(gameObject);

@@ -18,13 +18,13 @@ public class BoxBlocker : Block
         MoveBlock += Move;
     }
 
-    private void Pang()
+    public override void Pang()
     {
         MapManager.Instance.map.MapTiles[Coord].MovableBlockOnMapTile = null;
         Destroy(gameObject);
     }
 
-    private void Move(MapTile mapTile)
+    public override void Move(MapTile mapTile)
     {
         IsMoving = true;
         var gameConfig = GameManager.Instance.gameConfig;

@@ -21,20 +21,53 @@ public abstract class Block : MonoBehaviour
     protected Action OnPang;
     protected Action<MapTile> MoveBlock;
     
-    public void Pang()
+    public virtual void Pang()
     {
         OnPang?.Invoke();
     }
-    //이동 구현
-    public void Move(MapTile mapTile)
+    public virtual void Move(MapTile mapTile)
     {
         MoveBlock?.Invoke(mapTile);
     }
 
-    public void PangMainBlock(Block block)
+    protected void PangMainBlock(Block block)
     {
         MapManager.Instance.map.MapTiles[block.Coord].MovableBlockOnMapTile = null;
         Destroy(block.gameObject);
     }
+
+    protected void PangNearBoxBlock(MapTile mapTile)
+    {
+        var mapTiles = MapManager.Instance.map.MapTiles;
+        var nearPosList = MapManager.Instance.neighborPos.neighbor;
+        for (int i = 0; i < nearPosList.Count; i++)
+        {
+            var nearPos = mapTile.MapTileCoord + nearPosList[i].neighborPos;
+            if (mapTiles.ContainsKey(nearPos))
+            {
+                var nearTile = mapTiles[nearPos];
+                if (nearTile.MovableBlockOnMapTile != null)
+                {
+                    if(nearTile.MovableBlockOnMapTile.value == 61)
+                    {
+                        nearTile.MovableBlockOnMapTile.Pang();
+                    }
+                }
+            }
+        }
+
+    }
+
+    protected void PangIceOnBlock(MapTile mapTile)
+    {
+        if (mapTile.UnMovalbleBlockOnMapTile != null)
+        {
+            if (mapTile.UnMovalbleBlockOnMapTile.value == 71)
+            {
+                mapTile.UnMovalbleBlockOnMapTile.Pang();
+            }
+        }
+    }
+
 }
 

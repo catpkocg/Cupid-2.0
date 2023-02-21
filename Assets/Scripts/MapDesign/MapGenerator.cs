@@ -30,7 +30,6 @@ public class MapGenerator : MonoBehaviour
         // 저장
         PrefabUtility.SaveAsPrefabAsset(template.gameObject, "Assets/Prefabs/Maps/Map"+setStageNumber+".prefab");
         //삭제
-        
         // 스크립터블 오브젝트 정보 저장 하고 삭제
         DestroyImmediate(template.gameObject);
     }
@@ -87,7 +86,6 @@ public class MapGenerator : MonoBehaviour
         }
         return template;
     }
-
     private void SetOtherTile(Tilemap tilemap, Block blocks, Transform temPlate, Map template)
     {
         for (var i = tilemap.cellBounds.xMin; i < tilemap.cellBounds.xMax; i++)

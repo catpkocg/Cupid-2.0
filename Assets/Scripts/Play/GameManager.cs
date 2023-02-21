@@ -19,8 +19,7 @@ public class GameManager : MonoSingleton<GameManager>
     public int touchCount;
     
     public States State { get; set; }
-
-
+    
     private void Start()
     {
         State = States.ReadyForInteraction;

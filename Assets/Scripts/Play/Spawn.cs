@@ -53,7 +53,6 @@ public class Spawn : MonoBehaviour
         for (int i = 0; i < spawnPlace.Count; i++)
         {
             var howManyNeedToSpawn = MapUtil.CountNullPlace(mapTiles, spawnPlace[i].SpawnPosCoord);
-            Debug.Log(i + "번 줄은 " + howManyNeedToSpawn + "개 생성해야됨");
             for (int j = 0; j < howManyNeedToSpawn; j++)
             {
                 var spawnPos = spawnPlace[i].transform.position +

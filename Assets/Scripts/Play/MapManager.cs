@@ -70,7 +70,6 @@ public class MapManager : MonoSingleton<MapManager>
                 var currBlock = mapTiles[map.MapTilePresetDataList[i].Coord].MovableBlockOnMapTile;
                 if (currBlock.IsMoving)
                 {
-                    Debug.Log(currBlock + "이거 움직이고 있음");
                     return true;
                 }
             }
@@ -125,7 +124,6 @@ public class MapManager : MonoSingleton<MapManager>
             if (map.MapTiles.ContainsKey(neighbor) && map.MapTiles[neighbor].MovableBlockOnMapTile != null)
             {
                 var neighborValue = map.MapTiles[neighbor].MovableBlockOnMapTile.value;
-                // 블럭끼리의 값이 같은거 + 나무상자의 value일경우 같은 블럭에 넣어서 삭제할수있도록 한다.
                 if (neighborValue == block.value)
                 {
                     sameBlockList.Add(map.MapTiles[neighbor].MovableBlockOnMapTile);
@@ -136,8 +134,6 @@ public class MapManager : MonoSingleton<MapManager>
         return sameBlockList;
     }
     
-    
-
     public void MakeListForFindDir()
     {
         allBlockForCheckDir = new List<Block>();
