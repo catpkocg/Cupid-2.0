@@ -24,8 +24,8 @@ public class GameConfig : ScriptableObject
 
     public int BlockNumber => blockNumber;
     public float AnimationSpeed => animationSpeed;
-    public float LineClearBlockCondition => lineClearBlockCondition;
-    public float SameColorClearBlockCondition => sameColorClearBlockCondition;
+    public int LineClearBlockCondition => lineClearBlockCondition;
+    public int SameColorClearBlockCondition => sameColorClearBlockCondition;
     public Ease EasyType => easyType;
     
     //public int AddMaxCount => addMaxCount;

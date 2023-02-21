@@ -46,6 +46,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5cc862fd16ed0db4ca7f48e7e40371e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  IsMovable: 1
+  IsMoving: 0
+  drawValue: 0
+  dir: []
+  foot: {fileID: 0}
+  Coord: {x: 0, y: 0, z: 0}
+  score: 0
+  value: 0
+  line: 0
 --- !u!212 &7040507236686456247
 SpriteRenderer:
   m_ObjectHideFlags: 0

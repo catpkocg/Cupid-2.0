@@ -16,6 +16,8 @@ public class GameManager : MonoSingleton<GameManager>
     public GameConfig gameConfig;
     public Interaction interaction;
     public int score;
+    public int touchCount;
+    
     public States State { get; set; }
 
 
@@ -26,14 +28,9 @@ public class GameManager : MonoSingleton<GameManager>
     
     void Update()
     {
-        if (Input.GetMouseButtonDown(0))
-        {
-            
-        }
-
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            MapManager.Instance.MoveAllBlock();
+            //MapManager.Instance.DrawDirectionOnBlock();
         }
         
         switch (State)
@@ -46,6 +43,7 @@ public class GameManager : MonoSingleton<GameManager>
                 break;
             case States.CreateNewBlock:
                 spawn.SpawnForEmptyPlace();
+                MapManager.Instance.DeleteAllDraw();
                 State = States.DownAllBlock;
                 break;
             case States.DownAllBlock:
@@ -56,11 +54,12 @@ public class GameManager : MonoSingleton<GameManager>
                 if (!MapManager.Instance.IsThereMovingPang())
                 {
                     Debug.Log("바뀜");
-                    State = States.ReadyForInteraction;
+                    State = States.DrawDirection;
                 }
-                //애니메이션 끝나는지 확인
-                //애니메이션 꿑나면 readyforinteraction으로 스테이트 변환
-                
+                break;
+            case States.DrawDirection:
+                MapManager.Instance.DrawDirectionOnBlock();
+                State = States.ReadyForInteraction;
                 break;
         }
     }
@@ -72,11 +71,10 @@ public class GameManager : MonoSingleton<GameManager>
 }
 public enum States
 {
-    
     ReadyForInteraction,
     CheckTarget,
     Waiting,
-    DeleteBlock,
     CreateNewBlock,
     DownAllBlock,
+    DrawDirection,
 }

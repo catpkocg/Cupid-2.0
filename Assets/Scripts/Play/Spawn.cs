@@ -16,9 +16,9 @@ public class Spawn : MonoBehaviour
 {
     [SerializeField] private Transform blockContainer;
     [SerializeField] private List<Block> normalBlocks;
-    [SerializeField] private List<SpecialBlock> lineClearBlocks;
-    [SerializeField] private List<SpecialBlock> sameColorClearBlocks;
     
+    public List<Block> lineClearBlocks;
+    public List<Block> sameColorClearBlocks;
     public int moveCounter;
     // 시작하면 맵에 있는 정보를 통해, 이동할수있는 블럭이 없는곳에 블럭생성
     

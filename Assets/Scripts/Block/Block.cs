@@ -10,7 +10,7 @@ public abstract class Block : MonoBehaviour
     
     public bool IsMoving;
     
-    public int ShapeValue;
+    public int drawValue;
     public List<GameObject> dir;
     public GameObject foot;
     public Vector3Int Coord;

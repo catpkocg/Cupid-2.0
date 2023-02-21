@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public static class MapUtil
@@ -17,6 +18,24 @@ public static class MapUtil
             targetPos += new Vector3Int(0, 1, -1);
         }
         return nullCount;
+    }
+    
+    public static int CalCulateMaxAndMinDif(List<int> allNum)
+    {
+        var min = allNum.Min();
+        var max = allNum.Max();
+    
+        var amount = max - min;
+    
+        return amount;
+    }
+    
+    public static int CalCulateAverage(List<int> allNum)
+    {
+        int Sum = allNum.Sum();
+        int Average = Sum / allNum.Count;
+    
+        return Average;
     }
     
 }
