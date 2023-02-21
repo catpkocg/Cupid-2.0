@@ -37,9 +37,15 @@ public class NormalBlock : Block
 
     private void Pang()
     {
-        Destroy(gameObject);
-        MapManager.Instance.map.MapTiles[Coord].MovableBlockOnMapTile = null;
-        Debug.Log("일반 블럭");
+        var mapTile = MapManager.Instance.map.MapTiles[Coord];
+        
+        PangMainBlock(this);
+        PangNearBoxBlock(mapTile);
+        PangIceOnBlock(mapTile);
+        
+        // Destroy(gameObject);
+        // MapManager.Instance.map.MapTiles[Coord].MovableBlockOnMapTile = null;
+        // Debug.Log("일반 블럭");
     }
 
     private void Move(MapTile mapTile)
@@ -54,6 +60,41 @@ public class NormalBlock : Block
     private void ChangeCondition()
     {
         IsMoving = false;
+    }
+
+    private void PangNearBoxBlock(MapTile mapTile)
+    {
+        var mapTiles = MapManager.Instance.map.MapTiles;
+        var nearPosList = MapManager.Instance.neighborPos.neighbor;
+        for (int i = 0; i < nearPosList.Count; i++)
+        {
+            var nearPos = mapTile.MapTileCoord + nearPosList[i].neighborPos;
+            if (mapTiles.ContainsKey(nearPos))
+            {
+                var nearTile = mapTiles[nearPos];
+                if (nearTile.MovableBlockOnMapTile != null)
+                {
+                    if(nearTile.MovableBlockOnMapTile.value == 61)
+                    {
+                        nearTile.MovableBlockOnMapTile.Pang();
+                    }
+                    
+                    
+                }
+            }
+        }
+
+    }
+
+    private void PangIceOnBlock(MapTile mapTile)
+    {
+        if (mapTile.UnMovalbleBlockOnMapTile != null)
+        {
+            if (mapTile.UnMovalbleBlockOnMapTile.value == 71)
+            {
+                mapTile.UnMovalbleBlockOnMapTile.Pang();
+            }
+        }
     }
     
 }

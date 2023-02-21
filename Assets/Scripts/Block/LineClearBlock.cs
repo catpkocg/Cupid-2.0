@@ -3,7 +3,7 @@ using DG.Tweening;
 using UnityEngine;
 using Wayway.Engine;
 
-public class LineClearBlock : SpecialBlock
+public class LineClearBlock : Block
 {
     private void Awake()
     {
@@ -21,8 +21,12 @@ public class LineClearBlock : SpecialBlock
     {
         var mapTile = MapManager.Instance.map.MapTiles[Coord];
         var axis = mapTile.MovableBlockOnMapTile.value - 20;
-        Destroy(gameObject);
-        MapManager.Instance.map.MapTiles[Coord].MovableBlockOnMapTile = null;
+        
+        PangMainBlock(this);
+        PangNearBoxBlock(mapTile);
+        PangIceOnBlock(mapTile);
+        // Destroy(gameObject);
+        // MapManager.Instance.map.MapTiles[Coord].MovableBlockOnMapTile = null;
         
         DeleteSameLineBlock(mapTile, axis);
         Debug.Log("특수 블럭2");
@@ -63,4 +67,35 @@ public class LineClearBlock : SpecialBlock
             sameLineBlocks[i].Pang();
         }
     }
+    
+    private void PangNearBoxBlock(MapTile mapTile)
+    {
+        var mapTiles = MapManager.Instance.map.MapTiles;
+        var nearPosList = MapManager.Instance.neighborPos.neighbor;
+        for (int i = 0; i < nearPosList.Count; i++)
+        {
+            var nearPos = mapTile.MapTileCoord + nearPosList[i].neighborPos;
+            if (mapTiles.ContainsKey(nearPos))
+            {
+                var nearTile = mapTiles[nearPos];
+                if (nearTile.MovableBlockOnMapTile != null && nearTile.MovableBlockOnMapTile.value == 61)
+                {
+                    nearTile.MovableBlockOnMapTile.Pang();
+                }
+            }
+        }
+
+    }
+
+    private void PangIceOnBlock(MapTile mapTile)
+    {
+        if (mapTile.UnMovalbleBlockOnMapTile != null)
+        {
+            if (mapTile.UnMovalbleBlockOnMapTile.value == 71)
+            {
+                mapTile.UnMovalbleBlockOnMapTile.Pang();
+            }
+        }
+    }
+    
 }

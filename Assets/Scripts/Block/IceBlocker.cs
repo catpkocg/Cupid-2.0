@@ -1,0 +1,25 @@
+using System.Collections;
+using System.Collections.Generic;
+using DG.Tweening;
+using UnityEngine;
+using Wayway.Engine;
+
+public class IceBlocker : Block
+{
+    private void Awake()
+    {
+        OnPang += Pang;
+    }
+
+    private void OnDisable()
+    {
+        OnPang -= Pang;
+    }
+
+    private void Pang()
+    {
+        MapManager.Instance.map.MapTiles[Coord].UnMovalbleBlockOnMapTile = null;
+        Destroy(gameObject);
+    }
+    
+}

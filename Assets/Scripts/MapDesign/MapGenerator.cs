@@ -115,10 +115,13 @@ public class MapGenerator : MonoBehaviour
                         if (instance.IsMovable)
                         {
                             template.MapTiles[currCoord].MovableBlockOnMapTile = instance;
+                            instance.Coord = currCoord;
+
                         }
                         else
                         {
                             template.MapTiles[currCoord].UnMovalbleBlockOnMapTile = instance;
+                            instance.Coord = currCoord;
                         }
                     }
                 }

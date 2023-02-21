@@ -10,8 +10,8 @@ public class MapManager : MonoSingleton<MapManager>
 {
     [SerializeField] private List<Map> mapList;
     [SerializeField] private Spawn spawn;
-    [SerializeField] private NeighborPos neighborPos;
-
+    
+    public NeighborPos neighborPos;
     public GameConfig gameConfig;
     public Map map;
     public List<Block> WhatWillMove;
@@ -137,10 +137,6 @@ public class MapManager : MonoSingleton<MapManager>
     }
     
     
-    
-    
-    
-
 
     public void MakeListForFindDir()
     {

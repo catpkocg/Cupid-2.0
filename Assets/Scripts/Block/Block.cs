@@ -4,17 +4,17 @@ using UnityEngine;
 
 public abstract class Block : MonoBehaviour
 {
-    public BlockType BlockType { get; set; }
-
-    public bool IsMovable;
     
+    public bool IsMovable;
     public bool IsMoving;
     
     public int drawValue;
     public List<GameObject> dir;
     public GameObject foot;
     public Vector3Int Coord;
-    public int score;
+    
+    //점수계산이 필요한가?? 현재는 없음
+    //public int score;
     
     [SerializeField] public int value;
 
@@ -30,6 +30,11 @@ public abstract class Block : MonoBehaviour
     {
         MoveBlock?.Invoke(mapTile);
     }
-    
+
+    public void PangMainBlock(Block block)
+    {
+        MapManager.Instance.map.MapTiles[block.Coord].MovableBlockOnMapTile = null;
+        Destroy(block.gameObject);
+    }
 }
 
