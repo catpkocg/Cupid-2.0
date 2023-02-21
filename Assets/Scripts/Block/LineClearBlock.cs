@@ -1,8 +1,7 @@
-using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
 using UnityEngine;
-
+using Wayway.Engine;
 
 public class LineClearBlock : SpecialBlock
 {
@@ -20,13 +19,8 @@ public class LineClearBlock : SpecialBlock
 
     private void Pang()
     {
-        Destroy(gameObject);
-        MapManager.Instance.map.MapTiles[Coord].MovableBlockOnMapTile = null;
-        
-        //맵매니저에서 같은줄 전체 삭제하는 메소드 구현
-        
-        //같은 색깔 전체 삭제
-        
+        var mapTile = MapManager.Instance.map.MapTiles[Coord];
+        DeleteSameLineBlock(mapTile, mapTile.MovableBlockOnMapTile.value - 20);
         Debug.Log("특수 블럭2");
     }
 
@@ -44,5 +38,25 @@ public class LineClearBlock : SpecialBlock
         IsMoving = false;
     }
 
+    private void DeleteSameLineBlock(MapTile mapTile, int line)
+    {
+        List<Block> sameLineBlocks = new List<Block>();
+        var mapTiles = MapManager.Instance.map.MapTiles;
+        //var direction = mapTile.MovableBlockOnMapTile.value - 20;
+        mapTiles.Keys.ForEach(pos =>
+        {
+            if (mapTiles[pos].MovableBlockOnMapTile != null)
+            {
+                if (CoordUtil.GetAxisValue(pos, mapTile.MapTileCoord, line))
+                {
+                    sameLineBlocks.Add(mapTiles[pos].MovableBlockOnMapTile);
+                }
+            }
+        });
 
+        for (int i = 0; i < sameLineBlocks.Count; i++)
+        {
+            sameLineBlocks[i].Pang();
+        }
+    }
 }

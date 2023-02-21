@@ -1117,9 +1117,9 @@ MonoBehaviour:
   - {fileID: 3211530580547241267, guid: a16bc065b5863604ba008b585433b223, type: 3}
   - {fileID: 1516362380822368976, guid: 40682624fc09b1f49aee12fc110e7cb6, type: 3}
   - {fileID: 5740905361169618848, guid: 784ef617707c3894d97dfbcdc86f805e, type: 3}
-  gameConfig: {fileID: 11400000, guid: 8f3c5492dc7270e4bb4e5b1d351b3425, type: 2}
   spawn: {fileID: 1747731045}
   neighborPos: {fileID: 11400000, guid: 5363a2dc384001c4b9d4c514e2e37576, type: 2}
+  gameConfig: {fileID: 11400000, guid: 8f3c5492dc7270e4bb4e5b1d351b3425, type: 2}
   map: {fileID: 0}
   WhatWillMove: []
   WhereToMove: []
@@ -1182,6 +1182,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0171095778684624b8947a3a2d70afcd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  spawn: {fileID: 1747731045}
 --- !u!1 &351074963
 GameObject:
   m_ObjectHideFlags: 0
@@ -1463,6 +1464,7 @@ MonoBehaviour:
   gameConfig: {fileID: 11400000, guid: 8f3c5492dc7270e4bb4e5b1d351b3425, type: 2}
   interaction: {fileID: 324243770}
   score: 0
+  touchCount: 0
 --- !u!1 &1497691531
 GameObject:
   m_ObjectHideFlags: 0

@@ -8,16 +8,15 @@ public static class CoordUtil
     {
         return line switch
         {
-            0 => target.x == current.x,
-            1 => target.y == current.y,
-            2 => target.z == current.z,
+            1 => target.x == current.x,
+            2 => target.y == current.y,
+            3 => target.z == current.z,
             _ => false
         };
     }
     
     public static Vector3Int UnityCellToCube(Vector3Int cell)
     {
-        
         var yCell = cell.x; 
         var xCell = cell.y;
         var z = yCell - (xCell - (xCell & 1)) / 2;

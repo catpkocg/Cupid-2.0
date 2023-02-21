@@ -26,19 +26,24 @@ public class Interaction : MonoBehaviour
                 else if (target.drawValue > 0)
                 {
                     //DeleteClickedBlocks(mapTile);
-                    var lindBlock = Instantiate(spawn.lineClearBlocks[target.drawValue], mapTile.transform.position,
+                    var lindBlock = Instantiate(spawn.lineClearBlocks[target.drawValue-1], mapTile.transform.position,
                         Quaternion.identity);
                     mapTile.MovableBlockOnMapTile = lindBlock;
                     lindBlock.Coord = mapTile.MapTileCoord;
                 }
+                GameManager.Instance.ChangeState(States.CheckTarget);
                 break;
             case >10 and < 20:
                 //랜덤한 숫자 정하기
                 int randomNumber = Random.Range(0, gameConfig.BlockNumber);
                 
+                Debug.Log("라인삭제블럭 실행중");
                 //랜덤한 숫자의 값의 블럭들 전부다 삭제
                 break;
             case >20 and < 30:
+                
+                mapTile.MovableBlockOnMapTile.Pang();
+                
                 //target.value - 20 라인의 블럭들 전부다삭제
                 break;
         }
@@ -57,9 +62,15 @@ public class Interaction : MonoBehaviour
             }
             
             GameManager.Instance.touchCount++;
-            GameManager.Instance.ChangeState(States.CheckTarget);
         }
+    }
+
+    
+
+    private void DeleteSameColorBlock(MapTile mapTile)
+    {
         
     }
+    
     
 }

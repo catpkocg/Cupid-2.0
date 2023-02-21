@@ -75,7 +75,6 @@ public class MapManager : MonoSingleton<MapManager>
                 }
             }
         }
-
         return false;
     }
 
@@ -136,6 +135,11 @@ public class MapManager : MonoSingleton<MapManager>
 
         return sameBlockList;
     }
+    
+    
+    
+    
+    
 
 
     public void MakeListForFindDir()
