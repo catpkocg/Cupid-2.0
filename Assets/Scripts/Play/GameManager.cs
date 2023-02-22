@@ -78,7 +78,6 @@ public class GameManager : MonoSingleton<GameManager>
                 {
                     if (ThisGameIsCleared())
                     {
-                        
                         //성공창 출력
                         
                         //확인버튼 누르면 스테이지씬으로 넘어감
