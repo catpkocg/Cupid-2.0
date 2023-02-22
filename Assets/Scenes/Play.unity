@@ -1461,6 +1461,9 @@ MonoBehaviour:
   spawn: {fileID: 1747731045}
   scoreText: {fileID: 0}
   cam: {fileID: 230045247}
+  ConditionStates:
+    keys: 
+    values: 
   gameConfig: {fileID: 11400000, guid: 8f3c5492dc7270e4bb4e5b1d351b3425, type: 2}
   interaction: {fileID: 324243770}
   score: 0
@@ -1947,10 +1950,10 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 1
+  m_text: "\uC548\uB155"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 61664764e77b64d469eddf735a51b68f, type: 2}
+  m_sharedMaterial: {fileID: 4079636663649843011, guid: 61664764e77b64d469eddf735a51b68f, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
