@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Sirenix.OdinInspector;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -12,9 +13,12 @@ public class GameManager : MonoSingleton<GameManager>
     [SerializeField] private Spawn spawn;
     [SerializeField] private TextMeshProUGUI scoreText;
     [SerializeField] private Camera cam;
-    
+
+    //public List<ConditionStates> ConditionStatesList;
+    public SerializeDictionary<int,int> ConditionStates = new ();
     public GameConfig gameConfig;
     public Interaction interaction;
+    
     public int score;
     public int touchCount;
     
@@ -22,6 +26,7 @@ public class GameManager : MonoSingleton<GameManager>
     
     private void Start()
     {
+        SettingConditionStates();
         State = States.ReadyForInteraction;
     }
     
@@ -61,19 +66,47 @@ public class GameManager : MonoSingleton<GameManager>
                 State = States.ReadyForInteraction;
                 break;
             case States.CheckClearCondition:
-                //현재가지고 있는 정보와 클리어 컨디션의 조건을 비교
-                
-                //먼저 무브카운트가 0인지 확인
-                
-                // 0이면 게임 실패창 출력
-                
-                // 0 이 아닌경우
-                
-                // 클리어 조건 비교
-                
-                
-                
+
+                if (MapManager.Instance.map.MoveLimit == touchCount)
+                {
+                    //실패창 출력
+                    
+                    //확인버튼 누르면 스테이지씬으로 넘어감
+                }
+                else
+                {
+                    if (ThisGameIsCleared())
+                    {
+                        //성공창 출력
+                        
+                        //확인버튼 누르면 스테이지씬으로 넘어감
+                        
+                        //스테이지씬에 지금게임번호 완료했다고 표시해줘야함
+                        
+                    }
+                    else
+                    {
+                        //게임스테이트 레디인터렉션으로 바꿔줌
+                    }
+                }
                 break;
+        }
+    }
+
+    public bool ThisGameIsCleared()
+    {
+        
+        return true;
+    }
+    
+    
+    public void SettingConditionStates()
+    {
+        var enumCount = Enum.GetValues(typeof(ClearConditionBlock)).Length;
+        Debug.Log(enumCount);
+        foreach (int blockType in Enum.GetValues(typeof(ClearConditionBlock)))
+        {
+            ConditionStates.Add(blockType, 0);
         }
     }
 
@@ -92,3 +125,17 @@ public enum States
     DrawDirection,
     CheckClearCondition,
 }
+//
+// [Serializable]
+// public class ConditionStates
+// {
+//     [HorizontalGroup("ClearCondition"), HideLabel] public ClearConditionBlock ConditionBlock;
+//     [HorizontalGroup("ClearCondition"), HideLabel] public int HowMuchForClear;
+//
+//     public ConditionStates(ClearConditionBlock conditionBlock, int howMuchForClear)
+//     {
+//         ConditionBlock = conditionBlock;
+//         HowMuchForClear = howMuchForClear;
+//     }
+// }
+//

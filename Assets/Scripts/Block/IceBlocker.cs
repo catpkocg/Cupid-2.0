@@ -18,6 +18,8 @@ public class IceBlocker : Block
 
     public override void Pang()
     {
+        var blockValue = this.value;
+        GameManager.Instance.ConditionStates[blockValue]++;
         MapManager.Instance.map.MapTiles[Coord].UnMovalbleBlockOnMapTile = null;
         Destroy(gameObject);
     }

@@ -190,23 +190,6 @@ public class ClearCondition
     }
 }
 
-public enum ClearConditionBlock
-{
-    None = 0,
-    RedBlock = 1,
-    YellowBlock = 2,
-    OrangeBlock = 3,
-    GreenBlock = 4,
-    BlueBlock = 5,
-    TurquoiseBlock = 6,
-    PurpleBlock = 7,
-    PinkBlock = 8,
-    XLineClearBlock = 21,
-    YLineClearBlock = 22,
-    ZLineClearBlock = 23,
-    SameColorClearBlock = 30,
-    BoxBlocker = 61,
-    IceBlocker = 71,
-}
+
 
 

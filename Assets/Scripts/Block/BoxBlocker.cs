@@ -20,6 +20,8 @@ public class BoxBlocker : Block
 
     public override void Pang()
     {
+        var blockValue = this.value;
+        GameManager.Instance.ConditionStates[blockValue]++;
         MapManager.Instance.map.MapTiles[Coord].MovableBlockOnMapTile = null;
         Destroy(gameObject);
     }

@@ -21,7 +21,8 @@ public class LineClearBlock : Block
     {
         var mapTile = MapManager.Instance.map.MapTiles[Coord];
         var axis = mapTile.MovableBlockOnMapTile.value - 20;
-        
+        var blockValue = this.value;
+        GameManager.Instance.ConditionStates[blockValue]++;
         PangMainBlock(this);
         PangNearBoxBlock(mapTile);
         PangIceOnBlock(mapTile);
