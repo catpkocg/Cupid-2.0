@@ -31,7 +31,7 @@ public class Interaction : MonoBehaviour
                 }
                 GameManager.Instance.ChangeState(States.CheckTarget);
                 break;
-            case >10 and <30:
+            case >10 and <40:
                 mapTile.MovableBlockOnMapTile.Pang();
                 GameManager.Instance.ChangeState(States.CheckTarget);
                 break;
@@ -62,12 +62,5 @@ public class Interaction : MonoBehaviour
         }
     }
 
-    
-
-    private void DeleteSameColorBlock(MapTile mapTile)
-    {
-        
-    }
-    
     
 }

@@ -1038,6 +1038,12 @@ MonoBehaviour:
   - {fileID: 6963222549579380349, guid: fa3d0d6a810ba29419f10d03588e895f, type: 3}
   - {fileID: 9081851610897295702, guid: 3756c4da58ff54d44a8ab722076d5174, type: 3}
   spawnPos: {fileID: -1577310684953360731, guid: 0dcbe6f9d9ac84a4bbab84b67fdcc15b, type: 3}
+  ClearConditionDataAdd:
+  - ConditionBlock: 1
+    HowMuchForClear: 16
+  - ConditionBlock: 5
+    HowMuchForClear: 12
+  MoveLimitAdd: 5
   setStageNumber: 5
 --- !u!1 &1934833948
 GameObject:

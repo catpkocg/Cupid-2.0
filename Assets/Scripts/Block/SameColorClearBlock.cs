@@ -52,7 +52,7 @@ public class SameColorClearBlock : Block
         mapTiles.Keys.ForEach(pos =>
         {
             if (mapTiles[pos].MovableBlockOnMapTile == null) return;
-            if (mapTiles[pos].MovableBlockOnMapTile.value == randomNumber)
+            if (mapTiles[pos].MovableBlockOnMapTile.value == randomNumber+1)
             {
                 sameColorBlocks.Add(mapTiles[pos].MovableBlockOnMapTile);
             }

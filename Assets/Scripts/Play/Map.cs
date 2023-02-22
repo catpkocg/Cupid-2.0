@@ -9,8 +9,10 @@ public class Map : MonoBehaviour
 {
     public GameConfig GameConfig;
     public List<SpawnPos> SpawnPlace = new ();
-    public List<MapTilePresetData> MapTilePresetDataList = new();
     public Dictionary<Vector3Int, MapTile> MapTiles = new ();
+    public List<MapTilePresetData> MapTilePresetDataList = new();
+    public List<ClearCondition> ClearConditionData = new();
+    public int MoveLimit;
 }
 
 [Serializable]

@@ -52,7 +52,7 @@ MonoBehaviour:
   dir: []
   foot: {fileID: 0}
   Coord: {x: 0, y: 0, z: 0}
-  value: 0
+  value: 30
 --- !u!212 &7040507236686456247
 SpriteRenderer:
   m_ObjectHideFlags: 0

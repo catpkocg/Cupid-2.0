@@ -15,10 +15,15 @@ public class MapGenerator : MonoBehaviour
     [SerializeField] private List<Block> blockerPrefabList;
     [SerializeField] private SpawnPos spawnPos;
     
+    [TitleGroup("ClearCondition")]
+    [SerializeField] private List<ClearCondition> ClearConditionDataAdd;
+
+    [SerializeField] private int MoveLimitAdd;
+    
+    
     [TitleGroup("StageNumber")]
     [SerializeField] private int setStageNumber;
 
-    
     [Button(ButtonSizes.Gigantic), GUIColor(0.2f, 1f, 0.2f)]
     
     public void GenerateMap()
@@ -26,13 +31,30 @@ public class MapGenerator : MonoBehaviour
         // 인스턴스 한다
         var template = Instantiate(mapDesignTemplate, new Vector3(0, 0, 0), Quaternion.identity);
         // 맵의 범위를 설정하고 배경오브젝트를 깐다.
+        ClearConditionAdd(template);
         GenerateFromPreset(transform.GetComponent<MapPreset>(), template);
         // 저장
         PrefabUtility.SaveAsPrefabAsset(template.gameObject, "Assets/Prefabs/Maps/Map"+setStageNumber+".prefab");
+        //template.ClearConditionData = ClearConditionData;
+        
         //삭제
         // 스크립터블 오브젝트 정보 저장 하고 삭제
         DestroyImmediate(template.gameObject);
+        
+        Debug.Log(ClearConditionDataAdd.Count);
     }
+
+    public void ClearConditionAdd(Map template)
+    {
+        for (int i = 0; i < ClearConditionDataAdd.Count; i++)
+        {
+            template.ClearConditionData.Add(ClearConditionDataAdd[i]);
+        }
+
+        template.MoveLimit = MoveLimitAdd;
+    }
+    
+    
     
     public void GenerateFromPreset(MapPreset mapPreset, Map template)
     {
@@ -154,3 +176,37 @@ public class MapGenerator : MonoBehaviour
         }
     }
 }
+
+[Serializable]
+public class ClearCondition
+{
+    [HorizontalGroup("ClearCondition"), HideLabel] public ClearConditionBlock ConditionBlock;
+    [HorizontalGroup("ClearCondition"), HideLabel] public int HowMuchForClear;
+
+    public ClearCondition(ClearConditionBlock conditionBlock, int howMuchForClear)
+    {
+        ConditionBlock = conditionBlock;
+        HowMuchForClear = howMuchForClear;
+    }
+}
+
+public enum ClearConditionBlock
+{
+    None = 0,
+    RedBlock = 1,
+    YellowBlock = 2,
+    OrangeBlock = 3,
+    GreenBlock = 4,
+    BlueBlock = 5,
+    TurquoiseBlock = 6,
+    PurpleBlock = 7,
+    PinkBlock = 8,
+    XLineClearBlock = 21,
+    YLineClearBlock = 22,
+    ZLineClearBlock = 23,
+    SameColorClearBlock = 30,
+    BoxBlocker = 61,
+    IceBlocker = 71,
+}
+
+

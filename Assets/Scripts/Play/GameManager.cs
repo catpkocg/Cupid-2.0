@@ -60,6 +60,20 @@ public class GameManager : MonoSingleton<GameManager>
                 MapManager.Instance.DrawDirectionOnBlock();
                 State = States.ReadyForInteraction;
                 break;
+            case States.CheckClearCondition:
+                //현재가지고 있는 정보와 클리어 컨디션의 조건을 비교
+                
+                //먼저 무브카운트가 0인지 확인
+                
+                // 0이면 게임 실패창 출력
+                
+                // 0 이 아닌경우
+                
+                // 클리어 조건 비교
+                
+                
+                
+                break;
         }
     }
 
@@ -76,4 +90,5 @@ public enum States
     CreateNewBlock,
     DownAllBlock,
     DrawDirection,
+    CheckClearCondition,
 }
