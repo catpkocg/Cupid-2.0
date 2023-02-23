@@ -34,6 +34,8 @@ public class MapGenerator : MonoBehaviour
         ClearConditionAdd(template);
         GenerateFromPreset(transform.GetComponent<MapPreset>(), template);
         // 저장
+        var preset = Instantiate(this.gameObject);
+        preset.transform.SetParent(template.transform);
         PrefabUtility.SaveAsPrefabAsset(template.gameObject, "Assets/Prefabs/Maps/Map"+setStageNumber+".prefab");
         //template.ClearConditionData = ClearConditionData;
         
