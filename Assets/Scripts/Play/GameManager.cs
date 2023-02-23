@@ -1,11 +1,6 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using Sirenix.OdinInspector;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.Serialization;
 using Wayway.Engine.Singleton;
 
 public class GameManager : MonoSingleton<GameManager>
