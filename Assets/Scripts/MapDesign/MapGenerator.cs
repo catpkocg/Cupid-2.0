@@ -12,7 +12,7 @@ public class MapGenerator : MonoBehaviour
     [TitleGroup("Prefabs")]
     [SerializeField] private Map mapDesignTemplate;
     [SerializeField] private MapTile mapTilePrefab;
-    [SerializeField] private List<Block> blockerPrefabList;
+    [SerializeField] private List<Block> blockPrefabList;
     [SerializeField] private SpawnPos spawnPos;
     
     [TitleGroup("ClearCondition")]
@@ -45,7 +45,6 @@ public class MapGenerator : MonoBehaviour
         
         Debug.Log(ClearConditionDataAdd.Count);
     }
-
     public void ClearConditionAdd(Map template)
     {
         for (int i = 0; i < ClearConditionDataAdd.Count; i++)
@@ -55,25 +54,19 @@ public class MapGenerator : MonoBehaviour
 
         template.MoveLimit = MoveLimitAdd;
     }
-    
-    
-    
     public void GenerateFromPreset(MapPreset mapPreset, Map template)
     {
         template.MapTiles = new Dictionary<Vector3Int, MapTile>();
         var backGroundTileMap = mapPreset.BackgroundMap.GetComponent<Tilemap>();
         var mapTemplate = SetMapTile(backGroundTileMap, mapTilePrefab, template.transform, template);
         
-        var otherTileMapList = mapPreset.MapLayerList;
-        if (otherTileMapList.Count != 0)
-        { 
-            for (var i = 0; i < otherTileMapList.Count; i++)
-            {
-                var tileMap = otherTileMapList[i].GetComponent<Tilemap>();
-                
-                SetOtherTile(tileMap, blockerPrefabList[i], template.transform, mapTemplate);
-            }
-        }
+        mapPreset.MapLayerList.ForEach(mapLayer =>
+        {
+            var tileMap = mapLayer.GetComponent<Tilemap>();
+            var prefabByValue = blockPrefabList.Find(x => x.value == mapLayer.value);
+            SetOtherTile(tileMap, prefabByValue, template.transform, mapTemplate);
+        });
+        
         var spawnPlace = mapPreset.SpawnPlace.GetComponent<Tilemap>();
         SettingSpawnPlace(spawnPlace, template);
         template.MapTiles = mapTemplate.MapTiles;
@@ -110,7 +103,7 @@ public class MapGenerator : MonoBehaviour
         }
         return template;
     }
-    private void SetOtherTile(Tilemap tilemap, Block blocks, Transform temPlate, Map template)
+    private void SetOtherTile(Tilemap tilemap, Block block, Transform temPlate, Map template)
     {
         for (var i = tilemap.cellBounds.xMin; i < tilemap.cellBounds.xMax; i++)
         {
@@ -126,7 +119,7 @@ public class MapGenerator : MonoBehaviour
                 
                 if (tilemap.HasTile(currTileMapCoord))
                 {
-                    var instance = PrefabUtility.InstantiatePrefab(blocks, temPlate.transform) as Block;
+                    var instance = PrefabUtility.InstantiatePrefab(block, temPlate.transform) as Block;
                     if (instance == null)
                     {
                         Debug.LogWarning("Casting to GameObject failed. Tile instance is null");
@@ -150,7 +143,6 @@ public class MapGenerator : MonoBehaviour
             }
         }
     }
-    
     private void SettingSpawnPlace(Tilemap tilemap, Map template)
     {
         for (var i = tilemap.cellBounds.xMin; i < tilemap.cellBounds.xMax; i++)

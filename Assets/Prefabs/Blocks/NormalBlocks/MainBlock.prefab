@@ -134,7 +134,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: acea0cb0ed7e61f47818d4ee97c33e55, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  IsMovable: 0
+  IsMovable: 1
   IsMoving: 0
   drawValue: 0
   dir:
