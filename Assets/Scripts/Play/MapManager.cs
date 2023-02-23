@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Mono.Cecil;
 using UnityEngine;
 using Wayway.Engine;
 using Wayway.Engine.Singleton;
@@ -26,12 +27,26 @@ public class MapManager : MonoSingleton<MapManager>
 
     private void SettingMap()
     {
-        map = Instantiate(mapList[gameConfig.StageLevel - 1], transform.position, Quaternion.identity);
+        map = Instantiate(GetMapByStageNumber(gameConfig.StageLevel), transform.position, Quaternion.identity);
         map.MapTilePresetDataList.ForEach(x => { map.MapTiles.Add(x.Coord, x.MapTile); });
         GameManager.Instance.State = States.ReadyForInteraction;
         spawn.SpawnBlockOnTile(map);
     }
 
+    private Map GetMapByStageNumber(int stageNumber)
+    {
+        var stageMap = Resources.Load<Map>($"Map{stageNumber}");
+
+        if (stageMap != null)
+        {
+            return stageMap;
+        }
+
+        Debug.LogError($"There is no map of the stage requested {stageNumber}");
+        
+        return null;
+    }
+    
     public void MoveAllBlock()
     {
         var mapTiles = map.MapTiles;
