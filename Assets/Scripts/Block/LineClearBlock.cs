@@ -19,14 +19,15 @@ public class LineClearBlock : Block
 
     public override void Pang()
     {
+        var gameManager = GameManager.Instance;
         var mapTile = MapManager.Instance.map.MapTiles[Coord];
         var axis = mapTile.MovableBlockOnMapTile.value - 20;
         var blockValue = this.value;
-        GameManager.Instance.ConditionStates[blockValue]++;
+        gameManager.ConditionStates[blockValue]++;
+        gameManager.score += gameManager.gameConfig.LineClearBlockCondition * 20;
         PangMainBlock(this);
         PangNearBoxBlock(mapTile);
         PangIceOnBlock(mapTile);
-        
         DeleteSameLineBlock(mapTile, axis);
     }
 

@@ -8,6 +8,7 @@ public class Interaction : MonoBehaviour
     [SerializeField] private Spawn spawn;
     public void OnTileClickHandler(Vector3Int coord)
     {
+        
         var mapTile = MapManager.Instance.map.MapTiles[coord];
         var target = mapTile.MovableBlockOnMapTile;
         var gameConfig = MapManager.Instance.gameConfig;
@@ -29,7 +30,8 @@ public class Interaction : MonoBehaviour
                     mapTile.MovableBlockOnMapTile = lindBlock;
                     lindBlock.Coord = mapTile.MapTileCoord;
                 }
-                GameManager.Instance.ChangeState(States.CheckTarget);
+
+                
                 break;
             case >10 and <40:
                 mapTile.MovableBlockOnMapTile.Pang();
@@ -49,6 +51,7 @@ public class Interaction : MonoBehaviour
 
     private void DeleteClickedBlocks(MapTile mapTile)
     {
+        var gameManager = GameManager.Instance;
         var sameBlockList = MapManager.Instance.FindAllNearSameValue(mapTile.MovableBlockOnMapTile);
         if (sameBlockList.Count > 1)
         {
@@ -58,7 +61,8 @@ public class Interaction : MonoBehaviour
                 sameBlockList[i].Pang();
             }
             
-            GameManager.Instance.touchCount++;
+            gameManager.touchCount++;
+            gameManager.ChangeState(States.CheckTarget);
         }
     }
 

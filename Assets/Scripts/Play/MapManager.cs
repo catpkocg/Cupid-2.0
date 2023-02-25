@@ -3,7 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Mono.Cecil;
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 using Wayway.Engine;
 using Wayway.Engine.Singleton;
 
@@ -31,6 +33,22 @@ public class MapManager : MonoSingleton<MapManager>
         map.MapTilePresetDataList.ForEach(x => { map.MapTiles.Add(x.Coord, x.MapTile); });
         GameManager.Instance.State = States.ReadyForInteraction;
         spawn.SpawnBlockOnTile(map);
+        SettingUI(map);
+    }
+
+    private void SettingUI(Map map)
+    {
+        var conditionList = map.ClearConditionData;
+        var playUI = GameManager.Instance.ui;
+        var conditionImage = GameManager.Instance.conditionImage;
+        for (var i = 0; i < conditionList.Count; i++)
+        {
+            playUI.conditionImages[i].GetComponent<Image>().sprite 
+               = conditionImage.ImagesForUI[conditionList[i].ConditionBlock];
+            playUI.conditionCount[i].GetComponent<TextMeshProUGUI>().text = conditionList[i].HowMuchForClear.ToString();
+
+
+        }
     }
 
     private Map GetMapByStageNumber(int stageNumber)

@@ -1,4 +1,4 @@
-public enum ClearConditionBlock
+    public enum ClearConditionBlock
     {
         RedBlock = 1,
         OrangeBlock = 2,
@@ -13,6 +13,23 @@ public enum ClearConditionBlock
         ZLineClearBlock = 23,
         SameColorClearBlock = 30,
         BoxBlocker = 61,
+        TwoBoxBlocker = 62,
+        ThreeBoxBlocker = 63,
+        FourBoxBlocker = 64,
         IceBlocker = 71,
+        TwoIceBlocker = 72,
+        ThreeIceBlocker = 73,
+        FourIceBlocker = 74,
+        StarScore = 100,
+        
     }
+
+
+
+
+
+
+
+
+
 

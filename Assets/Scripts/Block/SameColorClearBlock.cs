@@ -20,9 +20,11 @@ public class SameColorClearBlock : Block
 
     public override void Pang()
     {
+        var gameManager = GameManager.Instance;
         var mapTile = MapManager.Instance.map.MapTiles[Coord];
         var blockValue = this.value;
-        GameManager.Instance.ConditionStates[blockValue]++;
+        gameManager.ConditionStates[blockValue]++;
+        gameManager.score += gameManager.gameConfig.SameColorClearBlockCondition * 30;
         PangMainBlock(this);
         PangNearBoxBlock(mapTile);
         PangIceOnBlock(mapTile);

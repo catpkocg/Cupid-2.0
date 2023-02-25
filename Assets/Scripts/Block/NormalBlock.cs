@@ -20,9 +20,11 @@ public class NormalBlock : Block
 
     public override void Pang()
     {
+        var gameManager = GameManager.Instance;
         var mapTile = MapManager.Instance.map.MapTiles[Coord];
         var blockValue = this.value;
-        GameManager.Instance.ConditionStates[blockValue]++;
+        gameManager.ConditionStates[blockValue]++;
+        gameManager.score += 10;
         PangMainBlock(this);
         PangNearBoxBlock(mapTile);
         PangIceOnBlock(mapTile);

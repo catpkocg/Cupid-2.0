@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using Wayway.Engine.Singleton;
@@ -6,13 +7,19 @@ using Wayway.Engine.Singleton;
 public class GameManager : MonoSingleton<GameManager>
 {
     [SerializeField] private Spawn spawn;
-    [SerializeField] private TextMeshProUGUI scoreText;
     [SerializeField] private Camera cam;
-
+    [SerializeField] private GameObject gameOverPanel;
+    [SerializeField] private GameObject failPopUp;
+    [SerializeField] private GameObject clearPopUp;
+    [SerializeField] private List<GameObject> starFill;
+    [SerializeField] private TextMeshProUGUI moveNumber;
+    
     //public List<ConditionStates> ConditionStatesList;
+    public ConditionImage conditionImage;
     public SerializeDictionary<int,int> ConditionStates = new ();
     public GameConfig gameConfig;
     public Interaction interaction;
+    public PlayUI ui;
     
     public int score;
     public int touchCount;
@@ -37,6 +44,8 @@ public class GameManager : MonoSingleton<GameManager>
             case States.ReadyForInteraction:
                 break;
             case States.CheckTarget:
+                MapManager.Instance.map.MoveLimit--;
+                moveNumber.text = MapManager.Instance.map.MoveLimit.ToString();
                 MapManager.Instance.CheckTarget();
                 State = States.CreateNewBlock;
                 break;
@@ -61,11 +70,11 @@ public class GameManager : MonoSingleton<GameManager>
                 State = States.ReadyForInteraction;
                 break;
             case States.CheckClearCondition:
-
                 if (MapManager.Instance.map.MoveLimit == touchCount)
                 {
                     //실패창 출력
-                    
+                    gameOverPanel.SetActive(true);
+                    failPopUp.SetActive(true);
                     //확인버튼 누르면 스테이지씬으로 넘어감
                     
                 }
@@ -74,7 +83,8 @@ public class GameManager : MonoSingleton<GameManager>
                     if (ThisGameIsCleared())
                     {
                         //성공창 출력
-                        
+                        gameOverPanel.SetActive(true);
+                        clearPopUp.SetActive(true);
                         //확인버튼 누르면 스테이지씬으로 넘어감
                         
                         //스테이지씬에 지금게임번호 완료했다고 표시해줘야함
@@ -82,6 +92,7 @@ public class GameManager : MonoSingleton<GameManager>
                     }
                     else
                     {
+                        ChangeState(States.ReadyForInteraction);
                         //게임스테이트 레디인터렉션으로 바꿔줌
                     }
                 }
@@ -91,6 +102,8 @@ public class GameManager : MonoSingleton<GameManager>
 
     public bool ThisGameIsCleared()
     {
+        
+        
         
         return true;
     }
