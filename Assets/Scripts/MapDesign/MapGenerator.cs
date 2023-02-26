@@ -18,6 +18,7 @@ public class MapGenerator : MonoBehaviour
     [TitleGroup("ClearCondition")]
     [SerializeField] private List<ClearCondition> ClearConditionDataAdd;
 
+    [SerializeField] private int PerfectScore;
     [SerializeField] private int MoveLimitAdd;
     
     
@@ -54,6 +55,7 @@ public class MapGenerator : MonoBehaviour
         }
 
         template.MoveLimit = MoveLimitAdd;
+        template.PerfectScore = PerfectScore;
     }
     public void GenerateFromPreset(MapPreset mapPreset, Map template)
     {

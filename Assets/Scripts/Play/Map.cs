@@ -12,6 +12,7 @@ public class Map : MonoBehaviour
     public Dictionary<Vector3Int, MapTile> MapTiles = new ();
     public List<MapTilePresetData> MapTilePresetDataList = new();
     public List<ClearCondition> ClearConditionData = new();
+    public int PerfectScore;
     public int MoveLimit;
 }
 

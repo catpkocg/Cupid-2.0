@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 using Wayway.Engine.Singleton;
 
 public class GameManager : MonoSingleton<GameManager>
@@ -25,6 +26,8 @@ public class GameManager : MonoSingleton<GameManager>
     public int touchCount;
     
     public States State { get; set; }
+
+    public bool scaleIsDone = false;
     
     private void Start()
     {
@@ -67,9 +70,18 @@ public class GameManager : MonoSingleton<GameManager>
                 break;
             case States.DrawDirection:
                 MapManager.Instance.DrawDirectionOnBlock();
-                State = States.ReadyForInteraction;
+                State = States.CheckClearCondition;
                 break;
             case States.CheckClearCondition:
+                
+                //Check Score;
+                
+                var mapScore = (float)MapManager.Instance.map.PerfectScore;
+                var percentScore = score / mapScore;
+                ui.scoreEnergy.value = score / mapScore;
+                
+                
+                
                 if (MapManager.Instance.map.MoveLimit == touchCount)
                 {
                     //실패창 출력
@@ -82,13 +94,7 @@ public class GameManager : MonoSingleton<GameManager>
                 {
                     if (ThisGameIsCleared())
                     {
-                        //성공창 출력
-                        gameOverPanel.SetActive(true);
-                        clearPopUp.SetActive(true);
-                        //확인버튼 누르면 스테이지씬으로 넘어감
-                        
-                        //스테이지씬에 지금게임번호 완료했다고 표시해줘야함
-                        
+                        ChangeState(States.LastPang);
                     }
                     else
                     {
@@ -97,15 +103,62 @@ public class GameManager : MonoSingleton<GameManager>
                     }
                 }
                 break;
+            case States.LastPang:
+                MapManager.Instance.LastPangAction(MapManager.Instance.map.MoveLimit);
+                ChangeState(States.WaitingLastPangScale);
+                break;
+            case States.WaitingLastPangScale:
+                if (scaleIsDone)
+                {
+                    // 특수팡블럭들 삭제하고 실행
+
+                    
+                    
+                    MapManager.Instance.CheckTarget();
+                    spawn.SpawnForEmptyPlace();
+                    MapManager.Instance.DeleteAllDraw();
+                    MapManager.Instance.MoveAllBlock();
+                    ChangeState(States.WaitingLastPangMove);
+                }
+                break;
+            case States.WaitingLastPangMove:
+                if (!MapManager.Instance.IsThereMovingPang())
+                {
+                    gameOverPanel.SetActive(true);
+                    clearPopUp.SetActive(true);
+                    Debug.Log("바뀜");
+                    State = States.ReadyForInteraction;
+                }
+                break;
         }
     }
+    
+    
+    
 
     public bool ThisGameIsCleared()
     {
+        int clearCount = 0;
+        var condition = MapManager.Instance.map.ClearConditionData;
+        for (var i = 0; i < condition.Count; i++)
+        {
+            var conditionValue = (int)condition[i].ConditionBlock;
+            if (ConditionStates[conditionValue] > condition[i].HowMuchForClear)
+            {
+                clearCount++;
+            }
+        }
+        
+        Debug.Log(clearCount);
+        Debug.Log(condition.Count);
+
+        if (clearCount == condition.Count)
+        {
+            return true;
+        }
         
         
-        
-        return true;
+        return false;
     }
     
     
@@ -133,6 +186,9 @@ public enum States
     DownAllBlock,
     DrawDirection,
     CheckClearCondition,
+    LastPang,
+    WaitingLastPangScale,
+    WaitingLastPangMove,
 }
 //
 // [Serializable]

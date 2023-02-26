@@ -45,7 +45,7 @@ public class Spawn : MonoBehaviour
             }
         });
     }
-    
+
     public void SpawnForEmptyPlace()
     {
         var spawnPlace = MapManager.Instance.map.SpawnPlace;
@@ -66,6 +66,19 @@ public class Spawn : MonoBehaviour
             }
         }
     }
+
+
+    public Block SpawnRandomLineBlock(MapTile mapTile)
+    {
+        Destroy(mapTile.MovableBlockOnMapTile);
+        var random = Random.Range(0, 3);
+        var randomLineClear = Instantiate(lineClearBlocks[random], mapTile.transform.position, Quaternion.identity);
+        mapTile.MovableBlockOnMapTile = randomLineClear;
+        randomLineClear.Coord = mapTile.MapTileCoord;
+        randomLineClear.transform.localScale = new Vector3(0, 0, 0);
+        return randomLineClear;
+    }
+    
 
     //remodeling
 

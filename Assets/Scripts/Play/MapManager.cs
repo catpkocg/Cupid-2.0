@@ -2,12 +2,14 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using DG.Tweening;
 using Mono.Cecil;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using Wayway.Engine;
 using Wayway.Engine.Singleton;
+using Random = UnityEngine.Random;
 
 public class MapManager : MonoSingleton<MapManager>
 {
@@ -20,7 +22,7 @@ public class MapManager : MonoSingleton<MapManager>
     public List<Block> WhatWillMove;
     public List<Vector3Int> WhereToMove;
     private List<Block> allBlockForCheckDir;
-    
+    private List<MapTile> canCreatPosList = new ();
     private void Start()
     {
         SettingMap();
@@ -50,6 +52,43 @@ public class MapManager : MonoSingleton<MapManager>
 
         }
     }
+
+    public void LastPangAction(int howManyBlockNeedToCreate)
+    {
+        var mySequence = DOTween.Sequence();
+        var mapTiles = map.MapTiles;
+        mapTiles.Values.ForEach(mapTile =>
+        {
+            if (mapTile.MovableBlockOnMapTile.value < 10)
+            {
+                canCreatPosList.Add(mapTile);   
+            }
+        });
+
+        
+        for (int i = 0; i < howManyBlockNeedToCreate; i++)
+        {
+            var randomTile = ValidRandomTileSelect(canCreatPosList);
+            var lineBlock = spawn.SpawnRandomLineBlock(randomTile);
+            mySequence.Join(lineBlock.transform.DOScale(new Vector3(1, 1, 0), 0.3f));
+            canCreatPosList.Remove(randomTile);
+        }
+
+        mySequence.OnComplete(ChangeScaleState);
+
+    }
+
+    private void ChangeScaleState()
+    {
+        GameManager.Instance.scaleIsDone = true;
+    }
+
+    private MapTile ValidRandomTileSelect(List<MapTile> validMapTiles)
+    {
+        var random = Random.Range(0, validMapTiles.Count);
+        return validMapTiles[random];
+    }
+    
 
     private Map GetMapByStageNumber(int stageNumber)
     {
