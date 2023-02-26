@@ -20,7 +20,7 @@ public class MapGenerator : MonoBehaviour
 
     [SerializeField] private int PerfectScore;
     [SerializeField] private int MoveLimitAdd;
-    
+    [SerializeField] private int HowManyKindsOfBlock;
     
     [TitleGroup("StageNumber")]
     [SerializeField] private int setStageNumber;
@@ -35,6 +35,8 @@ public class MapGenerator : MonoBehaviour
         ClearConditionAdd(template);
         GenerateFromPreset(transform.GetComponent<MapPreset>(), template);
         // 저장
+        
+        template.BlockNumber = HowManyKindsOfBlock;
         var preset = Instantiate(this.gameObject);
         preset.gameObject.SetActive(false);
         preset.transform.SetParent(template.transform);

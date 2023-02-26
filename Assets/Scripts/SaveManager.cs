@@ -9,22 +9,21 @@ public class SaveManager : MonoSingleton<SaveManager>
     public PlayerData PlayerData;
     // Start is called before the first frame update
 
-    // private void Awake()
-    // {
-    //     Load();
-    // }
-    // private void OnApplicationPause(bool pauseStatus)
-    // {
-    //     Save();
-    // }
-    // private void OnApplicationQuit()
-    // {
-    //     Save();
-    // }
+    private void Awake()
+    {
+        Load();
+    }
+    private void OnApplicationPause(bool pauseStatus)
+    {
+        Save();
+    }
+    private void OnApplicationQuit()
+    {
+        Save();
+    }
     
     private void Save()
     {
-        PlayerData.clearedMaxStage = 2;
         ES3.Save("PlayerData", PlayerData);
         PlayerData = null;
     }

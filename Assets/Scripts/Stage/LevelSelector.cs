@@ -14,7 +14,7 @@ public class LevelSelector : MonoBehaviour
     {
         gameConfig.StageLevel = StageNumber;
         Debug.Log(StageNumber);
-        SceneManager.LoadScene(1);
+        SceneManager.LoadScene(2);
         
     }
 }

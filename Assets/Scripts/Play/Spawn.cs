@@ -37,7 +37,7 @@ public class Spawn : MonoBehaviour
             if (mapTiles[mapTilePos].MovableBlockOnMapTile == null)
             {
                 var normalBlock =
-                    Instantiate(normalBlocks[Random.Range(0, map.GameConfig.BlockNumber)],
+                    Instantiate(normalBlocks[Random.Range(0, map.BlockNumber)],
                         mapTiles[mapTilePos].transform.position, Quaternion.identity);
                 mapTiles[mapTilePos].MovableBlockOnMapTile = normalBlock;
                 normalBlock.Coord = mapTilePos;
@@ -57,7 +57,7 @@ public class Spawn : MonoBehaviour
             {
                 var spawnPos = spawnPlace[i].transform.position +
                                (new Vector3(0, UpPosNum, 0) * (j));
-                var random = Random.Range(0, GameManager.Instance.gameConfig.BlockNumber);
+                var random = Random.Range(0, MapManager.Instance.map.BlockNumber);
                 var block = Instantiate(normalBlocks[random], spawnPos, Quaternion.identity);
                 
                 MapManager.Instance.WhatWillMove.Add(block);

@@ -16,6 +16,7 @@ public class GameManager : MonoSingleton<GameManager>
     [SerializeField] private TextMeshProUGUI moveNumber;
     
     //public List<ConditionStates> ConditionStatesList;
+    public PlayerData PlayerData;
     public ConditionImage conditionImage;
     public SerializeDictionary<int,int> ConditionStates = new ();
     public GameConfig gameConfig;
@@ -37,11 +38,6 @@ public class GameManager : MonoSingleton<GameManager>
     
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            //MapManager.Instance.DrawDirectionOnBlock();
-        }
-        
         switch (State)
         {
             case States.ReadyForInteraction:
@@ -75,25 +71,31 @@ public class GameManager : MonoSingleton<GameManager>
             case States.CheckClearCondition:
                 
                 //Check Score;
+                CheckStarFill();
+                //Check Condition Text Count;
+                CheckConditionCount(MapManager.Instance.map);
                 
-                var mapScore = (float)MapManager.Instance.map.PerfectScore;
-                var percentScore = score / mapScore;
-                ui.scoreEnergy.value = score / mapScore;
-                
-                
-                
-                if (MapManager.Instance.map.MoveLimit == touchCount)
+                if (MapManager.Instance.map.MoveLimit == 0)
                 {
                     //실패창 출력
                     gameOverPanel.SetActive(true);
                     failPopUp.SetActive(true);
                     //확인버튼 누르면 스테이지씬으로 넘어감
-                    
                 }
                 else
                 {
                     if (ThisGameIsCleared())
                     {
+                        var stageLevel = MapManager.Instance.map.GameConfig.StageLevel;
+                        if (stageLevel > PlayerData.clearedMaxStage)
+                        {
+                            PlayerData.clearedMaxStage = stageLevel;
+                            
+                        }
+                        if (score > PlayerData.stagesInformation[stageLevel-1].StageScore)
+                        {
+                            PlayerData.stagesInformation[stageLevel-1].StageScore = score;
+                        }
                         ChangeState(States.LastPang);
                     }
                     else
@@ -104,21 +106,21 @@ public class GameManager : MonoSingleton<GameManager>
                 }
                 break;
             case States.LastPang:
-                MapManager.Instance.LastPangAction(MapManager.Instance.map.MoveLimit);
+                MapManager.Instance.LastPangScaleAction(MapManager.Instance.map.MoveLimit);
                 ChangeState(States.WaitingLastPangScale);
                 break;
             case States.WaitingLastPangScale:
                 if (scaleIsDone)
                 {
                     // 특수팡블럭들 삭제하고 실행
-
-                    
+                    MapManager.Instance.LastPangBlock();
                     
                     MapManager.Instance.CheckTarget();
                     spawn.SpawnForEmptyPlace();
                     MapManager.Instance.DeleteAllDraw();
                     MapManager.Instance.MoveAllBlock();
                     ChangeState(States.WaitingLastPangMove);
+                    
                 }
                 break;
             case States.WaitingLastPangMove:
@@ -132,10 +134,59 @@ public class GameManager : MonoSingleton<GameManager>
                 break;
         }
     }
-    
-    
-    
 
+    private void CheckStarFill()
+    {
+        var mapScore = (float)MapManager.Instance.map.PerfectScore;
+        var percentScore = score / mapScore;
+        var percent1 = (float)1 / 3;
+        var percent2 = (float)2 / 3;
+        if (percentScore < 1)
+        {
+            ui.scoreEnergy.value = percentScore;
+            
+        }
+        else
+        {
+            ui.scoreEnergy.value = 1;
+            
+        }
+        if (percentScore > percent1)
+        {
+            Debug.Log(percent1);
+            Debug.Log(percentScore);
+            starFill[0].SetActive(true);
+            ConditionStates[(int)ClearConditionBlock.StarScore] = 1;
+        }
+        if (percentScore > percent2)
+        {
+            starFill[1].SetActive(true);
+            ConditionStates[(int)ClearConditionBlock.StarScore] = 2;
+        }
+        if (percentScore > 1)
+        {
+            starFill[2].SetActive(true);
+            ConditionStates[(int)ClearConditionBlock.StarScore] = 3;
+        }
+    }
+    
+    private void CheckConditionCount(Map map)
+    {
+        var conditionList = map.ClearConditionData;
+        for (var i = 0; i < conditionList.Count; i++)
+        {
+            var checkNum = conditionList[i].HowMuchForClear - ConditionStates[(int)conditionList[i].ConditionBlock];
+            if (checkNum > 0)
+            {
+                ui.conditionCount[i].GetComponent<TextMeshProUGUI>().text = 
+                    checkNum.ToString();
+            }
+            else
+            {
+                ui.conditionCount[i].GetComponent<TextMeshProUGUI>().text = 0.ToString();
+            }
+        }
+    }
     public bool ThisGameIsCleared()
     {
         int clearCount = 0;
@@ -143,7 +194,7 @@ public class GameManager : MonoSingleton<GameManager>
         for (var i = 0; i < condition.Count; i++)
         {
             var conditionValue = (int)condition[i].ConditionBlock;
-            if (ConditionStates[conditionValue] > condition[i].HowMuchForClear)
+            if (ConditionStates[conditionValue] >= condition[i].HowMuchForClear)
             {
                 clearCount++;
             }
@@ -160,8 +211,6 @@ public class GameManager : MonoSingleton<GameManager>
         
         return false;
     }
-    
-    
     public void SettingConditionStates()
     {
         var enumCount = Enum.GetValues(typeof(ClearConditionBlock)).Length;
@@ -171,7 +220,6 @@ public class GameManager : MonoSingleton<GameManager>
             ConditionStates.Add(blockType, 0);
         }
     }
-
     public void ChangeState(States stateType)
     {
         State = stateType;
@@ -190,17 +238,3 @@ public enum States
     WaitingLastPangScale,
     WaitingLastPangMove,
 }
-//
-// [Serializable]
-// public class ConditionStates
-// {
-//     [HorizontalGroup("ClearCondition"), HideLabel] public ClearConditionBlock ConditionBlock;
-//     [HorizontalGroup("ClearCondition"), HideLabel] public int HowMuchForClear;
-//
-//     public ConditionStates(ClearConditionBlock conditionBlock, int howMuchForClear)
-//     {
-//         ConditionBlock = conditionBlock;
-//         HowMuchForClear = howMuchForClear;
-//     }
-// }
-//

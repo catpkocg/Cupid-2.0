@@ -5,9 +5,8 @@ using UnityEngine.SceneManagement;
 
 public class BackToStage : MonoBehaviour
 {
-    
     public void LoadStageScene()
     {
-        SceneManager.LoadScene(0);
+        SceneManager.LoadScene(1);
     }
 }

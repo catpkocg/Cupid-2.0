@@ -12,7 +12,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b039f5dba33ed1044901cddebc9a8b1b, type: 3}
   m_Name: PlayerData
   m_EditorClassIdentifier: 
-  clearedMaxStage: 2
-  stagesScore:
-    keys: 
-    values: []
+  clearedMaxStage: 0
+  stagesInformation:
+  - StageLevel: 1
+    StageScore: 0
+  - StageLevel: 2
+    StageScore: 0
+  - StageLevel: 3
+    StageScore: 0
+  - StageLevel: 4
+    StageScore: 0
+  - StageLevel: 5
+    StageScore: 0
+  - StageLevel: 6
+    StageScore: 0
+  - StageLevel: 7
+    StageScore: 120
+  - StageLevel: 8
+    StageScore: 0
+  - StageLevel: 9
+    StageScore: 0
+  - StageLevel: 10
+    StageScore: 0

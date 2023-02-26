@@ -1446,6 +1446,7 @@ MonoBehaviour:
     HowMuchForClear: 30
   PerfectScore: 0
   MoveLimitAdd: 50
+  HowManyKindsOfBlock: 0
   setStageNumber: 3
 --- !u!156049354 &92748635
 Grid:
@@ -8699,8 +8700,11 @@ MonoBehaviour:
   ClearConditionDataAdd:
   - ConditionBlock: 61
     HowMuchForClear: 10
+  - ConditionBlock: 100
+    HowMuchForClear: 2
   PerfectScore: 1000
   MoveLimitAdd: 10
+  HowManyKindsOfBlock: 2
   setStageNumber: 7
 --- !u!156049354 &806639774
 Grid:
@@ -8974,6 +8978,7 @@ MonoBehaviour:
     HowMuchForClear: 30
   PerfectScore: 0
   MoveLimitAdd: 50
+  HowManyKindsOfBlock: 0
   setStageNumber: 3
 --- !u!156049354 &844885868
 Grid:
@@ -10419,6 +10424,7 @@ MonoBehaviour:
     HowMuchForClear: 30
   PerfectScore: 0
   MoveLimitAdd: 50
+  HowManyKindsOfBlock: 0
   setStageNumber: 3
 --- !u!156049354 &960010121
 Grid:
@@ -10612,6 +10618,7 @@ MonoBehaviour:
     HowMuchForClear: 30
   PerfectScore: 0
   MoveLimitAdd: 50
+  HowManyKindsOfBlock: 0
   setStageNumber: 3
 --- !u!156049354 &974152754
 Grid:
@@ -11139,6 +11146,7 @@ MonoBehaviour:
     HowMuchForClear: 30
   PerfectScore: 0
   MoveLimitAdd: 50
+  HowManyKindsOfBlock: 0
   setStageNumber: 3
 --- !u!156049354 &1133318985
 Grid:
@@ -11502,6 +11510,7 @@ MonoBehaviour:
     HowMuchForClear: 30
   PerfectScore: 0
   MoveLimitAdd: 50
+  HowManyKindsOfBlock: 0
   setStageNumber: 3
 --- !u!156049354 &1139658829
 Grid:
@@ -12597,6 +12606,7 @@ MonoBehaviour:
     HowMuchForClear: 30
   PerfectScore: 0
   MoveLimitAdd: 50
+  HowManyKindsOfBlock: 0
   setStageNumber: 3
 --- !u!156049354 &1550507673
 Grid:
@@ -13788,6 +13798,7 @@ MonoBehaviour:
     HowMuchForClear: 30
   PerfectScore: 0
   MoveLimitAdd: 50
+  HowManyKindsOfBlock: 0
   setStageNumber: 3
 --- !u!156049354 &1576767507
 Grid:
@@ -14227,7 +14238,7 @@ Grid:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1818836979}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CellSize: {x: 0.8659766, y: 1, z: 1}
   m_CellGap: {x: 0, y: 0, z: 0}
   m_CellLayout: 1
@@ -14297,6 +14308,7 @@ MonoBehaviour:
     HowMuchForClear: 20
   PerfectScore: 0
   MoveLimitAdd: 30
+  HowManyKindsOfBlock: 0
   setStageNumber: 1
 --- !u!1 &1934833948
 GameObject:

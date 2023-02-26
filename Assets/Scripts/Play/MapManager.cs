@@ -33,6 +33,7 @@ public class MapManager : MonoSingleton<MapManager>
     {
         map = Instantiate(GetMapByStageNumber(gameConfig.StageLevel), transform.position, Quaternion.identity);
         map.MapTilePresetDataList.ForEach(x => { map.MapTiles.Add(x.Coord, x.MapTile); });
+        //map.BlockNumber = gameConfig.BlockNumber;
         GameManager.Instance.State = States.ReadyForInteraction;
         spawn.SpawnBlockOnTile(map);
         SettingUI(map);
@@ -48,12 +49,10 @@ public class MapManager : MonoSingleton<MapManager>
             playUI.conditionImages[i].GetComponent<Image>().sprite 
                = conditionImage.ImagesForUI[conditionList[i].ConditionBlock];
             playUI.conditionCount[i].GetComponent<TextMeshProUGUI>().text = conditionList[i].HowMuchForClear.ToString();
-
-
         }
     }
 
-    public void LastPangAction(int howManyBlockNeedToCreate)
+    public void LastPangScaleAction(int howManyBlockNeedToCreate)
     {
         var mySequence = DOTween.Sequence();
         var mapTiles = map.MapTiles;
@@ -73,11 +72,25 @@ public class MapManager : MonoSingleton<MapManager>
             mySequence.Join(lineBlock.transform.DOScale(new Vector3(1, 1, 0), 0.3f));
             canCreatPosList.Remove(randomTile);
         }
-
         mySequence.OnComplete(ChangeScaleState);
-
     }
 
+    public void LastPangBlock()
+    {
+        var mapTiles = map.MapTiles;
+        mapTiles.Values.ForEach(mapTile =>
+        {
+            if (mapTile.MovableBlockOnMapTile != null)
+            {
+                if (mapTile.MovableBlockOnMapTile.value > 10)
+                {
+                    mapTile.MovableBlockOnMapTile.Pang();  
+                }
+            }
+            
+        });
+    }
+    
     private void ChangeScaleState()
     {
         GameManager.Instance.scaleIsDone = true;
