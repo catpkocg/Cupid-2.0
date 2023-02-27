@@ -395,6 +395,7 @@ public class MapManager : MonoSingleton<MapManager>
 
         allBlockForCheckDir.Clear();
         
+        //TODO: 확인 필요. state 여기서 변환하고 있는데 GameManager에서 바로 다른 스테잇을 넘기고 있음
         GameManager.Instance.ChangeState(States.CreateNewBlock);
         
     }

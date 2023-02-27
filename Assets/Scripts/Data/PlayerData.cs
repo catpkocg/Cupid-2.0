@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
+using JetBrains.Annotations;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
@@ -10,6 +11,8 @@ public class PlayerData : ScriptableObject
 {
     public int clearedMaxStage = 0;
     public List<StageInformation> stagesInformation;
+
+    //public SerializeDictionary<int, float> StageInformation;
 }
 
 [Serializable]

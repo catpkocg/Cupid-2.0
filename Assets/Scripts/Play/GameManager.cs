@@ -25,18 +25,43 @@ public class GameManager : MonoSingleton<GameManager>
     
     public int score;
     public int touchCount;
+    public bool scaleIsDone = false;
     
     public States State { get; set; }
 
-    public bool scaleIsDone = false;
+    private bool IsCleared
+    {
+        get
+        {
+            var clearCount = 0;
+            var condition = MapManager.Instance.map.ClearConditionData;
+            for (var i = 0; i < condition.Count; i++)
+            {
+                var conditionValue = (int)condition[i].ConditionBlock;
+                if (ConditionStates[conditionValue] >= condition[i].HowMuchForClear)
+                {
+                    clearCount++;
+                }
+            }
+        
+            Debug.Log(clearCount);
+            Debug.Log(condition.Count);
+
+            if (clearCount == condition.Count)
+            {
+                return true;
+            }
+
+            return false;
+        }
+    }
     
     private void Start()
     {
         SettingConditionStates();
         State = States.ReadyForInteraction;
     }
-    
-    void Update()
+    private void Update()
     {
         switch (State)
         {
@@ -84,7 +109,7 @@ public class GameManager : MonoSingleton<GameManager>
                 }
                 else
                 {
-                    if (ThisGameIsCleared())
+                    if (IsCleared)
                     {
                         var stageLevel = MapManager.Instance.map.GameConfig.StageLevel;
                         if (stageLevel > PlayerData.clearedMaxStage)
@@ -135,6 +160,11 @@ public class GameManager : MonoSingleton<GameManager>
         }
     }
 
+    public void ChangeState(States stateType)
+    {
+        State = stateType;
+    }
+    
     private void CheckStarFill()
     {
         var mapScore = (float)MapManager.Instance.map.PerfectScore;
@@ -169,7 +199,6 @@ public class GameManager : MonoSingleton<GameManager>
             ConditionStates[(int)ClearConditionBlock.StarScore] = 3;
         }
     }
-    
     private void CheckConditionCount(Map map)
     {
         var conditionList = map.ClearConditionData;
@@ -187,31 +216,7 @@ public class GameManager : MonoSingleton<GameManager>
             }
         }
     }
-    public bool ThisGameIsCleared()
-    {
-        int clearCount = 0;
-        var condition = MapManager.Instance.map.ClearConditionData;
-        for (var i = 0; i < condition.Count; i++)
-        {
-            var conditionValue = (int)condition[i].ConditionBlock;
-            if (ConditionStates[conditionValue] >= condition[i].HowMuchForClear)
-            {
-                clearCount++;
-            }
-        }
-        
-        Debug.Log(clearCount);
-        Debug.Log(condition.Count);
-
-        if (clearCount == condition.Count)
-        {
-            return true;
-        }
-        
-        
-        return false;
-    }
-    public void SettingConditionStates()
+    private void SettingConditionStates()
     {
         var enumCount = Enum.GetValues(typeof(ClearConditionBlock)).Length;
         Debug.Log(enumCount);
@@ -219,10 +224,6 @@ public class GameManager : MonoSingleton<GameManager>
         {
             ConditionStates.Add(blockType, 0);
         }
-    }
-    public void ChangeState(States stateType)
-    {
-        State = stateType;
     }
 }
 public enum States

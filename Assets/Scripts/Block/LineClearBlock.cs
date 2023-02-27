@@ -37,12 +37,8 @@ public class LineClearBlock : Block
         var gameConfig = GameManager.Instance.gameConfig;
         mapTile.MovableBlockOnMapTile = this;
         mapTile.MovableBlockOnMapTile.Coord = mapTile.MapTileCoord;
-        transform.DOMove(mapTile.transform.position, gameConfig.AnimationSpeed).SetEase(gameConfig.EasyType).OnComplete(ChangeCondition);
-    }
-    
-    private void ChangeCondition()
-    {
-        IsMoving = false;
+        
+        MoveAnimation(mapTile.transform.position);
     }
 
     private void DeleteSameLineBlock(MapTile mapTile, int line)

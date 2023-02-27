@@ -1,5 +1,7 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using Sirenix.OdinInspector;
 using UnityEngine;
 using Wayway.Engine.Singleton;
 
@@ -9,8 +11,10 @@ public class SaveManager : MonoSingleton<SaveManager>
     public PlayerData PlayerData;
     // Start is called before the first frame update
 
-    private void Awake()
+    protected override void Awake()
     {
+        base.Awake();
+        
         Load();
     }
     private void OnApplicationPause(bool pauseStatus)
@@ -21,6 +25,12 @@ public class SaveManager : MonoSingleton<SaveManager>
     {
         Save();
     }
+
+    [Button]
+    public void DeleteSaveFileFromDevice()
+    {
+        ES3.DeleteKey("PlayerData");
+    }
     
     private void Save()
     {
@@ -30,15 +40,21 @@ public class SaveManager : MonoSingleton<SaveManager>
 
     private void Load()
     {
-        var loaded = ES3.Load<PlayerData>("PlayerData");
-        if (loaded != null)
+        PlayerData loaded;
+        try
         {
-            PlayerData = loaded;    
+            loaded = ES3.Load<PlayerData>("PlayerData");
+            PlayerData = loaded;
+            
+            Debug.Log("Found PlayerData and Loaded");
         }
-        else
+        catch (Exception e)
         {
+            Debug.LogWarning(e);
+            
             PlayerData = DefaultPlayerData;
+
+            Debug.Log("Did not Find PlayerData and Loaded Default PlayerData");
         }
-        Debug.Log(PlayerData.clearedMaxStage);
     }
 }

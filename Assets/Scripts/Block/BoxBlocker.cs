@@ -1,8 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
 using DG.Tweening;
 using UnityEngine;
-using Wayway.Engine;
 
 public class BoxBlocker : Block
 {
@@ -20,10 +17,21 @@ public class BoxBlocker : Block
 
     public override void Pang()
     {
+        var block = this;
+        
         var blockValue = this.value;
         GameManager.Instance.ConditionStates[blockValue]++;
         MapManager.Instance.map.MapTiles[Coord].MovableBlockOnMapTile = null;
-        Destroy(gameObject);
+        
+        var gameConfig = GameManager.Instance.gameConfig;
+        
+        block.transform.DOScale(Vector3.one * 0.8f, 0.1f)
+            .SetEase(gameConfig.EasyType)
+            .SetLoops(2, LoopType.Yoyo)
+            .OnComplete(() =>
+            {
+                Destroy(block.gameObject);
+            });
     }
 
     public override void Move(MapTile mapTile)
@@ -32,12 +40,9 @@ public class BoxBlocker : Block
         var gameConfig = GameManager.Instance.gameConfig;
         mapTile.MovableBlockOnMapTile = this;
         mapTile.MovableBlockOnMapTile.Coord = mapTile.MapTileCoord;
-        transform.DOMove(mapTile.transform.position, gameConfig.AnimationSpeed).SetEase(gameConfig.EasyType).OnComplete(ChangeCondition);
+        
+        MoveAnimation(mapTile.transform.position);
+        
+        // transform.DOMove(mapTile.transform.position, gameConfig.AnimationSpeed).SetEase(gameConfig.EasyType).OnComplete(ChangeCondition);
     }
-    
-    private void ChangeCondition()
-    {
-        IsMoving = false;
-    }
-
 }

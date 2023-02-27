@@ -8699,12 +8699,10 @@ MonoBehaviour:
   spawnPos: {fileID: -1577310684953360731, guid: 0dcbe6f9d9ac84a4bbab84b67fdcc15b, type: 3}
   ClearConditionDataAdd:
   - ConditionBlock: 61
-    HowMuchForClear: 10
-  - ConditionBlock: 100
-    HowMuchForClear: 2
+    HowMuchForClear: 40
   PerfectScore: 1000
-  MoveLimitAdd: 10
-  HowManyKindsOfBlock: 2
+  MoveLimitAdd: 90
+  HowManyKindsOfBlock: 5
   setStageNumber: 7
 --- !u!156049354 &806639774
 Grid:

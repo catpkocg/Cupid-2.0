@@ -1,9 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using DG.Tweening;
-using UnityEngine;
-
 public class NormalBlock : Block
 {
     private void Awake()
@@ -33,16 +27,9 @@ public class NormalBlock : Block
     public override void Move(MapTile mapTile)
     {
         IsMoving = true;
-        var gameConfig = GameManager.Instance.gameConfig;
         mapTile.MovableBlockOnMapTile = this;
         mapTile.MovableBlockOnMapTile.Coord = mapTile.MapTileCoord;
-        transform.DOMove(mapTile.transform.position, gameConfig.AnimationSpeed).SetEase(gameConfig.EasyType).OnComplete(ChangeCondition);
-    }
 
-    private void ChangeCondition()
-    {
-        IsMoving = false;
+        MoveAnimation(mapTile.transform.position);
     }
-
-    
 }

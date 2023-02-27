@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using DG.Tweening;
 using UnityEngine;
 
 public abstract class Block : MonoBehaviour
@@ -30,10 +31,39 @@ public abstract class Block : MonoBehaviour
         MoveBlock?.Invoke(mapTile);
     }
 
+    protected void MoveAnimation(Vector3 targetPos)
+    {
+        var gameConfig = GameManager.Instance.gameConfig;
+        
+        transform.DOScaleY(gameConfig.YScaleOnMove, gameConfig.ScaleAnimDuration)
+            .SetEase(gameConfig.EasyType)
+            .SetDelay(gameConfig.MoveAnimationDelay + gameConfig.AnimationSpeed - gameConfig.ScaleAnimDuration)
+            .SetLoops(2, LoopType.Yoyo);
+        transform.DOScaleX(gameConfig.XScaleOnMove, gameConfig.ScaleAnimDuration)
+            .SetEase(gameConfig.EasyType)
+            .SetDelay(gameConfig.MoveAnimationDelay + gameConfig.AnimationSpeed - gameConfig.ScaleAnimDuration)
+            .SetLoops(2, LoopType.Yoyo);
+        transform.DOMove(targetPos, gameConfig.AnimationSpeed)
+            .SetDelay(gameConfig.MoveAnimationDelay)
+            .SetEase(gameConfig.EasyType)
+            .OnComplete(ChangeCondition);
+    }
+    
     protected void PangMainBlock(Block block)
     {
         MapManager.Instance.map.MapTiles[block.Coord].MovableBlockOnMapTile = null;
-        Destroy(block.gameObject);
+
+        var gameConfig = GameManager.Instance.gameConfig;
+            
+        block.transform.DOScale(Vector3.one * 0.8f, 0.1f)
+            .SetEase(gameConfig.EasyType)
+            .SetLoops(2, LoopType.Yoyo)
+            .OnComplete(() =>
+            {
+                var explosion = Instantiate(gameConfig.Explosion, block.transform.position, Quaternion.identity);
+                DOVirtual.DelayedCall(0.5f, () => Destroy(explosion.gameObject));
+                Destroy(block.gameObject);
+            });
     }
 
     protected void PangNearBoxBlock(MapTile mapTile)
@@ -55,7 +85,6 @@ public abstract class Block : MonoBehaviour
                 }
             }
         }
-
     }
 
     protected void PangIceOnBlock(MapTile mapTile)
@@ -68,6 +97,9 @@ public abstract class Block : MonoBehaviour
             }
         }
     }
-
+    protected void ChangeCondition()
+    {
+        IsMoving = false;
+    }
 }
 

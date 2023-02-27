@@ -34,3 +34,7 @@ MonoBehaviour:
     StageScore: 0
   - StageLevel: 10
     StageScore: 0
+  StageInformation:
+    keys: 01000000
+    values:
+    - 1000

@@ -34,17 +34,15 @@ public class SameColorClearBlock : Block
     public override void Move(MapTile mapTile)
     {
         IsMoving = true;
+        
         var gameConfig = GameManager.Instance.gameConfig;
+        
         mapTile.MovableBlockOnMapTile = this;
         mapTile.MovableBlockOnMapTile.Coord = mapTile.MapTileCoord;
-        transform.DOMove(mapTile.transform.position, gameConfig.AnimationSpeed).SetEase(gameConfig.EasyType).OnComplete(ChangeCondition);
+        
+        MoveAnimation(mapTile.transform.position);
     }
-    
-    private void ChangeCondition()
-    {
-        IsMoving = false;
-    }
-    
+
     private void DeleteSameColorBlock(MapTile mapTile)
     {
         var sameColorBlocks = new List<Block>();

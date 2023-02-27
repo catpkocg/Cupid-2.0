@@ -136,6 +136,8 @@ MonoBehaviour:
   ClearConditionData:
   - ConditionBlock: 1
     HowMuchForClear: 20
+  BlockNumber: 0
+  PerfectScore: 0
   MoveLimit: 30
 --- !u!1001 &87867171447494633
 PrefabInstance:

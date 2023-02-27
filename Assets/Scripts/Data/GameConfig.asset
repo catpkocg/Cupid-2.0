@@ -14,7 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   stageLevel: 7
   blockNumber: 5
-  animationSpeed: 2
+  moveAnimationDelay: 0.5
+  animationSpeed: 0.3
   lineClearBlockCondition: 7
   sameColorClearBlockCondition: 12
-  easyType: 6
+  yScaleOnMove: 0.8
+  xScaleOnMove: 1.1
+  scaleAnimDuration: 0.1
+  easyType: 3
+  explosion: {fileID: 7202756349663976314, guid: 226fce422cb700a4ba6f6c279abee294, type: 3}
