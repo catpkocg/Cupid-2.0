@@ -69,7 +69,7 @@ public class MapManager : MonoSingleton<MapManager>
         {
             var randomTile = ValidRandomTileSelect(canCreatPosList);
             var lineBlock = spawn.SpawnRandomLineBlock(randomTile);
-            mySequence.Join(lineBlock.transform.DOScale(new Vector3(1, 1, 0), 0.3f));
+            mySequence.Join(lineBlock.transform.DOScale(new Vector3(1, 1, 0), 1f));
             canCreatPosList.Remove(randomTile);
         }
         mySequence.OnComplete(ChangeScaleState);

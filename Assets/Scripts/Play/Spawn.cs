@@ -70,7 +70,8 @@ public class Spawn : MonoBehaviour
 
     public Block SpawnRandomLineBlock(MapTile mapTile)
     {
-        Destroy(mapTile.MovableBlockOnMapTile);
+        
+        Destroy(mapTile.MovableBlockOnMapTile.gameObject);
         var random = Random.Range(0, 3);
         var randomLineClear = Instantiate(lineClearBlocks[random], mapTile.transform.position, Quaternion.identity);
         mapTile.MovableBlockOnMapTile = randomLineClear;
