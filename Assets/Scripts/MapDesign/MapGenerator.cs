@@ -1,12 +1,14 @@
 using System;
 using System.Collections.Generic;
 using Sirenix.OdinInspector;
+#if UNITY_EDITOR
 using UnityEditor;
-using UnityEngine;
-using UnityEngine.Serialization;
-using UnityEngine.Tilemaps;
-using Wayway.Engine;
+#endif
 
+using UnityEngine;
+using UnityEngine.Tilemaps;
+
+#if UNITY_EDITOR
 public class MapGenerator : MonoBehaviour
 {
     [TitleGroup("Prefabs")]
@@ -175,7 +177,7 @@ public class MapGenerator : MonoBehaviour
         }
     }
 }
-
+#endif
 [Serializable]
 public class ClearCondition
 {
