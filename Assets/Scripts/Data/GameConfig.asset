@@ -12,12 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a405f2d6474572468f20b1bb3bf5745, type: 3}
   m_Name: GameConfig
   m_EditorClassIdentifier: 
-  stageLevel: 7
+  stageLevel: 1
   blockNumber: 5
   moveAnimationDelay: 0.5
   animationSpeed: 0.3
   lineClearBlockCondition: 7
-  sameColorClearBlockCondition: 12
+  sameColorClearBlockCondition: 10
   yScaleOnMove: 0.8
   xScaleOnMove: 1.1
   scaleAnimDuration: 0.1

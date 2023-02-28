@@ -39,6 +39,7 @@ public class MapManager : MonoSingleton<MapManager>
         SettingUI(map);
     }
 
+    //TODO UI관련한 것의 세부 구현은 PlayUI.cs 에서 담당해야 함. 객체지향적 사고에 어긋하고 안 좋은 프랙티스로 보임
     private void SettingUI(Map map)
     {
         var conditionList = map.ClearConditionData;

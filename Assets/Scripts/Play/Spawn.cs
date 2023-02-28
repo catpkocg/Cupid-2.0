@@ -41,7 +41,7 @@ public class Spawn : MonoBehaviour
                         mapTiles[mapTilePos].transform.position, Quaternion.identity);
                 mapTiles[mapTilePos].MovableBlockOnMapTile = normalBlock;
                 normalBlock.Coord = mapTilePos;
-                normalBlock.GetComponentInChildren<TextMeshPro>().text = mapTilePos.ToString();
+                // normalBlock.GetComponentInChildren<TextMeshPro>().text = mapTilePos.ToString();
             }
         });
     }
