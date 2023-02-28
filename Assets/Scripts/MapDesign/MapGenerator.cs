@@ -1,11 +1,11 @@
 using System;
 using System.Collections.Generic;
 using Sirenix.OdinInspector;
-using UnityEditor;
 using UnityEngine;
-using UnityEngine.Serialization;
 using UnityEngine.Tilemaps;
-using Wayway.Engine;
+
+#if UNITY_EDITOR
+using UnityEditor;
 
 public class MapGenerator : MonoBehaviour
 {
@@ -26,7 +26,6 @@ public class MapGenerator : MonoBehaviour
     [SerializeField] private int setStageNumber;
 
     [Button(ButtonSizes.Gigantic), GUIColor(0.2f, 1f, 0.2f)]
-    
     public void GenerateMap()
     {
         // 인스턴스 한다
@@ -49,6 +48,7 @@ public class MapGenerator : MonoBehaviour
         
         Debug.Log(ClearConditionDataAdd.Count);
     }
+
     public void ClearConditionAdd(Map template)
     {
         for (int i = 0; i < ClearConditionDataAdd.Count; i++)
@@ -175,7 +175,7 @@ public class MapGenerator : MonoBehaviour
         }
     }
 }
-
+#endif
 [Serializable]
 public class ClearCondition
 {
@@ -188,7 +188,5 @@ public class ClearCondition
         HowMuchForClear = howMuchForClear;
     }
 }
-
-
 
 
