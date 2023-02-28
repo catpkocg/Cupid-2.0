@@ -1,14 +1,12 @@
 using System;
 using System.Collections.Generic;
 using Sirenix.OdinInspector;
-#if UNITY_EDITOR
-using UnityEditor;
-#endif
-
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
 #if UNITY_EDITOR
+using UnityEditor;
+
 public class MapGenerator : MonoBehaviour
 {
     [TitleGroup("Prefabs")]
@@ -28,7 +26,6 @@ public class MapGenerator : MonoBehaviour
     [SerializeField] private int setStageNumber;
 
     [Button(ButtonSizes.Gigantic), GUIColor(0.2f, 1f, 0.2f)]
-    
     public void GenerateMap()
     {
         // 인스턴스 한다
@@ -51,6 +48,7 @@ public class MapGenerator : MonoBehaviour
         
         Debug.Log(ClearConditionDataAdd.Count);
     }
+
     public void ClearConditionAdd(Map template)
     {
         for (int i = 0; i < ClearConditionDataAdd.Count; i++)
@@ -190,7 +188,5 @@ public class ClearCondition
         HowMuchForClear = howMuchForClear;
     }
 }
-
-
 
 
