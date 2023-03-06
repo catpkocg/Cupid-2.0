@@ -7,7 +7,7 @@ using Wayway.Engine.Singleton;
 
 public class GameManager : MonoSingleton<GameManager>
 {
-    [SerializeField] private Spawn spawn;
+    [SerializeField] internal Spawn spawn;
     [SerializeField] private Camera cam;
     [SerializeField] private GameObject gameOverPanel;
     [SerializeField] private GameObject failPopUp;
@@ -20,7 +20,6 @@ public class GameManager : MonoSingleton<GameManager>
     public ConditionImage conditionImage;
     public SerializeDictionary<int,int> ConditionStates = new ();
     public GameConfig gameConfig;
-    public Interaction interaction;
     public PlayUI ui;
     
     public int score;

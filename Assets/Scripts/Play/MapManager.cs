@@ -123,7 +123,7 @@ public class MapManager : MonoSingleton<MapManager>
         var mapTiles = map.MapTiles;
         for (var i = 0; i < WhatWillMove.Count; i++)
         {
-            WhatWillMove[i].Move(mapTiles[WhereToMove[i]]);
+            WhatWillMove[i].MoveBlock(mapTiles[WhereToMove[i]]);
         }
     }
 
@@ -163,62 +163,6 @@ public class MapManager : MonoSingleton<MapManager>
         return false;
     }
 
-    public List<Block> FindAllNearSameValue(Block block)
-    {
-        var toSearch = new List<Block>();
-        var searched = new List<Block>();
-        var allSameBlocks = new List<Block>();
-        toSearch.Add(block);
-        allSameBlocks.Add(block);
-        var tempCount = 0;
-        while (!toSearch.IsNullOrEmpty())
-        {
-            var currSearchTarget = toSearch[0];
-            var sameBlocks = FindNearSameValue(currSearchTarget);
-            if (!sameBlocks.IsNullOrEmpty())
-            {
-                for (var i = 0; i < sameBlocks.Count; i++)
-                {
-                    var currSameBlock = sameBlocks[i];
-
-                    if (!searched.Contains(currSameBlock)
-                        && !toSearch.Contains(currSameBlock))
-                    {
-                        allSameBlocks.Add(currSameBlock);
-                        toSearch.Add(currSameBlock);
-                    }
-                }
-            }
-
-            searched.Add(currSearchTarget);
-            toSearch.Remove(currSearchTarget);
-
-            if (500 < tempCount) break;
-            tempCount++;
-        }
-
-        return allSameBlocks;
-    }
-
-    public List<Block> FindNearSameValue(Block block)
-    {
-        var map = MapManager.Instance.map;
-        List<Block> sameBlockList = new List<Block>();
-        for (int i = 0; i < neighborPos.neighbor.Count; i++)
-        {
-            var neighbor = block.Coord + neighborPos.neighbor[i].neighborPos;
-            if (map.MapTiles.ContainsKey(neighbor) && map.MapTiles[neighbor].MovableBlockOnMapTile != null)
-            {
-                var neighborValue = map.MapTiles[neighbor].MovableBlockOnMapTile.value;
-                if (neighborValue == block.value)
-                {
-                    sameBlockList.Add(map.MapTiles[neighbor].MovableBlockOnMapTile);
-                }
-            }
-        }
-
-        return sameBlockList;
-    }
     
     public void MakeListForFindDir()
     {
@@ -241,7 +185,7 @@ public class MapManager : MonoSingleton<MapManager>
         {
             if (allBlockForCheckDir[i].drawValue == 0)
             {
-                List<Block> sameBlock = FindAllNearSameValue(allBlockForCheckDir[i]);
+                List<Block> sameBlock = MapUtil.FindAllNearSameValue(allBlockForCheckDir[i]);
                 if (sameBlock.Count >= gameConfig.SameColorClearBlockCondition)
                 {
                     for (int j = 0; j < sameBlock.Count; j++)

@@ -1,12 +1,11 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using Random = UnityEngine.Random;
 
 public class MapTile : MonoBehaviour, IPointerClickHandler
 {
-    [SerializeField] private Interaction interaction;
+    [SerializeField] private Spawn spawn;
     
     public Vector3Int MapTileCoord;
     public Block MovableBlockOnMapTile;
@@ -14,17 +13,71 @@ public class MapTile : MonoBehaviour, IPointerClickHandler
 
     private void Start()
     {
-        interaction = GameManager.Instance.interaction;
+        spawn = GameManager.Instance.spawn;
     }
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        Debug.Log(MapTileCoord);
         if (GameManager.Instance.State == States.ReadyForInteraction)
         {
-            interaction.OnTileClickHandler(MapTileCoord);
+            OnTileClickHandler(MapTileCoord);
+            
+            //util.asdfksehoifhaef;
+            
+            // dddddd
+            
+        }
+    }
+    
+    public void OnTileClickHandler(Vector3Int coord)
+    {
+        var mapTile = MapManager.Instance.map.MapTiles[coord];
+        var target = mapTile.MovableBlockOnMapTile;
+        var gameConfig = MapManager.Instance.gameConfig;
+        
+        switch (target.value)
+        {
+            case > 0 and < 10:
+                DeleteClickedBlocks(mapTile);
+                if (target.drawValue == gameConfig.SameColorClearBlockCondition)
+                {
+                    spawn.SpawnSameColorBlock(mapTile,target.value-1);
+                    //condition state 수정해야함
+                    
+                }
+                else if (target.drawValue > 0)
+                {
+                    spawn.SpawnLineClearBlock(mapTile, target.drawValue - 1);
+                }
+                break;
+            case >10 and <40:
+                mapTile.MovableBlockOnMapTile.Pang();
+                GameManager.Instance.ChangeState(States.CheckTarget);
+                break;
         }
         
     }
+
+    private void DeleteClickedBlocks(MapTile mapTile)
+    {
+        var gameManager = GameManager.Instance;
+        var sameBlockList = MapUtil.FindAllNearSameValue(mapTile.MovableBlockOnMapTile);
+        if (sameBlockList.Count > 1)
+        {
+            
+            for (int i = 0; i < sameBlockList.Count; i++)
+            {
+                sameBlockList[i].OnPang();
+            }
+            
+            gameManager.touchCount++;
+            gameManager.ChangeState(States.CheckTarget);
+        }
+    }
+    
+    
+    
+    
+    
     
 }

@@ -14,13 +14,10 @@ public abstract class Block : MonoBehaviour
     public GameObject foot;
     public Vector3Int Coord;
     
-    //점수계산이 필요한가?? 현재는 없음
-    //public int score;
-    
     [SerializeField] public int value;
 
-    protected Action OnPang;
-    protected Action<MapTile> MoveBlock;
+    public Action OnPang;
+    public Action<MapTile> MoveBlock;
     
     public virtual void Pang()
     {
@@ -48,7 +45,6 @@ public abstract class Block : MonoBehaviour
             .SetEase(gameConfig.EasyType)
             .OnComplete(ChangeCondition);
     }
-    
     protected void PangMainBlock(Block block)
     {
         MapManager.Instance.map.MapTiles[block.Coord].MovableBlockOnMapTile = null;
@@ -65,7 +61,6 @@ public abstract class Block : MonoBehaviour
                 Destroy(block.gameObject);
             });
     }
-
     protected void PangNearBoxBlock(MapTile mapTile)
     {
         var mapTiles = MapManager.Instance.map.MapTiles;
@@ -86,7 +81,6 @@ public abstract class Block : MonoBehaviour
             }
         }
     }
-
     protected void PangIceOnBlock(MapTile mapTile)
     {
         if (mapTile.UnMovalbleBlockOnMapTile != null)
