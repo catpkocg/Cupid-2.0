@@ -1,6 +1,4 @@
 using System.Collections.Generic;
-using DG.Tweening;
-using UnityEngine;
 using Wayway.Engine;
 
 public class LineClearBlock : Block
@@ -22,9 +20,15 @@ public class LineClearBlock : Block
         var gameManager = GameManager.Instance;
         var mapTile = MapManager.Instance.map.MapTiles[Coord];
         var axis = mapTile.MovableBlockOnMapTile.value - 20;
-        var blockValue = this.value;
+        
+        // 같은 라인클리어 블럭이 붙어있는지 확인해야함. 
+        
+        // 세임컬러 클리어 블럭이 붙어있는지 확인해야함.
+        
+        //var blockValue = this.value;
         gameManager.ConditionStates[20]++;
         gameManager.score += gameManager.gameConfig.LineClearBlockCondition * 20;
+        
         PangMainBlock(this);
         //PangNearBoxBlock(mapTile);
         PangIceOnBlock(mapTile);

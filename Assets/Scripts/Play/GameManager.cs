@@ -130,6 +130,12 @@ public class GameManager : MonoSingleton<GameManager>
                         // canPangBox라는 bool값을 전부 true 로 변환.
                         MapManager.Instance.AlreadyPangChange();
                         
+                        //선택할수있는 곳이 있는지 확인
+                        
+                        //없으면 랜덤으로 섞는 로직이 들어가야 함
+                        
+                        //두번까지 섞고 안되면 게임오버
+                        
                         ChangeState(States.ReadyForInteraction);
                         //게임스테이트 레디인터렉션으로 바꿔줌
                     }

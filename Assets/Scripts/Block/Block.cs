@@ -109,7 +109,8 @@ public abstract class Block : MonoBehaviour
     {
         if (mapTile.UnMovalbleBlockOnMapTile != null)
         {
-            if (mapTile.UnMovalbleBlockOnMapTile.value == 71)
+            var ice = mapTile.UnMovalbleBlockOnMapTile as IceBlocker;
+            if (ice != null && (ice.colorValue == 0 || (ice.colorValue == mapTile.MovableBlockOnMapTile.value)))
             {
                 mapTile.UnMovalbleBlockOnMapTile.Pang();
             }

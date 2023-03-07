@@ -14,6 +14,7 @@ using Random = UnityEngine.Random;
 public class MapManager : MonoSingleton<MapManager>
 {
     [SerializeField] private Spawn spawn;
+    [SerializeField] private PlayUI ui;
     
     public NeighborPos neighborPos;
     public GameConfig gameConfig;
@@ -50,21 +51,7 @@ public class MapManager : MonoSingleton<MapManager>
         //map.BlockNumber = gameConfig.BlockNumber;
         GameManager.Instance.State = States.ReadyForInteraction;
         spawn.SpawnBlockOnTile(map);
-        SettingUI(map);
-    }
-
-    //TODO UI관련한 것의 세부 구현은 PlayUI.cs 에서 담당해야 함. 객체지향적 사고에 어긋하고 안 좋은 프랙티스로 보임
-    private void SettingUI(Map map)
-    {
-        var conditionList = map.ClearConditionData;
-        var playUI = GameManager.Instance.ui;
-        var conditionImage = GameManager.Instance.conditionImage;
-        for (var i = 0; i < conditionList.Count; i++)
-        {
-            playUI.conditionImages[i].GetComponent<Image>().sprite 
-               = conditionImage.ImagesForUI[conditionList[i].ConditionBlock];
-            playUI.conditionCount[i].GetComponent<TextMeshProUGUI>().text = conditionList[i].HowMuchForClear.ToString();
-        }
+        ui.SettingUI(map);
     }
 
     public void LastPangScaleAction(int howManyBlockNeedToCreate)
@@ -116,7 +103,6 @@ public class MapManager : MonoSingleton<MapManager>
         return validMapTiles[random];
     }
     
-
     private Map GetMapByStageNumber(int stageNumber)
     {
         var stageMap = Resources.Load<Map>($"Map{stageNumber}");

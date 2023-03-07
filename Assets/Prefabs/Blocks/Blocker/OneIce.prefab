@@ -55,9 +55,17 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7040507236686456247, guid: 3756c4da58ff54d44a8ab722076d5174, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 1866075755, guid: 4d5a3bb1d5669984a852d9488bfa85f8, type: 3}
     - target: {fileID: 9081851610897295702, guid: 3756c4da58ff54d44a8ab722076d5174, type: 3}
       propertyPath: value
       value: 56
+      objectReference: {fileID: 0}
+    - target: {fileID: 9081851610897295702, guid: 3756c4da58ff54d44a8ab722076d5174, type: 3}
+      propertyPath: iceCounter
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3756c4da58ff54d44a8ab722076d5174, type: 3}

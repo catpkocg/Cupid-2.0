@@ -59,5 +59,9 @@ PrefabInstance:
       propertyPath: value
       value: 59
       objectReference: {fileID: 0}
+    - target: {fileID: 9081851610897295702, guid: 3756c4da58ff54d44a8ab722076d5174, type: 3}
+      propertyPath: iceCounter
+      value: 4
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3756c4da58ff54d44a8ab722076d5174, type: 3}
