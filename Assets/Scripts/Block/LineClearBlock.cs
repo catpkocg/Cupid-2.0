@@ -23,10 +23,10 @@ public class LineClearBlock : Block
         var mapTile = MapManager.Instance.map.MapTiles[Coord];
         var axis = mapTile.MovableBlockOnMapTile.value - 20;
         var blockValue = this.value;
-        gameManager.ConditionStates[blockValue]++;
+        gameManager.ConditionStates[20]++;
         gameManager.score += gameManager.gameConfig.LineClearBlockCondition * 20;
         PangMainBlock(this);
-        PangNearBoxBlock(mapTile);
+        //PangNearBoxBlock(mapTile);
         PangIceOnBlock(mapTile);
         DeleteSameLineBlock(mapTile, axis);
     }
@@ -50,7 +50,14 @@ public class LineClearBlock : Block
             if (mapTiles[pos].MovableBlockOnMapTile == null) return;
             if (CoordUtil.GetAxisValue(pos, mapTile.MapTileCoord, line))
             {
-                mapTiles[pos].MovableBlockOnMapTile.Pang();
+                if (mapTiles[pos].MovableBlockOnMapTile.value < 10)
+                {
+                    PangMainBlock(mapTiles[pos].MovableBlockOnMapTile);
+                }
+                else
+                {
+                    mapTiles[pos].MovableBlockOnMapTile.Pang();
+                }
             }
         });
     }

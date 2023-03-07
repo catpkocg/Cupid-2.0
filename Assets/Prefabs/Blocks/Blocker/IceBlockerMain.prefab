@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 9081851610897295702}
   - component: {fileID: 7040507236686456247}
   m_Layer: 0
-  m_Name: IceBlocker
+  m_Name: IceBlockerMain
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -52,7 +52,7 @@ MonoBehaviour:
   dir: []
   foot: {fileID: 0}
   Coord: {x: 0, y: 0, z: 0}
-  value: 71
+  value: 0
 --- !u!212 &7040507236686456247
 SpriteRenderer:
   m_ObjectHideFlags: 0

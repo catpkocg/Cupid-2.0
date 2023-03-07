@@ -6,8 +6,6 @@ using UnityEngine.UI;
 
 public class LoadSceneManager : MonoBehaviour
 {
-    public static int nextScene;
-
     [SerializeField] private Image progressBar;
     
     // Start is called before the first frame update

@@ -22,13 +22,13 @@ public class SameColorClearBlock : Block
     {
         var gameManager = GameManager.Instance;
         var mapTile = MapManager.Instance.map.MapTiles[Coord];
-        var blockValue = this.value;
-        gameManager.ConditionStates[blockValue]++;
+        var blockValue = value;
+        gameManager.ConditionStates[30]++;
         gameManager.score += gameManager.gameConfig.SameColorClearBlockCondition * 30;
         PangMainBlock(this);
         PangNearBoxBlock(mapTile);
         PangIceOnBlock(mapTile);
-        DeleteSameColorBlock(mapTile);
+        DeleteSameColorBlock(blockValue);
     }
 
     public override void Move(MapTile mapTile)
@@ -43,18 +43,18 @@ public class SameColorClearBlock : Block
         MoveAnimation(mapTile.transform.position);
     }
 
-    private void DeleteSameColorBlock(MapTile mapTile)
+    private void DeleteSameColorBlock(int cakeValue)
     {
         var sameColorBlocks = new List<Block>();
         var mapTiles = MapManager.Instance.map.MapTiles;
-        var randomNumber = Random.Range(0, MapManager.Instance.gameConfig.BlockNumber);
-        
-        Debug.Log(randomNumber +"이값 전부다 블럭 터뜨림");
+        var sameValue = cakeValue - 30 + 1;
+        //var randomNumber = Random.Range(0, MapManager.Instance.gameConfig.BlockNumber);
+        //Debug.Log(randomNumber +"이값 전부다 블럭 터뜨림");
         
         mapTiles.Keys.ForEach(pos =>
         {
             if (mapTiles[pos].MovableBlockOnMapTile == null) return;
-            if (mapTiles[pos].MovableBlockOnMapTile.value == randomNumber+1)
+            if (mapTiles[pos].MovableBlockOnMapTile.value == sameValue)
             {
                 sameColorBlocks.Add(mapTiles[pos].MovableBlockOnMapTile);
             }

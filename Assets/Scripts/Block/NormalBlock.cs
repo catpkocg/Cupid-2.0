@@ -1,5 +1,7 @@
 public class NormalBlock : Block
 {
+    
+    
     private void Awake()
     {
         OnPang += Pang;

@@ -124,7 +124,13 @@ public class MapGenerator : MonoBehaviour
                 
                 if (tilemap.HasTile(currTileMapCoord))
                 {
-                    var instance = PrefabUtility.InstantiatePrefab(block, temPlate.transform) as Block;
+                    var tileName = tilemap.GetTile(currTileMapCoord).name;
+                    var tileValue = int.Parse(tileName.Replace("HexTile_Sheet_BLANK_", ""));
+                    var prefabByValue = blockPrefabList.Find(x => x.value == tileValue);
+                    
+                    Debug.Log(tileValue);
+                    var instance = PrefabUtility.InstantiatePrefab(prefabByValue, temPlate.transform) as Block;
+                    
                     if (instance == null)
                     {
                         Debug.LogWarning("Casting to GameObject failed. Tile instance is null");

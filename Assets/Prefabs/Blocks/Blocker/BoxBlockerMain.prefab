@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 6963222549579380349}
   - component: {fileID: 7040507236686456247}
   m_Layer: 0
-  m_Name: BoxBlocker
+  m_Name: BoxBlockerMain
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -52,7 +52,13 @@ MonoBehaviour:
   dir: []
   foot: {fileID: 0}
   Coord: {x: 0, y: 0, z: 0}
-  value: 61
+  value: 0
+  colorValue: 0
+  boxCounter: 0
+  boxSprites:
+  - {fileID: 1938378115, guid: 4d5a3bb1d5669984a852d9488bfa85f8, type: 3}
+  - {fileID: 752865474, guid: 4d5a3bb1d5669984a852d9488bfa85f8, type: 3}
+  - {fileID: 801553188, guid: 4d5a3bb1d5669984a852d9488bfa85f8, type: 3}
 --- !u!212 &7040507236686456247
 SpriteRenderer:
   m_ObjectHideFlags: 0

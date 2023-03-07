@@ -8,6 +8,8 @@ using Wayway.Engine.Singleton;
 public class GameManager : MonoSingleton<GameManager>
 {
     [SerializeField] internal Spawn spawn;
+    //카메라 사이즈 조절 필요
+    //맵에서 가로세로 정보 불러와야함.
     [SerializeField] private Camera cam;
     [SerializeField] private GameObject gameOverPanel;
     [SerializeField] private GameObject failPopUp;
@@ -124,6 +126,10 @@ public class GameManager : MonoSingleton<GameManager>
                     }
                     else
                     {
+                        // 여기에 박스 블럭들 이미 터진 거 방지할려고 체크해 놨던거 지우기.
+                        // canPangBox라는 bool값을 전부 true 로 변환.
+                        MapManager.Instance.AlreadyPangChange();
+                        
                         ChangeState(States.ReadyForInteraction);
                         //게임스테이트 레디인터렉션으로 바꿔줌
                     }
@@ -138,7 +144,6 @@ public class GameManager : MonoSingleton<GameManager>
                 {
                     // 특수팡블럭들 삭제하고 실행
                     MapManager.Instance.LastPangBlock();
-                    
                     MapManager.Instance.CheckTarget();
                     spawn.SpawnForEmptyPlace();
                     MapManager.Instance.DeleteAllDraw();

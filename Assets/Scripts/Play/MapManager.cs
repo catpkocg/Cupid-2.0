@@ -13,7 +13,6 @@ using Random = UnityEngine.Random;
 
 public class MapManager : MonoSingleton<MapManager>
 {
-    [SerializeField] private List<Map> mapList;
     [SerializeField] private Spawn spawn;
     
     public NeighborPos neighborPos;
@@ -23,12 +22,27 @@ public class MapManager : MonoSingleton<MapManager>
     public List<Vector3Int> WhereToMove;
     private List<Block> allBlockForCheckDir;
     private List<MapTile> canCreatPosList = new ();
+    
+    
     private void Start()
     {
         SettingMap();
         DrawDirectionOnBlock();
     }
 
+    public void AlreadyPangChange()
+    {
+        var mapTiles = map.MapTiles;
+        mapTiles.Values.ForEach(mapTile =>
+        {
+            if (mapTile.MovableBlockOnMapTile.value is >= 60 and <= 63)
+            {
+                var box = mapTile.MovableBlockOnMapTile as BoxBlocker;
+                if (box != null) box.alreadyPang = false;
+            }
+        });
+    }
+    
     private void SettingMap()
     {
         map = Instantiate(GetMapByStageNumber(gameConfig.StageLevel), transform.position, Quaternion.identity);
@@ -64,7 +78,6 @@ public class MapManager : MonoSingleton<MapManager>
                 canCreatPosList.Add(mapTile);   
             }
         });
-
         
         for (int i = 0; i < howManyBlockNeedToCreate; i++)
         {
@@ -283,7 +296,6 @@ public class MapManager : MonoSingleton<MapManager>
                                 sameBlock[j].dir[highNumDirSign[dirValue] - 1].SetActive(true);
                                 sameBlock[j].drawValue = highNumDirSign[dirValue];
                             }
-
                         }
 
                         else
@@ -340,8 +352,6 @@ public class MapManager : MonoSingleton<MapManager>
 
         allBlockForCheckDir.Clear();
         
-        //TODO: 확인 필요. state 여기서 변환하고 있는데 GameManager에서 바로 다른 스테잇을 넘기고 있음
-        GameManager.Instance.ChangeState(States.CreateNewBlock);
         
     }
 

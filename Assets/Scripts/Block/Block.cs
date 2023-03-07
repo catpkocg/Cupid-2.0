@@ -28,6 +28,25 @@ public abstract class Block : MonoBehaviour
         MoveBlock?.Invoke(mapTile);
     }
 
+    
+    protected void PangAnimation()
+    {
+        var block = this;
+        
+        var blockValue = this.value;
+        GameManager.Instance.ConditionStates[blockValue]++;
+        MapManager.Instance.map.MapTiles[Coord].MovableBlockOnMapTile = null;
+        
+        var gameConfig = GameManager.Instance.gameConfig;
+        
+        block.transform.DOScale(Vector3.one * 0.8f, 0.1f)
+            .SetEase(gameConfig.EasyType)
+            .SetLoops(2, LoopType.Yoyo)
+            .OnComplete(() =>
+            {
+                Destroy(block.gameObject);
+            });
+    }
     protected void MoveAnimation(Vector3 targetPos)
     {
         var gameConfig = GameManager.Instance.gameConfig;
@@ -73,9 +92,14 @@ public abstract class Block : MonoBehaviour
                 var nearTile = mapTiles[nearPos];
                 if (nearTile.MovableBlockOnMapTile != null)
                 {
-                    if(nearTile.MovableBlockOnMapTile.value == 61)
+                    if(nearTile.MovableBlockOnMapTile.value is >= 60 and <= 63)
                     {
-                        nearTile.MovableBlockOnMapTile.Pang();
+                        var box = nearTile.MovableBlockOnMapTile as BoxBlocker;
+                        if (box != null && (box.colorValue == 0 || box.colorValue == mapTile.MovableBlockOnMapTile.value))
+                        {
+                            nearTile.MovableBlockOnMapTile.Pang();
+                        }
+                        
                     }
                 }
             }
