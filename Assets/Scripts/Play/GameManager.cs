@@ -60,12 +60,22 @@ public class GameManager : MonoSingleton<GameManager>
     private void Start()
     {
         SettingConditionStates();
-        State = States.ReadyForInteraction;
+        State = States.CheckThereIsBlockCanPang;
     }
     private void Update()
     {
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            MapManager.Instance.ShuffleBlocks();
+        }
+        
+        
         switch (State)
         {
+            case States.CheckThereIsBlockCanPang:
+                
+                
+                break;
             case States.ReadyForInteraction:
                 break;
             case States.CheckTarget:
@@ -136,6 +146,8 @@ public class GameManager : MonoSingleton<GameManager>
                         
                         //두번까지 섞고 안되면 게임오버
                         
+                        
+                        // 이걸 checkisthereblockcanbepang;
                         ChangeState(States.ReadyForInteraction);
                         //게임스테이트 레디인터렉션으로 바꿔줌
                     }
@@ -236,8 +248,13 @@ public class GameManager : MonoSingleton<GameManager>
         }
     }
 }
+
+
+
 public enum States
 {
+    
+    CheckThereIsBlockCanPang,
     ReadyForInteraction,
     CheckTarget,
     Waiting,

@@ -1,12 +1,8 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using DG.Tweening;
-using Mono.Cecil;
-using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 using Wayway.Engine;
 using Wayway.Engine.Singleton;
 using Random = UnityEngine.Random;
@@ -54,6 +50,35 @@ public class MapManager : MonoSingleton<MapManager>
         ui.SettingUI(map);
     }
 
+    public void ShuffleBlocks()
+    {
+        List<MapTile> normalBlockList = new List<MapTile>();
+        var mapTiles = map.MapTiles;
+        mapTiles.Values.ForEach(mapTile =>
+        {
+            if (mapTile.MovableBlockOnMapTile.value < 10)
+            {
+                //var normalBlock = mapTile.MovableBlockOnMapTile;
+                normalBlockList.Add(mapTile);
+            }
+        });
+        
+        var random = new System.Random();
+        var shuffledBlock = normalBlockList.OrderBy(x => random.Next()).ToList();
+
+        for (int i = 0; i < normalBlockList.Count; i++)
+        {
+            var a = normalBlockList[i].MovableBlockOnMapTile;
+            normalBlockList[i].MovableBlockOnMapTile = null;
+            a.Move(shuffledBlock[i]);
+            //shuffledBlock[i].MovableBlockOnMapTile.Move(normalBlockList[i]);
+            
+            //normalBlockList[i].MovableBlockOnMapTile = null;
+        }
+           
+
+    }
+
     public void LastPangScaleAction(int howManyBlockNeedToCreate)
     {
         var mySequence = DOTween.Sequence();
@@ -65,13 +90,26 @@ public class MapManager : MonoSingleton<MapManager>
                 canCreatPosList.Add(mapTile);   
             }
         });
-        
-        for (int i = 0; i < howManyBlockNeedToCreate; i++)
+
+        if (howManyBlockNeedToCreate > canCreatPosList.Count)
         {
-            var randomTile = ValidRandomTileSelect(canCreatPosList);
-            var lineBlock = spawn.SpawnRandomLineBlock(randomTile);
-            mySequence.Join(lineBlock.transform.DOScale(new Vector3(1, 1, 0), 1f));
-            canCreatPosList.Remove(randomTile);
+            for (int j = 0; j < canCreatPosList.Count; j++)
+            {
+                var randomTile = ValidRandomTileSelect(canCreatPosList);
+                var lineBlock = spawn.SpawnRandomLineBlock(randomTile);
+                mySequence.Join(lineBlock.transform.DOScale(new Vector3(1, 1, 0), 1f));
+                canCreatPosList.Remove(randomTile);
+            }
+        }
+        else
+        {
+            for (int i = 0; i < howManyBlockNeedToCreate; i++)
+            {
+                var randomTile = ValidRandomTileSelect(canCreatPosList);
+                var lineBlock = spawn.SpawnRandomLineBlock(randomTile);
+                mySequence.Join(lineBlock.transform.DOScale(new Vector3(1, 1, 0), 1f));
+                canCreatPosList.Remove(randomTile);
+            }
         }
         mySequence.OnComplete(ChangeScaleState);
     }
@@ -88,7 +126,6 @@ public class MapManager : MonoSingleton<MapManager>
                     mapTile.MovableBlockOnMapTile.Pang();  
                 }
             }
-            
         });
     }
     
