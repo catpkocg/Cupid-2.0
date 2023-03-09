@@ -144,10 +144,10 @@ TextureImporter:
       name: HexTile_Sheet_BLANK_0
       rect:
         serializedVersion: 2
-        x: 24
-        y: 1825
-        width: 209
-        height: 189
+        x: 0
+        y: 1792
+        width: 256
+        height: 256
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -165,10 +165,10 @@ TextureImporter:
       name: HexTile_Sheet_BLANK_1
       rect:
         serializedVersion: 2
-        x: 279
-        y: 1825
-        width: 210
-        height: 189
+        x: 256
+        y: 1792
+        width: 256
+        height: 256
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -186,10 +186,10 @@ TextureImporter:
       name: HexTile_Sheet_BLANK_2
       rect:
         serializedVersion: 2
-        x: 535
-        y: 1825
-        width: 210
-        height: 189
+        x: 512
+        y: 1792
+        width: 256
+        height: 256
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -207,10 +207,10 @@ TextureImporter:
       name: HexTile_Sheet_BLANK_3
       rect:
         serializedVersion: 2
-        x: 791
-        y: 1825
-        width: 210
-        height: 189
+        x: 768
+        y: 1792
+        width: 256
+        height: 256
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -228,10 +228,10 @@ TextureImporter:
       name: HexTile_Sheet_BLANK_4
       rect:
         serializedVersion: 2
-        x: 1047
-        y: 1825
-        width: 210
-        height: 189
+        x: 1024
+        y: 1792
+        width: 256
+        height: 256
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -249,10 +249,10 @@ TextureImporter:
       name: HexTile_Sheet_BLANK_5
       rect:
         serializedVersion: 2
-        x: 1303
-        y: 1825
-        width: 210
-        height: 189
+        x: 1280
+        y: 1792
+        width: 256
+        height: 256
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -270,10 +270,10 @@ TextureImporter:
       name: HexTile_Sheet_BLANK_6
       rect:
         serializedVersion: 2
-        x: 1559
-        y: 1825
-        width: 210
-        height: 189
+        x: 1536
+        y: 1792
+        width: 256
+        height: 256
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -291,10 +291,10 @@ TextureImporter:
       name: HexTile_Sheet_BLANK_7
       rect:
         serializedVersion: 2
-        x: 1815
-        y: 1825
-        width: 210
-        height: 189
+        x: 1792
+        y: 1792
+        width: 256
+        height: 256
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -312,10 +312,10 @@ TextureImporter:
       name: HexTile_Sheet_BLANK_8
       rect:
         serializedVersion: 2
-        x: 24
-        y: 1569
-        width: 209
-        height: 190
+        x: 0
+        y: 1536
+        width: 256
+        height: 256
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -333,10 +333,10 @@ TextureImporter:
       name: HexTile_Sheet_BLANK_9
       rect:
         serializedVersion: 2
-        x: 275
-        y: 1567
-        width: 218
-        height: 194
+        x: 256
+        y: 1536
+        width: 256
+        height: 256
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -354,10 +354,10 @@ TextureImporter:
       name: HexTile_Sheet_BLANK_10
       rect:
         serializedVersion: 2
-        x: 535
-        y: 1569
-        width: 210
-        height: 190
+        x: 512
+        y: 1536
+        width: 256
+        height: 256
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -375,10 +375,10 @@ TextureImporter:
       name: HexTile_Sheet_BLANK_11
       rect:
         serializedVersion: 2
-        x: 789
-        y: 1569
-        width: 212
-        height: 190
+        x: 768
+        y: 1536
+        width: 256
+        height: 256
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -396,10 +396,10 @@ TextureImporter:
       name: HexTile_Sheet_BLANK_12
       rect:
         serializedVersion: 2
-        x: 1047
-        y: 1569
-        width: 210
-        height: 190
+        x: 1024
+        y: 1536
+        width: 256
+        height: 256
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -417,10 +417,10 @@ TextureImporter:
       name: HexTile_Sheet_BLANK_13
       rect:
         serializedVersion: 2
-        x: 1303
-        y: 1569
-        width: 211
-        height: 190
+        x: 1280
+        y: 1536
+        width: 256
+        height: 256
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -438,10 +438,10 @@ TextureImporter:
       name: HexTile_Sheet_BLANK_14
       rect:
         serializedVersion: 2
-        x: 1559
-        y: 1569
-        width: 211
-        height: 190
+        x: 1536
+        y: 1536
+        width: 256
+        height: 256
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -459,10 +459,10 @@ TextureImporter:
       name: HexTile_Sheet_BLANK_15
       rect:
         serializedVersion: 2
-        x: 1810
-        y: 1565
-        width: 218
-        height: 221
+        x: 1792
+        y: 1536
+        width: 256
+        height: 256
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -480,10 +480,10 @@ TextureImporter:
       name: HexTile_Sheet_BLANK_16
       rect:
         serializedVersion: 2
-        x: 24
-        y: 1315
-        width: 209
-        height: 188
+        x: 0
+        y: 1280
+        width: 256
+        height: 256
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -501,10 +501,10 @@ TextureImporter:
       name: HexTile_Sheet_BLANK_17
       rect:
         serializedVersion: 2
-        x: 279
-        y: 1315
-        width: 210
-        height: 188
+        x: 256
+        y: 1280
+        width: 256
+        height: 256
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -522,10 +522,10 @@ TextureImporter:
       name: HexTile_Sheet_BLANK_18
       rect:
         serializedVersion: 2
-        x: 535
-        y: 1315
-        width: 210
-        height: 188
+        x: 512
+        y: 1280
+        width: 256
+        height: 256
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -543,10 +543,10 @@ TextureImporter:
       name: HexTile_Sheet_BLANK_19
       rect:
         serializedVersion: 2
-        x: 791
-        y: 1315
-        width: 210
-        height: 188
+        x: 768
+        y: 1280
+        width: 256
+        height: 256
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -564,10 +564,10 @@ TextureImporter:
       name: HexTile_Sheet_BLANK_20
       rect:
         serializedVersion: 2
-        x: 1047
-        y: 1315
-        width: 210
-        height: 188
+        x: 1024
+        y: 1280
+        width: 256
+        height: 256
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -585,10 +585,10 @@ TextureImporter:
       name: HexTile_Sheet_BLANK_21
       rect:
         serializedVersion: 2
-        x: 1303
-        y: 1315
-        width: 210
-        height: 188
+        x: 1280
+        y: 1280
+        width: 256
+        height: 256
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -606,10 +606,10 @@ TextureImporter:
       name: HexTile_Sheet_BLANK_22
       rect:
         serializedVersion: 2
-        x: 1559
-        y: 1315
-        width: 210
-        height: 188
+        x: 1536
+        y: 1280
+        width: 256
+        height: 256
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -627,10 +627,10 @@ TextureImporter:
       name: HexTile_Sheet_BLANK_23
       rect:
         serializedVersion: 2
-        x: 1815
-        y: 1315
-        width: 210
-        height: 188
+        x: 1792
+        y: 1280
+        width: 256
+        height: 256
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -648,10 +648,10 @@ TextureImporter:
       name: HexTile_Sheet_BLANK_24
       rect:
         serializedVersion: 2
-        x: 24
-        y: 1057
-        width: 209
-        height: 190
+        x: 0
+        y: 1024
+        width: 256
+        height: 256
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -669,10 +669,10 @@ TextureImporter:
       name: HexTile_Sheet_BLANK_25
       rect:
         serializedVersion: 2
-        x: 279
-        y: 1057
-        width: 210
-        height: 190
+        x: 256
+        y: 1024
+        width: 256
+        height: 256
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -690,10 +690,10 @@ TextureImporter:
       name: HexTile_Sheet_BLANK_26
       rect:
         serializedVersion: 2
-        x: 535
-        y: 1057
-        width: 210
-        height: 190
+        x: 512
+        y: 1024
+        width: 256
+        height: 256
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -711,10 +711,10 @@ TextureImporter:
       name: HexTile_Sheet_BLANK_27
       rect:
         serializedVersion: 2
-        x: 791
-        y: 1057
-        width: 210
-        height: 190
+        x: 768
+        y: 1024
+        width: 256
+        height: 256
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -732,10 +732,10 @@ TextureImporter:
       name: HexTile_Sheet_BLANK_28
       rect:
         serializedVersion: 2
-        x: 1047
-        y: 1057
-        width: 210
-        height: 190
+        x: 1024
+        y: 1024
+        width: 256
+        height: 256
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -753,10 +753,10 @@ TextureImporter:
       name: HexTile_Sheet_BLANK_29
       rect:
         serializedVersion: 2
-        x: 1303
-        y: 1057
-        width: 210
-        height: 190
+        x: 1280
+        y: 1024
+        width: 256
+        height: 256
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -774,10 +774,10 @@ TextureImporter:
       name: HexTile_Sheet_BLANK_30
       rect:
         serializedVersion: 2
-        x: 1559
-        y: 1057
-        width: 210
-        height: 190
+        x: 1536
+        y: 1024
+        width: 256
+        height: 256
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -795,10 +795,10 @@ TextureImporter:
       name: HexTile_Sheet_BLANK_31
       rect:
         serializedVersion: 2
-        x: 1815
-        y: 1057
-        width: 210
-        height: 190
+        x: 1792
+        y: 1024
+        width: 256
+        height: 256
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -816,10 +816,10 @@ TextureImporter:
       name: HexTile_Sheet_BLANK_32
       rect:
         serializedVersion: 2
-        x: 24
-        y: 801
-        width: 209
-        height: 190
+        x: 0
+        y: 768
+        width: 256
+        height: 256
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -837,10 +837,10 @@ TextureImporter:
       name: HexTile_Sheet_BLANK_33
       rect:
         serializedVersion: 2
-        x: 279
-        y: 801
-        width: 210
-        height: 190
+        x: 256
+        y: 768
+        width: 256
+        height: 256
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -858,10 +858,10 @@ TextureImporter:
       name: HexTile_Sheet_BLANK_34
       rect:
         serializedVersion: 2
-        x: 535
-        y: 801
-        width: 210
-        height: 190
+        x: 512
+        y: 768
+        width: 256
+        height: 256
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -879,10 +879,10 @@ TextureImporter:
       name: HexTile_Sheet_BLANK_35
       rect:
         serializedVersion: 2
-        x: 791
-        y: 801
-        width: 210
-        height: 190
+        x: 768
+        y: 768
+        width: 256
+        height: 256
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -900,10 +900,10 @@ TextureImporter:
       name: HexTile_Sheet_BLANK_36
       rect:
         serializedVersion: 2
-        x: 1047
-        y: 801
-        width: 210
-        height: 190
+        x: 1024
+        y: 768
+        width: 256
+        height: 256
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -921,10 +921,10 @@ TextureImporter:
       name: HexTile_Sheet_BLANK_37
       rect:
         serializedVersion: 2
-        x: 1303
-        y: 801
-        width: 210
-        height: 190
+        x: 1280
+        y: 768
+        width: 256
+        height: 256
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -942,10 +942,10 @@ TextureImporter:
       name: HexTile_Sheet_BLANK_38
       rect:
         serializedVersion: 2
-        x: 1559
-        y: 801
-        width: 210
-        height: 190
+        x: 1536
+        y: 768
+        width: 256
+        height: 256
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -963,10 +963,10 @@ TextureImporter:
       name: HexTile_Sheet_BLANK_39
       rect:
         serializedVersion: 2
-        x: 1815
-        y: 801
-        width: 210
-        height: 190
+        x: 1792
+        y: 768
+        width: 256
+        height: 256
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -984,10 +984,10 @@ TextureImporter:
       name: HexTile_Sheet_BLANK_40
       rect:
         serializedVersion: 2
-        x: 24
-        y: 545
-        width: 209
-        height: 190
+        x: 0
+        y: 512
+        width: 256
+        height: 256
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1005,10 +1005,10 @@ TextureImporter:
       name: HexTile_Sheet_BLANK_41
       rect:
         serializedVersion: 2
-        x: 279
-        y: 545
-        width: 210
-        height: 190
+        x: 256
+        y: 512
+        width: 256
+        height: 256
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1026,10 +1026,10 @@ TextureImporter:
       name: HexTile_Sheet_BLANK_42
       rect:
         serializedVersion: 2
-        x: 535
-        y: 545
-        width: 210
-        height: 190
+        x: 512
+        y: 512
+        width: 256
+        height: 256
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1047,10 +1047,10 @@ TextureImporter:
       name: HexTile_Sheet_BLANK_43
       rect:
         serializedVersion: 2
-        x: 791
-        y: 545
-        width: 210
-        height: 190
+        x: 768
+        y: 512
+        width: 256
+        height: 256
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1068,10 +1068,10 @@ TextureImporter:
       name: HexTile_Sheet_BLANK_44
       rect:
         serializedVersion: 2
-        x: 1047
-        y: 545
-        width: 210
-        height: 190
+        x: 1024
+        y: 512
+        width: 256
+        height: 256
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1089,10 +1089,10 @@ TextureImporter:
       name: HexTile_Sheet_BLANK_45
       rect:
         serializedVersion: 2
-        x: 1303
-        y: 545
-        width: 210
-        height: 190
+        x: 1280
+        y: 512
+        width: 256
+        height: 256
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1110,10 +1110,10 @@ TextureImporter:
       name: HexTile_Sheet_BLANK_46
       rect:
         serializedVersion: 2
-        x: 1559
-        y: 545
-        width: 210
-        height: 190
+        x: 1536
+        y: 512
+        width: 256
+        height: 256
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1131,10 +1131,10 @@ TextureImporter:
       name: HexTile_Sheet_BLANK_47
       rect:
         serializedVersion: 2
-        x: 1815
-        y: 545
-        width: 210
-        height: 190
+        x: 1792
+        y: 512
+        width: 256
+        height: 256
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1152,10 +1152,10 @@ TextureImporter:
       name: HexTile_Sheet_BLANK_48
       rect:
         serializedVersion: 2
-        x: 24
-        y: 289
-        width: 209
-        height: 190
+        x: 0
+        y: 256
+        width: 256
+        height: 256
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1173,10 +1173,10 @@ TextureImporter:
       name: HexTile_Sheet_BLANK_49
       rect:
         serializedVersion: 2
-        x: 279
-        y: 289
-        width: 210
-        height: 190
+        x: 256
+        y: 256
+        width: 256
+        height: 256
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1194,10 +1194,10 @@ TextureImporter:
       name: HexTile_Sheet_BLANK_50
       rect:
         serializedVersion: 2
-        x: 535
-        y: 289
-        width: 210
-        height: 190
+        x: 512
+        y: 256
+        width: 256
+        height: 256
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1215,10 +1215,10 @@ TextureImporter:
       name: HexTile_Sheet_BLANK_51
       rect:
         serializedVersion: 2
-        x: 791
-        y: 289
-        width: 210
-        height: 190
+        x: 768
+        y: 256
+        width: 256
+        height: 256
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1236,10 +1236,10 @@ TextureImporter:
       name: HexTile_Sheet_BLANK_52
       rect:
         serializedVersion: 2
-        x: 1047
-        y: 289
-        width: 210
-        height: 190
+        x: 1024
+        y: 256
+        width: 256
+        height: 256
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1257,10 +1257,10 @@ TextureImporter:
       name: HexTile_Sheet_BLANK_53
       rect:
         serializedVersion: 2
-        x: 1303
-        y: 289
-        width: 210
-        height: 190
+        x: 1280
+        y: 256
+        width: 256
+        height: 256
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1278,10 +1278,10 @@ TextureImporter:
       name: HexTile_Sheet_BLANK_54
       rect:
         serializedVersion: 2
-        x: 1559
-        y: 289
-        width: 210
-        height: 190
+        x: 1536
+        y: 256
+        width: 256
+        height: 256
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1299,10 +1299,10 @@ TextureImporter:
       name: HexTile_Sheet_BLANK_55
       rect:
         serializedVersion: 2
-        x: 1815
-        y: 289
-        width: 210
-        height: 190
+        x: 1792
+        y: 256
+        width: 256
+        height: 256
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1320,10 +1320,10 @@ TextureImporter:
       name: HexTile_Sheet_BLANK_56
       rect:
         serializedVersion: 2
-        x: 24
-        y: 34
-        width: 209
-        height: 189
+        x: 0
+        y: 0
+        width: 256
+        height: 256
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1341,10 +1341,10 @@ TextureImporter:
       name: HexTile_Sheet_BLANK_57
       rect:
         serializedVersion: 2
-        x: 279
-        y: 34
-        width: 210
-        height: 189
+        x: 256
+        y: 0
+        width: 256
+        height: 256
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1362,10 +1362,10 @@ TextureImporter:
       name: HexTile_Sheet_BLANK_58
       rect:
         serializedVersion: 2
-        x: 535
-        y: 34
-        width: 210
-        height: 189
+        x: 512
+        y: 0
+        width: 256
+        height: 256
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1383,10 +1383,10 @@ TextureImporter:
       name: HexTile_Sheet_BLANK_59
       rect:
         serializedVersion: 2
-        x: 791
-        y: 34
-        width: 210
-        height: 189
+        x: 768
+        y: 0
+        width: 256
+        height: 256
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1404,10 +1404,10 @@ TextureImporter:
       name: HexTile_Sheet_BLANK_60
       rect:
         serializedVersion: 2
-        x: 1047
-        y: 34
-        width: 210
-        height: 189
+        x: 1024
+        y: 0
+        width: 256
+        height: 256
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1425,10 +1425,10 @@ TextureImporter:
       name: HexTile_Sheet_BLANK_61
       rect:
         serializedVersion: 2
-        x: 1303
-        y: 34
-        width: 210
-        height: 189
+        x: 1280
+        y: 0
+        width: 256
+        height: 256
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1446,10 +1446,10 @@ TextureImporter:
       name: HexTile_Sheet_BLANK_62
       rect:
         serializedVersion: 2
-        x: 1559
-        y: 34
-        width: 210
-        height: 189
+        x: 1536
+        y: 0
+        width: 256
+        height: 256
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1467,10 +1467,10 @@ TextureImporter:
       name: HexTile_Sheet_BLANK_63
       rect:
         serializedVersion: 2
-        x: 1815
-        y: 34
-        width: 210
-        height: 189
+        x: 1792
+        y: 0
+        width: 256
+        height: 256
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}

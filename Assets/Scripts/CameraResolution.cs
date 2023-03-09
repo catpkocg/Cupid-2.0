@@ -1,8 +1,19 @@
+using System;
 using UnityEngine;
 
 public class CameraResolution : MonoBehaviour
 { 
     private void Awake()
+    {
+        // SetRect();
+    }
+
+    private void Update()
+    {
+        // SetRect();
+    }
+
+    private void SetRect()
     {
         var playCamera = GetComponent<Camera>();
         var rect = playCamera.rect;
@@ -21,5 +32,4 @@ public class CameraResolution : MonoBehaviour
         }
         playCamera.rect = rect;
     }
-
 }

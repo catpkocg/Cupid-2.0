@@ -60,7 +60,7 @@ public class GameManager : MonoSingleton<GameManager>
     private void Start()
     {
         SettingConditionStates();
-        State = States.CheckThereIsBlockCanPang;
+        State = States.ReadyForInteraction;
     }
     private void Update()
     {

@@ -16,6 +16,8 @@ public class SaveManager : MonoSingleton<SaveManager>
         base.Awake();
         
         Load();
+
+        Application.targetFrameRate = 120;
     }
     private void OnApplicationPause(bool pauseStatus)
     {
