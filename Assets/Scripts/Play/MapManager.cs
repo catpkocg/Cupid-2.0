@@ -52,31 +52,24 @@ public class MapManager : MonoSingleton<MapManager>
 
     public void ShuffleBlocks()
     {
-        List<MapTile> normalBlockList = new List<MapTile>();
+        List<MapTile> normalTileList = new List<MapTile>();
+        List<Block> normalBlockList = new List<Block>();
         var mapTiles = map.MapTiles;
         mapTiles.Values.ForEach(mapTile =>
         {
             if (mapTile.MovableBlockOnMapTile.value < 10)
             {
-                //var normalBlock = mapTile.MovableBlockOnMapTile;
-                normalBlockList.Add(mapTile);
+                normalTileList.Add(mapTile);
+                normalBlockList.Add(mapTile.MovableBlockOnMapTile);
             }
         });
-        
         var random = new System.Random();
-        var shuffledBlock = normalBlockList.OrderBy(x => random.Next()).ToList();
+        var shuffledBlock = normalTileList.OrderBy(x => random.Next()).ToList();
 
         for (int i = 0; i < normalBlockList.Count; i++)
         {
-            var a = normalBlockList[i].MovableBlockOnMapTile;
-            normalBlockList[i].MovableBlockOnMapTile = null;
-            a.Move(shuffledBlock[i]);
-            //shuffledBlock[i].MovableBlockOnMapTile.Move(normalBlockList[i]);
-            
-            //normalBlockList[i].MovableBlockOnMapTile = null;
+            normalBlockList[i].Move(shuffledBlock[i]);
         }
-           
-
     }
 
     public void LastPangScaleAction(int howManyBlockNeedToCreate)
