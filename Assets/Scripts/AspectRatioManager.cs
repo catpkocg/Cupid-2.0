@@ -16,7 +16,14 @@ public class AspectRatioManager : MonoSingleton<AspectRatioManager>
     public event Action OnRatioWider;
     public event Action OnRatioNarrower;
     
-
+    public float horizontalResolution = 1920;
+ 
+    void OnGUI ()
+    {
+        float currentAspect = (float) Screen.width / (float) Screen.height;
+        Camera.main.orthographicSize = horizontalResolution / currentAspect / 200;
+    }
+    
     private void Start()
     {
         prevAspectRatio = CurrAspectRatio;
@@ -30,6 +37,7 @@ public class AspectRatioManager : MonoSingleton<AspectRatioManager>
         
         prevAspectRatio = CurrAspectRatio;
         CheckRatioAction();
+        OnGUI();
     }
     private void CheckRatioAction()
     {
@@ -41,5 +49,10 @@ public class AspectRatioManager : MonoSingleton<AspectRatioManager>
         {
             OnRatioWider?.Invoke();
         }
+    }
+    
+    public class CameraManager : MonoBehaviour 
+    {
+        
     }
 }

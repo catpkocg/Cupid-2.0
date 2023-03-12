@@ -72,6 +72,7 @@ public static class MapUtil
             tempCount++;
         }
 
+        Debug.Log(allSameBlocks.Count);
         return allSameBlocks;
     }
 

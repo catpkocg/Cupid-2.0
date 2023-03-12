@@ -27,9 +27,10 @@ public class GameManager : MonoSingleton<GameManager>
     public int score;
     public int touchCount;
     public bool scaleIsDone = false;
-    
+
     public States State { get; set; }
 
+    private int shuffleCount;
     private bool IsCleared
     {
         get
@@ -59,6 +60,7 @@ public class GameManager : MonoSingleton<GameManager>
     
     private void Start()
     {
+        shuffleCount = 0;
         SettingConditionStates();
         State = States.ReadyForInteraction;
     }
@@ -69,11 +71,34 @@ public class GameManager : MonoSingleton<GameManager>
             MapManager.Instance.ShuffleBlocks();
         }
         
-        
         switch (State)
         {
             case States.CheckThereIsBlockCanPang:
+                if (MapManager.Instance.FindIsThereCanPangBlock())
+                {
+                    shuffleCount = 0;
+                    State = States.ReadyForInteraction;
+                }
+                else
+                {
+                    if (shuffleCount == 2)
+                    {
+                        //더이상 섞을수 없어서 게임을 종료합니다.
+                    }
+                    else
+                    {
+                        State = States.Shuffle;
+                    }
+                }
                 
+                break;
+            case States.Shuffle:
+                shuffleCount++;
+                //터질게 없다는 뜻임
+                
+                //섞습니다 라는 창이 뜨고 창이 다 출력이 완료되면 섞기
+                
+                //섞기 에니메이션 끝나면 다시 checkthere로 넘기기;
                 
                 break;
             case States.ReadyForInteraction:
@@ -255,6 +280,7 @@ public enum States
 {
     
     CheckThereIsBlockCanPang,
+    Shuffle,
     ReadyForInteraction,
     CheckTarget,
     Waiting,
@@ -265,4 +291,5 @@ public enum States
     LastPang,
     WaitingLastPangScale,
     WaitingLastPangMove,
+    
 }

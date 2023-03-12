@@ -27,6 +27,31 @@ public class MapManager : MonoSingleton<MapManager>
         DrawDirectionOnBlock();
     }
 
+    public bool FindIsThereCanPangBlock()
+    {
+        var canPangNum = 0;
+        var mapTiles = map.MapTiles;
+        mapTiles.Values.ForEach(mapTile =>
+        {
+            var nearBlockListNum = MapUtil.FindAllNearSameValue(mapTile.MovableBlockOnMapTile).Count;
+            if (nearBlockListNum > 2 || mapTile.MovableBlockOnMapTile.value > 10)
+            {
+                canPangNum++;
+            }
+        });
+
+        if (canPangNum != 0)
+        {
+            return true;
+        }
+        
+        return false;
+    }
+    
+    
+    
+    
+    
     public void AlreadyPangChange()
     {
         var mapTiles = map.MapTiles;
