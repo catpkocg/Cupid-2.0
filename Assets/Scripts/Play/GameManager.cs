@@ -81,7 +81,7 @@ public class GameManager : MonoSingleton<GameManager>
                 }
                 else
                 {
-                    if (shuffleCount == 2)
+                    if (shuffleCount > 2)
                     {
                         //더이상 섞을수 없어서 게임을 종료합니다.
                     }
