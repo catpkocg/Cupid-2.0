@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using Random = UnityEngine.Random;
@@ -50,6 +51,22 @@ public class MapTile : MonoBehaviour, IPointerClickHandler
                 }
                 break;
             case >10 and <40:
+
+                var clickedBlock = mapTile.MovableBlockOnMapTile;
+                var specialBlockList = MapUtil.FindAllNearSpecialBlocks(clickedBlock);
+                Debug.Log("스페셜 블럭 개수" + specialBlockList.Count);
+                if (specialBlockList.Count > 1)
+                {
+
+                    SpecialBlockSum(mapTile, specialBlockList);
+
+                }
+                else
+                {
+                    //mapTile.MovableBlockOnMapTile.Pang();
+                    //GameManager.Instance.ChangeState(States.CheckTarget);
+                }
+                
                 
                 //클릭한애 주변에 살피기
                 
@@ -70,8 +87,7 @@ public class MapTile : MonoBehaviour, IPointerClickHandler
                 
                 //아무도 안붙어있을경우 는 그냥 터뜨리기
                 
-                mapTile.MovableBlockOnMapTile.Pang();
-                GameManager.Instance.ChangeState(States.CheckTarget);
+                
                 break;
         }
         
@@ -93,7 +109,84 @@ public class MapTile : MonoBehaviour, IPointerClickHandler
             gameManager.ChangeState(States.CheckTarget);
         }
     }
+
+    private void SpecialBlockSum(MapTile mapTile, List<Block> specialBlockList)
+    {
+        var lineClearBlockCount = 0;
+        var sameColorBlockCount = 0;
+        for (int i = 0; i < specialBlockList.Count; i++)
+        {
+            if (specialBlockList[i].value < 30)
+            {
+                lineClearBlockCount++;
+            }
+            else
+            {
+                sameColorBlockCount++;
+            }
+            
+            MapManager.Instance.map.MapTiles[specialBlockList[i].Coord].MovableBlockOnMapTile = null;
+            specialBlockList[i].MoveBlock(mapTile);
+            
+            //이동끝나면 터뜨려야겠다
+            
+        }
+
+        Debug.Log("라인컬러블럭" + lineClearBlockCount);
+        Debug.Log("세임컬러블럭" + sameColorBlockCount);
+
+        if (sameColorBlockCount > 1)
+        {
+            // 전부다 터뜨림
+            SpecialBlockSumPang(specialBlockList);
+            MapManager.Instance.AllPang();
+            GameManager.Instance.ChangeState(States.CheckTarget);
+            
+        }
+        else if(sameColorBlockCount == 1)
+        {
+            // 세임컬러 블락색깔에 랜덤한 라인클리어 블락 생성후 다 터뜨림
+        }
+        else if (lineClearBlockCount > 2)
+        {
+            // 3방향 터뜨림
+        }
+        else if (lineClearBlockCount > 1)
+        {
+            // 방향이 같으면 랜덤한 방향추가로 하나 더 터뜨림
+            
+            // 방향이 같지않으면 둘다 터뜨림
+        }
+    }
+
+    private void SpecialBlockSumPang(List<Block> specialBlockList)
+    {
+        for (int i = 0; i < specialBlockList.Count; i++)
+        {
+            specialBlockList[i].PangMainBlock(specialBlockList[i]);
+        }
+    }
     
+
+    private void CreateLineClearBlockOnSameColor()
+    {
+        
+    }
+
+    private void AllLineClearBlocksPang()
+    {
+        
+    }
+
+    private void AllDirectionPang()
+    {
+        
+    }
+
+    private void TwoDirectionPang()
+    {
+        
+    }
     
     
     

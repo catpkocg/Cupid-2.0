@@ -38,5 +38,6 @@ public class CanvasAspectRatioResolver : MonoBehaviour
     private void RatioWiderHandler()
     {
         canvasScaler.matchWidthOrHeight = 1;
+        Camera.main.orthographicSize = 8;
     }
 }

@@ -71,8 +71,10 @@ public static class MapUtil
             if (500 < tempCount) break;
             tempCount++;
         }
+        
+        
 
-        Debug.Log(allSameBlocks.Count);
+        //Debug.Log(allSameBlocks.Count);
         return allSameBlocks;
     }
 
@@ -92,9 +94,63 @@ public static class MapUtil
                 }
             }
         }
-
         return sameBlockList;
     }
     
+    public static List<Block> FindAllNearSpecialBlocks(Block block)
+    {
+        var toSearch = new List<Block>();
+        var searched = new List<Block>();
+        var allSameBlocks = new List<Block>();
+        toSearch.Add(block);
+        allSameBlocks.Add(block);
+        var tempCount = 0;
+        while (!toSearch.IsNullOrEmpty())
+        {
+            var currSearchTarget = toSearch[0];
+            var sameBlocks = FindNearSpecialBlocks(currSearchTarget, MapManager.Instance.neighborPos);
+            if (!sameBlocks.IsNullOrEmpty())
+            {
+                for (var i = 0; i < sameBlocks.Count; i++)
+                {
+                    var currSameBlock = sameBlocks[i];
+
+                    if (!searched.Contains(currSameBlock)
+                        && !toSearch.Contains(currSameBlock))
+                    {
+                        allSameBlocks.Add(currSameBlock);
+                        toSearch.Add(currSameBlock);
+                    }
+                }
+            }
+
+            searched.Add(currSearchTarget);
+            toSearch.Remove(currSearchTarget);
+
+            if (500 < tempCount) break;
+            tempCount++;
+        }
+        //Debug.Log(allSameBlocks.Count);
+        return allSameBlocks;
+    }
     
+    private static List<Block> FindNearSpecialBlocks(Block block, NeighborPos neighborPos)
+    {
+        var map = MapManager.Instance.map;
+        List<Block> sameBlockList = new List<Block>();
+        for (int i = 0; i < neighborPos.neighbor.Count; i++)
+        {
+            var neighbor = block.Coord + neighborPos.neighbor[i].neighborPos;
+            if (map.MapTiles.ContainsKey(neighbor) && map.MapTiles[neighbor].MovableBlockOnMapTile != null)
+            {
+                var neighborValue = map.MapTiles[neighbor].MovableBlockOnMapTile.value;
+                if (neighborValue is > 10 and < 40)
+                {
+                    sameBlockList.Add(map.MapTiles[neighbor].MovableBlockOnMapTile);
+                }
+            }
+        }
+        return sameBlockList;
+    }
+
 }

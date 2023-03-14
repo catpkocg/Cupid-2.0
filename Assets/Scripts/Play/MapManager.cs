@@ -34,7 +34,7 @@ public class MapManager : MonoSingleton<MapManager>
         mapTiles.Values.ForEach(mapTile =>
         {
             var nearBlockListNum = MapUtil.FindAllNearSameValue(mapTile.MovableBlockOnMapTile).Count;
-            if (nearBlockListNum > 2 || mapTile.MovableBlockOnMapTile.value > 10)
+            if ((mapTile.MovableBlockOnMapTile.value < 10 && nearBlockListNum > 1) || mapTile.MovableBlockOnMapTile.value is > 10 and < 40)
             {
                 canPangNum++;
             }
@@ -47,9 +47,27 @@ public class MapManager : MonoSingleton<MapManager>
         
         return false;
     }
-    
-    
-    
+
+
+    public void AllPang()
+    {
+        var mapTiles = map.MapTiles;
+        mapTiles.Values.ForEach(mapTile =>
+        {
+            if (mapTile.MovableBlockOnMapTile != null)
+            {
+                if (mapTile.MovableBlockOnMapTile.value < 40)
+                {
+                    mapTile.MovableBlockOnMapTile.PangMainBlock(mapTile.MovableBlockOnMapTile);
+                }
+                else
+                {
+                    mapTile.MovableBlockOnMapTile.Pang();
+                }
+                
+            }
+        });
+    }
     
     
     public void AlreadyPangChange()

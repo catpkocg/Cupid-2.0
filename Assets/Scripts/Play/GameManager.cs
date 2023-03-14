@@ -30,7 +30,7 @@ public class GameManager : MonoSingleton<GameManager>
 
     public States State { get; set; }
 
-    private int shuffleCount;
+    public int shuffleCount;
     private bool IsCleared
     {
         get
@@ -62,44 +62,55 @@ public class GameManager : MonoSingleton<GameManager>
     {
         shuffleCount = 0;
         SettingConditionStates();
-        State = States.ReadyForInteraction;
+        State = States.CheckThereIsBlockCanPang;
     }
+    
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            MapManager.Instance.ShuffleBlocks();
+            
+            ui.ShowShuffleMessageAndShuffle();
         }
         
         switch (State)
         {
             case States.CheckThereIsBlockCanPang:
-                if (MapManager.Instance.FindIsThereCanPangBlock())
+                if (!MapManager.Instance.IsThereMovingPang())
                 {
-                    shuffleCount = 0;
-                    State = States.ReadyForInteraction;
-                }
-                else
-                {
-                    if (shuffleCount > 2)
+                    if (MapManager.Instance.FindIsThereCanPangBlock())
                     {
-                        //더이상 섞을수 없어서 게임을 종료합니다.
+                        Debug.Log("터질수있는애 있음");
+                        shuffleCount = 0;
+                        State = States.ReadyForInteraction;
                     }
                     else
                     {
-                        State = States.Shuffle;
+                        if (shuffleCount > 2)
+                        {
+                            //더이상 섞을수 없어서 게임을 종료합니다.
+                            Debug.Log("두번썩고끝");
+                            gameOverPanel.SetActive(true);
+                            failPopUp.SetActive(true);
+                            State = States.ReadyForInteraction;
+
+                        }
+                        else
+                        {
+                            State = States.Shuffle;
+                        }
                     }
                 }
-                
                 break;
             case States.Shuffle:
                 shuffleCount++;
                 //터질게 없다는 뜻임
-                
+                ui.ShowShuffleMessageAndShuffle();
                 //섞습니다 라는 창이 뜨고 창이 다 출력이 완료되면 섞기
-                
+                State = States.WaitingShuffle;
                 //섞기 에니메이션 끝나면 다시 checkthere로 넘기기;
-                
+                break;
+            case States.WaitingShuffle:
                 break;
             case States.ReadyForInteraction:
                 break;
@@ -161,20 +172,8 @@ public class GameManager : MonoSingleton<GameManager>
                     }
                     else
                     {
-                        // 여기에 박스 블럭들 이미 터진 거 방지할려고 체크해 놨던거 지우기.
-                        // canPangBox라는 bool값을 전부 true 로 변환.
                         MapManager.Instance.AlreadyPangChange();
-                        
-                        //선택할수있는 곳이 있는지 확인
-                        
-                        //없으면 랜덤으로 섞는 로직이 들어가야 함
-                        
-                        //두번까지 섞고 안되면 게임오버
-                        
-                        
-                        // 이걸 checkisthereblockcanbepang;
-                        ChangeState(States.ReadyForInteraction);
-                        //게임스테이트 레디인터렉션으로 바꿔줌
+                        ChangeState(States.CheckThereIsBlockCanPang);
                     }
                 }
                 break;
@@ -185,7 +184,6 @@ public class GameManager : MonoSingleton<GameManager>
             case States.WaitingLastPangScale:
                 if (scaleIsDone)
                 {
-                    // 특수팡블럭들 삭제하고 실행
                     MapManager.Instance.LastPangBlock();
                     MapManager.Instance.CheckTarget();
                     spawn.SpawnForEmptyPlace();
@@ -200,7 +198,6 @@ public class GameManager : MonoSingleton<GameManager>
                 {
                     gameOverPanel.SetActive(true);
                     clearPopUp.SetActive(true);
-                    Debug.Log("바뀜");
                     State = States.ReadyForInteraction;
                 }
                 break;
@@ -281,6 +278,7 @@ public enum States
     
     CheckThereIsBlockCanPang,
     Shuffle,
+    WaitingShuffle,
     ReadyForInteraction,
     CheckTarget,
     Waiting,

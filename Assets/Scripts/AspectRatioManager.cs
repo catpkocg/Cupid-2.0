@@ -33,21 +33,23 @@ public class AspectRatioManager : MonoSingleton<AspectRatioManager>
 
     private void Update()
     {
-        if (prevAspectRatio == CurrAspectRatio) return;
-        
-        prevAspectRatio = CurrAspectRatio;
+        // if (prevAspectRatio == CurrAspectRatio) return;
+        //
+        // prevAspectRatio = CurrAspectRatio;
         CheckRatioAction();
-        OnGUI();
+        
     }
     private void CheckRatioAction()
     {
         if (CurrAspectRatio <= ratioConversionLimit)
         {
             OnRatioNarrower?.Invoke();
+            //OnGUI();
         }
         else if (ratioConversionLimit < CurrAspectRatio)
         {
             OnRatioWider?.Invoke();
+            
         }
     }
     

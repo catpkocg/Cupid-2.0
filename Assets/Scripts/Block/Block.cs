@@ -18,6 +18,7 @@ public abstract class Block : MonoBehaviour
 
     public Action OnPang;
     public Action<MapTile> MoveBlock;
+
     
     public virtual void Pang()
     {
@@ -64,7 +65,7 @@ public abstract class Block : MonoBehaviour
             .SetEase(gameConfig.EasyType)
             .OnComplete(ChangeCondition);
     }
-    protected void PangMainBlock(Block block)
+    public void PangMainBlock(Block block)
     {
         MapManager.Instance.map.MapTiles[block.Coord].MovableBlockOnMapTile = null;
 
@@ -78,6 +79,7 @@ public abstract class Block : MonoBehaviour
                 var explosion = Instantiate(gameConfig.Explosion, block.transform.position, Quaternion.identity);
                 DOVirtual.DelayedCall(0.5f, () => Destroy(explosion.gameObject));
                 Destroy(block.gameObject);
+                block.transform.DOKill();
             });
     }
     protected void PangNearBoxBlock(MapTile mapTile)

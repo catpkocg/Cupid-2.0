@@ -10,7 +10,7 @@ public class CameraResolution : MonoBehaviour
 
     private void Update()
     {
-        // SetRect();
+        //SetRect();
     }
 
     private void SetRect()
